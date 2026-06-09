@@ -1,14 +1,14 @@
 .hero-section {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 680px; /* Controlled height of the hero section */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding: 140px 24px 200px 24px;
+  padding: 0 24px 0 24px;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible; /* Ensure caution tapes overflow visible */
   background-color: var(--black);
 }
 
@@ -16,24 +16,24 @@
    The tapes (z-index 10) sit on top of this element (z-index 1).
    `bottom: 55px` lets the tapes overlap the flat base of the arc
    while the curved top remains fully visible above them. */
-.hero-semicircle {
+.hero-background-circle {
   position: absolute;
-  bottom: 55px;
+  top: -250px; /* Top begins near the navbar */
   left: 50%;
   transform: translateX(-50%);
-  width: 90vw;
-  max-width: 1109px;
-  height: auto;
-  z-index: 1;
+  width: 1300px;
+  height: 1300px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.025); /* Subtle dark framing circle */
+  z-index: 1; /* Lowest layer (Circle) */
   pointer-events: none;
-  opacity: 0.95;
 }
 
 .hero-container {
   width: 100%;
   max-width: 900px;
-  margin: 0 auto;
-  z-index: 2;
+  margin: 100px auto 0 auto; /* Moved downward but compact */
+  z-index: 2; /* Middle layer (Hero content) */
   position: relative;
 }
 
@@ -42,33 +42,34 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 28px; /* Generous vertical rhythm */
+  gap: 0; /* Control spacing individually for pixel-perfection */
 }
 
 /* Hello, I am - moved closer to name, weight 300, clamp size */
 .hero-intro-text {
   font-family: var(--font-body);
-  font-size: clamp(2rem, 3vw, 3.2rem);
+  font-size: clamp(1.8rem, 2.5vw, 2.6rem);
   font-weight: 300;
   color: var(--white);
   letter-spacing: 0;
-  margin-bottom: -12px; /* Pulls closer to the name box */
+  margin-bottom: 8px; /* Compact */
 }
 
 /* ARYAN VERMA Box - thin figma border, blue handles, subtle glow */
 .hero-name-box.figma-select {
   position: relative;
-  padding: 20px 40px; /* Top/bottom 20px, left/right 40px */
+  padding: 10px 24px; /* Snug padding to reduce width/height and empty space */
   border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 10px rgba(78, 161, 255, 0.15);
-  background-color: rgba(7, 7, 7, 0.7);
+  box-shadow: 0 0 8px rgba(78, 161, 255, 0.1);
+  background-color: rgba(7, 7, 7, 0.85);
   display: inline-block;
   z-index: 1; /* Lowest stacking context for name header */
+  margin-bottom: 24px; /* Compact */
 }
 
 .hero-display-name {
   font-family: var(--font-heading);
-  font-size: clamp(4rem, 8vw, 8rem);
+  font-size: clamp(3rem, 6.5vw, 6.8rem); /* Slightly smaller to fit compact container */
   font-weight: 500;
   line-height: 0.95;
   letter-spacing: 0.02em;
@@ -102,7 +103,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 0; /* Control spacing individually for pixel-perfection */
   width: 100%;
   position: relative;
   z-index: 20; /* High z-index to stay on top of the name box */
@@ -111,25 +112,33 @@
 /* A Designer Fueled by */
 .hero-accent-lead {
   font-family: var(--font-body);
-  font-size: clamp(20px, 3.2vw, 30px);
+  font-size: clamp(18px, 2.5vw, 22px);
   font-weight: 500;
   color: var(--white);
   letter-spacing: 0.02em;
+  margin-bottom: 12px; /* Compact */
 }
 
 /* Rotating word (directly below) */
 .word-rotator-wrapper {
   position: relative;
-  display: inline-flex;
-  min-width: 200px;
-  height: 1.4em;
+  display: flex;
+  width: 100%;
+  height: 1.5em;
   overflow: hidden;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px; /* Compact */
 }
 
 .flickering-word {
   position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  width: fit-content;
+  white-space: nowrap; /* Prevent word wrapping */
   color: #BC0058;
   font-weight: 500;
   font-family: Georgia, serif;
@@ -151,11 +160,12 @@
 /* Jack Line - single centered line */
 .hero-spec-motto {
   font-family: var(--font-body);
-  font-size: clamp(18px, 2.5vw, 24px);
+  font-size: clamp(16px, 2vw, 20px);
   font-weight: 400;
   color: var(--white);
   letter-spacing: 0.02em;
   white-space: nowrap;
+  margin-bottom: 24px; /* Compact spacing directly to quote */
 }
 
 .hero-spec-motto strong {
@@ -166,14 +176,15 @@
 /* Quote - placed farther below */
 .hero-quote {
   font-family: var(--font-body);
-  font-size: clamp(14px, 1.8vw, 17px);
+  font-size: clamp(12px, 1.4vw, 14px); /* Small italic text */
   font-style: italic;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.55);
-  margin-top: 24px; /* Generous spacing */
-  border-top: 1px solid var(--grey);
-  padding-top: 16px;
-  max-width: 480px;
+  color: rgba(255, 255, 255, 0.45); /* Low opacity */
+  border-top: 1px solid rgba(58, 58, 58, 0.3);
+  padding-top: 12px;
+  max-width: 420px;
+  text-align: center; /* Center aligned */
+  margin: 0 auto;
 }
 
 /* Inline card trigger word */
@@ -311,11 +322,38 @@
 /* ── Responsive adjustments ─────────────────────────────── */
 @media (max-width: 768px) {
   .hero-section {
-    padding: 100px 16px 160px 16px;
+    height: 520px;
+    padding: 0 16px 0 16px;
+  }
+
+  .hero-container {
+    margin-top: 60px;
   }
 
   .hero-semicircle {
-    width: 95vw;
-    bottom: 45px;
+    width: 90vw;
+    height: 350px;
+    top: 45%;
+  }
+
+  .hero-intro-text {
+    margin-bottom: 6px;
+  }
+
+  .hero-name-box.figma-select {
+    margin-bottom: 16px;
+    padding: 8px 16px;
+  }
+
+  .hero-accent-lead {
+    margin-bottom: 10px;
+  }
+
+  .word-rotator-wrapper {
+    margin-bottom: 16px;
+  }
+
+  .hero-spec-motto {
+    margin-bottom: 16px;
   }
 }

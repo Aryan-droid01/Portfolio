@@ -20,8 +20,8 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero-section">
-      {/* Huge background semicircle starting behind content and extending down */}
-      <img src={SemiCircleSvg} className="hero-semicircle" alt="Semicircle background" />
+      {/* Giant background circle acting as framing semicircle */}
+      <div className="hero-background-circle"></div>
 
       <div className="hero-container">
         <div className="hero-centered-content">
