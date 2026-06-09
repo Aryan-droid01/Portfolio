@@ -1,0 +1,321 @@
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 140px 24px 200px 24px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: var(--black);
+}
+
+/* Semicircle behind content
+   The tapes (z-index 10) sit on top of this element (z-index 1).
+   `bottom: 55px` lets the tapes overlap the flat base of the arc
+   while the curved top remains fully visible above them. */
+.hero-semicircle {
+  position: absolute;
+  bottom: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90vw;
+  max-width: 1109px;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+.hero-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  z-index: 2;
+  position: relative;
+}
+
+.hero-centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px; /* Generous vertical rhythm */
+}
+
+/* Hello, I am - moved closer to name, weight 300, clamp size */
+.hero-intro-text {
+  font-family: var(--font-body);
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  font-weight: 300;
+  color: var(--white);
+  letter-spacing: 0;
+  margin-bottom: -12px; /* Pulls closer to the name box */
+}
+
+/* ARYAN VERMA Box - thin figma border, blue handles, subtle glow */
+.hero-name-box.figma-select {
+  position: relative;
+  padding: 20px 40px; /* Top/bottom 20px, left/right 40px */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 10px rgba(78, 161, 255, 0.15);
+  background-color: rgba(7, 7, 7, 0.7);
+  display: inline-block;
+  z-index: 1; /* Lowest stacking context for name header */
+}
+
+.hero-display-name {
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 8vw, 8rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  margin: 0;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* Figma selection handles */
+.figma-handle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #4EA1FF;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  z-index: 5;
+}
+
+.figma-handle.top-left { top: -4px; left: -4px; }
+.figma-handle.top-right { top: -4px; right: -4px; }
+.figma-handle.bottom-left { bottom: -4px; left: -4px; }
+.figma-handle.bottom-right { bottom: -4px; right: -4px; }
+.figma-handle.mid-left { top: calc(50% - 4px); left: -4px; }
+.figma-handle.mid-right { top: calc(50% - 4px); right: -4px; }
+.figma-handle.top-center { top: -4px; left: calc(50% - 4px); }
+.figma-handle.bottom-center { bottom: -4px; left: calc(50% - 4px); }
+
+.hero-headline-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  position: relative;
+  z-index: 20; /* High z-index to stay on top of the name box */
+}
+
+/* A Designer Fueled by */
+.hero-accent-lead {
+  font-family: var(--font-body);
+  font-size: clamp(20px, 3.2vw, 30px);
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+/* Rotating word (directly below) */
+.word-rotator-wrapper {
+  position: relative;
+  display: inline-flex;
+  min-width: 200px;
+  height: 1.4em;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+.flickering-word {
+  position: absolute;
+  color: #BC0058;
+  font-weight: 500;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: clamp(26px, 4vw, 40px);
+  letter-spacing: 0.04em;
+  text-shadow:
+    0 0 8px rgba(188, 0, 88, 0.7),
+    0 0 24px rgba(188, 0, 88, 0.3);
+  /* Subtle steady pulse – no jarring steps */
+  animation: pinkPulse 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes pinkPulse {
+  0%   { text-shadow: 0 0 8px rgba(232, 0, 106, 0.7), 0 0 24px rgba(232, 0, 106, 0.3); }
+  100% { text-shadow: 0 0 14px rgba(232, 0, 106, 1),  0 0 40px rgba(232, 0, 106, 0.5); }
+}
+
+/* Jack Line - single centered line */
+.hero-spec-motto {
+  font-family: var(--font-body);
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.hero-spec-motto strong {
+  font-weight: 800;
+  color: var(--white);
+}
+
+/* Quote - placed farther below */
+.hero-quote {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.8vw, 17px);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 24px; /* Generous spacing */
+  border-top: 1px solid var(--grey);
+  padding-top: 16px;
+  max-width: 480px;
+}
+
+/* Inline card trigger word */
+.inline-card-trigger {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  z-index: 50; /* Set very high to stack trigger text and children above siblings */
+}
+
+.underline-jack {
+  text-decoration: underline;
+  font-weight: 800;
+  color: var(--white);
+  text-decoration-color: var(--white);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* 3D Hover Card Perspective Popover */
+.hover-card-perspective {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  perspective: 1000px;
+  width: 70px;
+  height: 100px;
+  z-index: 100;
+  pointer-events: auto;
+  transform: translate3d(-50%, 0, 50px);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hover-card-perspective:hover {
+  transform: translate3d(-50%, -10px, 120px) scale(2.2);
+  z-index: 150;
+}
+
+.jack-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+  border-radius: 6px;
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+}
+
+/* Card Front */
+.card-front {
+  background: transparent;
+  border: none;
+  padding: 0;
+  transform: rotateY(0deg) translateZ(1px);
+}
+
+.jack-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 6px;
+}
+
+/* Card Back */
+.card-back {
+  background: radial-gradient(circle at center, #140d11 0%, #070707 100%);
+  border: 1px solid var(--pink);
+  color: var(--white);
+  padding: 4px;
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+.card-back-frame {
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  width: 100%;
+  height: 100%;
+  padding: 5px 3px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.back-decor-tag {
+  font-family: var(--font-heading);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  color: var(--pink);
+  line-height: 1;
+}
+
+.back-skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.back-skills-list li {
+  font-family: var(--font-body);
+  font-size: 7px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 2px 4px;
+  border-radius: 2px;
+  line-height: 1;
+}
+
+.back-footer {
+  font-family: var(--font-heading);
+  font-size: 6px;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+/* ── Responsive adjustments ─────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 100px 16px 160px 16px;
+  }
+
+  .hero-semicircle {
+    width: 95vw;
+    bottom: 45px;
+  }
+}

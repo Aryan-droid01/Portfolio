@@ -1,0 +1,120 @@
+.chain-overlay-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9990;
+  pointer-events: auto; /* Allow dragging lobe */
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 0%, #0d0d0d 0%, #000000 100%);
+}
+
+.shroud-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 0%, rgba(20, 20, 20, 0.96) 0%, #000000 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.shroud-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 200px;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(255, 255, 255, 0.25),
+    transparent 70%
+  );
+  filter: blur(25px);
+  pointer-events: none;
+}
+
+.chain-overlay-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.chain-svg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.lobe-handle-box {
+  width: 38px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.lobe-graphic {
+  width: 28px;
+  height: 75px;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: 
+    drop-shadow(0 0 15px rgba(255, 255, 255, 0.25))
+    drop-shadow(0 0 40px rgba(255, 255, 255, 0.18));
+}
+
+.pull-label-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 6;
+  white-space: nowrap;
+}
+
+.pull-line-connector {
+  width: 25px;
+  height: 1px;
+  background-color: var(--pink);
+  margin-right: 10px;
+  opacity: 0.85;
+}
+
+.pull-tag-text {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 2.2vw, 23px);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  animation: pulseOpacity 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes pulseOpacity {
+  0% {
+    opacity: 0.3;
+    color: var(--text-muted);
+  }
+  100% {
+    opacity: 1;
+    color: var(--white);
+    text-shadow: 0 0 8px rgba(188, 0, 88, 0.7);
+  }
+}

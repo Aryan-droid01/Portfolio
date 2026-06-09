@@ -1,0 +1,159 @@
+/* Global CSS Variables & Theme Setup */
+:root {
+  --black: #070707;
+  --white: #ffffff;
+  --grey: #3A3A3A;
+  --pink: #BC0058; /* Laser sight red/pink */
+  
+  --bg-color: var(--black);
+  --text-primary: var(--white);
+  --text-secondary: rgba(255, 255, 255, 0.65);
+  --text-muted: rgba(255, 255, 255, 0.4);
+  
+  --font-heading: 'Teko', sans-serif;
+  --font-body: 'Instrument Sans', sans-serif;
+}
+
+/* CSS Reset & General Page Setup */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-color);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* App Fade-in wrapper logic */
+.app-wrapper {
+  opacity: 0;
+  transform: scale(0.995);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+
+.app-wrapper.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.app-wrapper.light-deactivated {
+  filter: blur(15px) brightness(0);
+  pointer-events: none;
+}
+
+.app-wrapper.light-activated {
+  filter: blur(0px) brightness(1);
+  pointer-events: auto;
+}
+
+/* Selection coloring (laser indicator red) */
+::selection {
+  background-color: rgba(188, 0, 88, 0.35);
+  color: #ffffff;
+}
+
+/* Tactical webkit scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--grey);
+  border-radius: 0; /* Square edges for military hardware style */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pink);
+}
+
+/* Tactical Design Helpers & Decals */
+.tactical-border-bracket {
+  position: relative;
+}
+
+.tactical-border-bracket::before,
+.tactical-border-bracket::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--grey);
+  pointer-events: none;
+}
+
+.tactical-border-bracket::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.tactical-border-bracket::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+/* Crosshair Decorator */
+.crosshair-decor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.crosshair-decor::before,
+.crosshair-decor::after {
+  content: '';
+  position: absolute;
+  background-color: var(--grey);
+}
+
+.crosshair-decor::before {
+  top: 5px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+
+.crosshair-decor::after {
+  top: 0;
+  left: 5px;
+  width: 1px;
+  height: 100%;
+}

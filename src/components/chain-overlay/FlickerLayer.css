@@ -1,0 +1,49 @@
+.flicker-layer-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Old Monitor CRT scanlines overlay */
+.flicker-scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.4) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Flash layer that alternates between black and transparent */
+.flicker-screen-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  z-index: 1;
+  pointer-events: none;
+  animation: monitorFlicker 0.5s steps(1) forwards;
+}
+
+@keyframes monitorFlicker {
+  0%   { opacity: 1; }   /* Black */
+  16%  { opacity: 0; }   /* Visible */
+  33%  { opacity: 1; }   /* Black */
+  50%  { opacity: 0; }   /* Visible */
+  66%  { opacity: 1; }   /* Black */
+  83%  { opacity: 0; }   /* Visible */
+  100% { opacity: 0; }   /* Visible - fully finished */
+}

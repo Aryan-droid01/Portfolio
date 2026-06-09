@@ -1,0 +1,161 @@
+/* ── CautionTape Component ────────────────────────────────────────
+   Design Goal:
+   - Two crossing caution tapes (X-shape)
+   - Full-width coverage without vertical clipping
+   - Distinct, solid white borders on both top/bottom edges
+   - High stripe density (thin white diagonal stripes on black background)
+   - Seamless infinite stripe animation
+   - Desktop + Mobile responsive
+ ──────────────────────────────────────────────────────────────── */
+
+/* ── Outer Container ─────────────────────────────────────────── */
+.caution-tapes-wrapper {
+  position: absolute;
+  left: 0;
+  bottom: -130px;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Static Rotation Tracks ──────────────────────────────────── */
+.tape-track {
+  position: absolute;
+  left: -15%;
+  width: 130%;
+  overflow: visible;
+}
+
+/* Upper tape (ascending - overlaps on top) */
+.tape-track-top {
+  bottom: 200px;
+  transform: rotate(-6deg);
+  transform-origin: center center;
+  z-index: 2; /* Ascending tape on top */
+}
+
+/* Lower tape (descending) */
+.tape-track-bottom {
+  bottom: 160px;
+  transform: rotate(6deg);
+  transform-origin: center center;
+  z-index: 1; /* Descending tape underneath */
+}
+
+/* ── Tape Strip ──────────────────────────────────────────────── */
+.caution-tape {
+  position: absolute;
+  left: -50%;
+  width: 200%;
+  height: 28px; /* Sleek height matching design */
+
+  /* Diagonal white stripes slanting downwards left-to-right (\) on black background */
+  background: linear-gradient(
+    -45deg,
+    #0d0d0d 35%,
+    #ffffff 35%,
+    #ffffff 65%,
+    #0d0d0d 65%
+  );
+  background-size: 30px 30px; /* High stripe density matching design */
+
+  /* Solid white borders framing the tape edges sharply */
+  border-top: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.55),
+    0 2px 8px rgba(255, 255, 255, 0.08);
+
+  opacity: 0.98;
+  will-change: transform;
+}
+
+/* ── Seamless Animation ──────────────────────────────────────── */
+/* Match animation distance exactly to background-size */
+
+@keyframes tapeScrollLeftDesktop {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+  }
+}
+
+@keyframes tapeScrollRightDesktop {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(30px);
+  }
+}
+
+@keyframes tapeScrollLeftMobile {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes tapeScrollRightMobile {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(20px);
+  }
+}
+
+.tape-top {
+  animation: tapeScrollLeftDesktop 1.3s linear infinite;
+}
+
+.tape-bottom {
+  animation: tapeScrollRightDesktop 1.3s linear infinite;
+}
+
+/* ── Mobile & Tablet ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .caution-tapes-wrapper {
+    height: 240px;
+    bottom: -60px;
+  }
+
+  .tape-track {
+    left: -20%;
+    width: 140%;
+  }
+
+  .tape-track-top {
+    bottom: 145px;
+    transform: rotate(-6deg);
+    z-index: 2; /* Ascending tape on top */
+  }
+
+  .tape-track-bottom {
+    bottom: 110px;
+    transform: rotate(6deg);
+    z-index: 1; /* Descending tape underneath */
+  }
+
+  .caution-tape {
+    height: 18px; /* Slimmer on mobile */
+    background-size: 20px 20px;
+    width: 220%;
+    left: -60%;
+  }
+
+  .tape-top {
+    animation: tapeScrollLeftMobile 1.3s linear infinite;
+  }
+
+  .tape-bottom {
+    animation: tapeScrollRightMobile 1.3s linear infinite;
+  }
+}

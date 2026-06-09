@@ -1,0 +1,232 @@
+.projects-section {
+  width: 100%;
+  background-color: var(--black);
+  color: var(--white);
+  padding: 100px 24px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.projects-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.projects-section-header {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.projects-section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+/* Vertical stack for MY WORK */
+.projects-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-top: 30px;
+}
+
+.project-panel-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--grey);
+  border-radius: 0;
+  display: flex;
+  flex-direction: row;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  min-height: 380px;
+}
+
+.project-panel-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.project-panel-left {
+  flex: 1.1;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  justify-content: center;
+}
+
+.project-panel-right {
+  flex: 0.9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 24px 48px 24px 0;
+}
+
+.project-visual-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-mockup-img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease;
+}
+
+.project-panel-card:hover .project-mockup-img {
+  transform: scale(1.02);
+}
+
+/* 2-Column Grid for SOME MORE OF MY WORK */
+.secondary-work-header {
+  margin-top: 90px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.secondary-section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.project-card-secondary {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--grey);
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.project-card-secondary:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Project Info details */
+.project-info {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  flex-grow: 1;
+}
+
+.project-category {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 8px;
+}
+
+.project-title {
+  font-family: var(--font-body);
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}
+
+.project-description {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0 0 28px 0;
+  font-weight: 400;
+  flex-grow: 1;
+}
+
+.project-link-btn {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.project-link-btn:hover {
+  opacity: 0.8;
+}
+
+.project-link-btn .arrow {
+  transition: transform 0.3s ease;
+}
+
+.project-link-btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ── Responsive adjustments ─────────────────────────────── */
+@media (max-width: 992px) {
+  .project-panel-card {
+    flex-direction: column;
+  }
+  
+  .project-panel-right {
+    padding: 24px;
+  }
+
+  .project-mockup-img {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .project-panel-left {
+    padding: 32px;
+  }
+
+  .project-info {
+    padding: 32px;
+  }
+}
