@@ -81,7 +81,7 @@ export default function ChainOverlay({ onRevealComplete }) {
     nodesRef.current[10].px -= (Math.random() > 0.5 ? 1 : -1) * (2.2 + Math.random() * 2.8);
 
     // If pulled past threshold (425px, i.e., >105px of pull), trigger light activation on release
-    if (maxDragYRef.current > 425 && !isFlyingAway) {
+    if (maxDragYRef.current > 390 && !isFlyingAway) {
       setIsFlyingAway(true);
       playChainReleaseClick();
       setTimeout(() => {
@@ -123,37 +123,38 @@ export default function ChainOverlay({ onRevealComplete }) {
       node.y += vy + 0.35; // gravityY = 0.35
     }
 
-    // Drag attraction on bottom Node (Node 10)
+    // Drag behavior on bottom Node (Node 10)
     if (isDragging) {
       const tx = dragX.get();
       const ty = dragY.get();
-      const k_drag = 0.20; // strong spring pull towards cursor
-      nodes[10].x += (tx - nodes[10].x) * k_drag;
-      nodes[10].y += (ty - nodes[10].y) * k_drag;
+      // Lock bottom node directly to the drag proxy position to prevent lag
+      nodes[10].x = tx;
+      nodes[10].y = ty;
       
       // Record max drag Y
       maxDragYRef.current = Math.max(maxDragYRef.current, nodes[10].y);
     } else {
-      // Subtle magnetic cursor assist when NOT dragging (within 120px)
+      // Stable magnetic cursor assist when NOT dragging (within 150px of resting position)
       if (mouseActiveRef.current) {
         const relMouseX = mousePosRef.current.x - window.innerWidth / 2;
         const relMouseY = mousePosRef.current.y;
 
-        const dx = relMouseX - nodes[10].x;
-        const dy = relMouseY - nodes[10].y;
-        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        // Calculate vector from resting position (0, 320) to mouse
+        const rx = relMouseX - 0;
+        const ry = relMouseY - 320;
+        const rDist = Math.sqrt(rx * rx + ry * ry) || 1;
 
-        if (dist < 120) {
-          const force = (120 - dist) / 120; // 0 (at 120px) to 1 (at 0px)
-          const targetOffsetDist = force * 16; // cap deflection at 16px max for high subtlety
-          const angle = Math.atan2(dy, dx);
+        if (rDist < 150) {
+          const force = (150 - rDist) / 150; // 0 to 1
+          const maxDeflection = 24; // cap deflection at 24px max for subtlety
+          const targetX = (rx / rDist) * force * maxDeflection;
           
-          const tx = nodes[10].x + Math.cos(angle) * targetOffsetDist;
-          const ty = nodes[10].y + Math.sin(angle) * targetOffsetDist;
-          
-          const k_attract = 0.07; // smooth spring attraction
-          nodes[10].x += (tx - nodes[10].x) * k_attract;
-          nodes[10].y += (ty - nodes[10].y) * k_attract;
+          const targetY = 320 + (ry / rDist) * force * maxDeflection;
+
+          // Smooth interpolation for heavy feel
+          const k_attract = 0.08;
+          nodes[10].x += (targetX - nodes[10].x) * k_attract;
+          nodes[10].y += (targetY - nodes[10].y) * k_attract;
         }
       }
 
@@ -169,6 +170,12 @@ export default function ChainOverlay({ onRevealComplete }) {
       nodes[0].x = 0;
       nodes[0].y = 0;
 
+      // Node 10 is fixed at the drag position when dragging
+      if (isDragging) {
+        nodes[10].x = dragX.get();
+        nodes[10].y = dragY.get();
+      }
+
       for (let j = 0; j < numNodes - 1; j++) {
         const A = nodes[j];
         const B = nodes[j + 1];
@@ -178,7 +185,7 @@ export default function ChainOverlay({ onRevealComplete }) {
 
         const rest = 32;
         const diff = rest - dist;
-        const stiffness = isDragging ? 0.78 : 0.98;
+        const stiffness = isDragging ? 0.95 : 0.995;
         const percent = (diff / dist) * 0.5 * stiffness;
         const ox = dx * percent;
         const oy = dy * percent;
@@ -187,6 +194,10 @@ export default function ChainOverlay({ onRevealComplete }) {
           // Node 0 is fixed, only Node 1 moves
           B.x += ox * 2;
           B.y += oy * 2;
+        } else if (j === numNodes - 2 && isDragging) {
+          // Node 10 is fixed when dragging, only Node 9 moves
+          A.x -= ox * 2;
+          A.y -= oy * 2;
         } else {
           A.x -= ox;
           A.y -= oy;
@@ -251,7 +262,7 @@ export default function ChainOverlay({ onRevealComplete }) {
   });
 
   // Keep text vertically aligned with the middle of the bulb
-  const labelY = useTransform(lobeY, (yVal) => yVal + 12);
+  const labelY = useTransform(lobeY, (yVal) => yVal + 33);
 
   // Fly away animation configs
   const flyAwayVariants = {
@@ -294,12 +305,10 @@ export default function ChainOverlay({ onRevealComplete }) {
         <motion.div
           style={{
             position: 'absolute',
-            left: '50%',
+            left: 'calc(50% - 19px)',
             top: 0,
             x: lobeX,
             y: lobeY,
-            translateX: '-50%',
-            translateY: 0,
             pointerEvents: 'none',
             zIndex: 9
           }}
@@ -312,10 +321,10 @@ export default function ChainOverlay({ onRevealComplete }) {
         <motion.div
           drag
           dragConstraints={{
-            top: 320,
-            bottom: 440,
-            left: -80,
-            right: 80
+            top: 300,
+            bottom: 550,
+            left: -180,
+            right: 180
           }}
           dragElastic={0.15}
           dragMomentum={false}
@@ -323,12 +332,10 @@ export default function ChainOverlay({ onRevealComplete }) {
           onDragEnd={onDragEnd}
           style={{
             position: 'absolute',
-            left: '50%',
-            top: 0,
+            left: 'calc(50% - 90px)',
+            top: -45,
             x: dragX,
             y: dragY,
-            translateX: '-50%',
-            translateY: 0,
             width: 180,
             height: 180,
             cursor: isDragging ? 'grabbing' : 'grab',
@@ -347,7 +354,6 @@ export default function ChainOverlay({ onRevealComplete }) {
             top: 0,
             x: lobeX,
             y: labelY,
-            translateY: '-50%',
             zIndex: 6,
             pointerEvents: 'none'
           }}
