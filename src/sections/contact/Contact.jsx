@@ -11,18 +11,35 @@ export default function Contact() {
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleTransmit = (e) => {
+  const handleTransmit = async (e) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.message) return;
 
     setStatus('transmitting');
-    
-    // Simulate tactical uplink transit
-    setTimeout(() => {
-      setStatus('success');
-      setFormState({ name: '', email: '', message: '' });
+
+    try {
+      const formData = new FormData(e.target);
+      formData.append("access_key", "9b094f12-e977-4b64-888b-eb0aeb3d8e1d");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setStatus('success');
+        setFormState({ name: '', email: '', message: '' });
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 5000);
+      }
+    } catch (err) {
+      console.error("Web3Forms transmission failed", err);
+      setStatus('error');
       setTimeout(() => setStatus('idle'), 5000);
-    }, 2000);
+    }
   };
 
   const contacts = [

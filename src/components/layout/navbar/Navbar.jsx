@@ -40,7 +40,6 @@ export default function Navbar() {
   const navItems = [
     { id: 'home', label: 'Home' },
     { id: 'projects', label: 'Project' },
-    { id: 'contact', label: 'Contact' },
     { id: 'about', label: 'About' }
   ];
 

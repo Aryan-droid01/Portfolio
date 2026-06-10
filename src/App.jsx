@@ -54,6 +54,9 @@ export default function App() {
 
       {showFlicker && <FlickerLayer />}
 
+      {/* Render Navbar fixed relative to viewport outside of transformed container */}
+      {siteVisible && !currentCaseStudy && <Navbar />}
+
       {/* Main website wrapper (revealed when pulled) */}
       <motion.div 
         className="app-wrapper"
@@ -73,15 +76,12 @@ export default function App() {
             images={projectImages}
           />
         ) : (
-          <>
-            <Navbar />
-            <main>
-              <Hero isRevealed={siteVisible} />
-              <Projects onViewCaseStudy={setCurrentCaseStudy} />
-              <About />
-              <Contact />
-            </main>
-          </>
+          <main>
+            <Hero isRevealed={siteVisible} />
+            <Projects onViewCaseStudy={setCurrentCaseStudy} />
+            <About />
+            <Contact />
+          </main>
         )}
       </motion.div>
     </>

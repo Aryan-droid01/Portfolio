@@ -52,6 +52,40 @@ const CASE_STUDIES_DATA = {
       { label: 'Logistics Costs', value: '20% Lower' },
       { label: 'Price Transparency', value: '99% Accuracy' }
     ],
+    nextId: 'posts-brand',
+    nextTitle: 'Posts And Brand Identity'
+  },
+  'posts-brand': {
+    title: 'Posts And Brand Identity',
+    category: 'UX Research,Branding + UX/UI Designing',
+    role: 'Lead Brand Designer',
+    timeline: '6 Weeks (2025)',
+    deliverables: 'Brand Style Guide, Marketing Collaterals, Social Templates',
+    platform: 'Print & Digital Social Media',
+    problem: 'The brand faced fragmented marketing assets across channels, causing inconsistent brand awareness and low user engagement.',
+    solution: 'Designed a cohesive posts layout and visual brand identity framework, establishing consistent grids, typography, and color schemes for all public-facing assets.',
+    metrics: [
+      { label: 'Brand Consistency', value: '100% Score' },
+      { label: 'Social Engagement', value: '+50% Growth' },
+      { label: 'Asset Design Speed', value: '3x Faster' }
+    ],
+    nextId: 'illustrations',
+    nextTitle: 'Illustrations'
+  },
+  'illustrations': {
+    title: 'Illustrations',
+    category: 'UX Research,Branding + UX/UI Designing',
+    role: 'Digital Illustrator',
+    timeline: '4 Weeks (2025)',
+    deliverables: 'Vector Art, Hero Assets, Custom Icons',
+    platform: 'Web & Mobile',
+    problem: 'Generic stock illustrations failed to communicate the unique product value and failed to align with our high-tech cyberpunk branding.',
+    solution: 'Created a custom vector and glitch-art illustration system tailored to the brand aesthetic, featuring mechanical components, wireframes, and vibrant cyber hues.',
+    metrics: [
+      { label: 'Visual Uniqueness', value: 'High Score' },
+      { label: 'Conversion Rate', value: '+18% Lift' },
+      { label: 'UI Cohesiveness', value: 'Perfect Fit' }
+    ],
     nextId: 'chayan-karo',
     nextTitle: 'Chayan Karo'
   }
