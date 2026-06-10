@@ -1,359 +1,482 @@
-.hero-section {
-  position: relative;
-  width: 100%;
-  height: 680px; /* Controlled height of the hero section */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0 24px 0 24px;
-  box-sizing: border-box;
-  overflow: visible; /* Ensure caution tapes overflow visible */
-  background-color: var(--black);
+.hero-section{
+    position:relative;
+    width:100%;
+    min-height:100vh;
+    background:#070707;
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+
+    padding-top:170px;
 }
 
-/* Semicircle behind content
-   The tapes (z-index 10) sit on top of this element (z-index 1).
-   `bottom: 55px` lets the tapes overlap the flat base of the arc
-   while the curved top remains fully visible above them. */
-.hero-background-circle {
-  position: absolute;
-  top: -250px; /* Top begins near the navbar */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1300px;
-  height: 1300px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.025); /* Subtle dark framing circle */
-  z-index: 1; /* Lowest layer (Circle) */
-  pointer-events: none;
+.hero-semicircle{
+    position:absolute;
+
+    width:1109px;
+    height:719px;
+
+    left:50%;
+    top:90px;
+
+    transform:translateX(-50%);
+
+    pointer-events:none;
+
+    z-index:0;
+
+    opacity:0;
 }
 
-.hero-container {
-  width: 100%;
-  max-width: 900px;
-  margin: 100px auto 0 auto; /* Moved downward but compact */
-  z-index: 2; /* Middle layer (Hero content) */
-  position: relative;
+.hero-section.revealed .hero-semicircle {
+    animation:semicircleFadeIn 1.5s ease-out forwards;
+    animation-delay:1.5s;
 }
 
-.hero-centered-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0; /* Control spacing individually for pixel-perfection */
+@keyframes semicircleFadeIn {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:var(--semicircle-opacity, 1);
+    }
+}
+/* ---------------- CONTAINER ---------------- */
+
+.hero-container{
+    width:100%;
+    max-width:1200px;
+
+    position:relative;
+    z-index:5;
+
+    display:flex;
+    justify-content:center;
 }
 
-/* Hello, I am - moved closer to name, weight 300, clamp size */
-.hero-intro-text {
-  font-family: var(--font-body);
-  font-size: clamp(1.8rem, 2.5vw, 2.6rem);
-  font-weight: 300;
-  color: var(--white);
-  letter-spacing: 0;
-  margin-bottom: 8px; /* Compact */
+.hero-centered-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+
+    gap:0;
+
+    position:relative;
+    z-index:20;
 }
 
-/* ARYAN VERMA Box - thin figma border, blue handles, subtle glow */
-.hero-name-box.figma-select {
-  position: relative;
-  padding: 10px 24px; /* Snug padding to reduce width/height and empty space */
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 8px rgba(78, 161, 255, 0.1);
-  background-color: rgba(7, 7, 7, 0.85);
-  display: inline-block;
-  z-index: 1; /* Lowest stacking context for name header */
-  margin-bottom: 24px; /* Compact */
+.hero-reveal {
+    opacity:0;
 }
 
-.hero-display-name {
-  font-family: var(--font-heading);
-  font-size: clamp(3rem, 6.5vw, 6.8rem); /* Slightly smaller to fit compact container */
-  font-weight: 500;
-  line-height: 0.95;
-  letter-spacing: 0.02em;
-  color: var(--white);
-  margin: 0;
-  text-transform: uppercase;
-  user-select: none;
+.hero-section.revealed .hero-reveal {
+    animation:bulbFlicker 1.5s forwards;
 }
 
-/* Figma selection handles */
-.figma-handle {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background-color: #4EA1FF;
-  border: 1px solid #ffffff;
-  box-sizing: border-box;
-  z-index: 5;
-}
-
-.figma-handle.top-left { top: -4px; left: -4px; }
-.figma-handle.top-right { top: -4px; right: -4px; }
-.figma-handle.bottom-left { bottom: -4px; left: -4px; }
-.figma-handle.bottom-right { bottom: -4px; right: -4px; }
-.figma-handle.mid-left { top: calc(50% - 4px); left: -4px; }
-.figma-handle.mid-right { top: calc(50% - 4px); right: -4px; }
-.figma-handle.top-center { top: -4px; left: calc(50% - 4px); }
-.figma-handle.bottom-center { bottom: -4px; left: calc(50% - 4px); }
-
-.hero-headline-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0; /* Control spacing individually for pixel-perfection */
-  width: 100%;
-  position: relative;
-  z-index: 20; /* High z-index to stay on top of the name box */
-}
-
-/* A Designer Fueled by */
-.hero-accent-lead {
-  font-family: var(--font-body);
-  font-size: clamp(18px, 2.5vw, 22px);
-  font-weight: 500;
-  color: var(--white);
-  letter-spacing: 0.02em;
-  margin-bottom: 12px; /* Compact */
-}
-
-/* Rotating word (directly below) */
-.word-rotator-wrapper {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 1.5em;
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px; /* Compact */
-}
-
-.flickering-word {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  text-align: center;
-  width: fit-content;
-  white-space: nowrap; /* Prevent word wrapping */
-  color: #BC0058;
-  font-weight: 500;
-  font-family: Georgia, serif;
-  font-style: italic;
-  font-size: clamp(26px, 4vw, 40px);
-  letter-spacing: 0.04em;
-  text-shadow:
-    0 0 8px rgba(188, 0, 88, 0.7),
-    0 0 24px rgba(188, 0, 88, 0.3);
-  /* Subtle steady pulse – no jarring steps */
-  animation: pinkPulse 2.8s ease-in-out infinite alternate;
-}
-
-@keyframes pinkPulse {
-  0%   { text-shadow: 0 0 8px rgba(232, 0, 106, 0.7), 0 0 24px rgba(232, 0, 106, 0.3); }
-  100% { text-shadow: 0 0 14px rgba(232, 0, 106, 1),  0 0 40px rgba(232, 0, 106, 0.5); }
-}
-
-/* Jack Line - single centered line */
-.hero-spec-motto {
-  font-family: var(--font-body);
-  font-size: clamp(16px, 2vw, 20px);
-  font-weight: 400;
-  color: var(--white);
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  margin-bottom: 24px; /* Compact spacing directly to quote */
-}
-
-.hero-spec-motto strong {
-  font-weight: 800;
-  color: var(--white);
-}
-
-/* Quote - placed farther below */
-.hero-quote {
-  font-family: var(--font-body);
-  font-size: clamp(12px, 1.4vw, 14px); /* Small italic text */
-  font-style: italic;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.45); /* Low opacity */
-  border-top: 1px solid rgba(58, 58, 58, 0.3);
-  padding-top: 12px;
-  max-width: 420px;
-  text-align: center; /* Center aligned */
-  margin: 0 auto;
-}
-
-/* Inline card trigger word */
-.inline-card-trigger {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  z-index: 50; /* Set very high to stack trigger text and children above siblings */
-}
-
-.underline-jack {
-  text-decoration: underline;
-  font-weight: 800;
-  color: var(--white);
-  text-decoration-color: var(--white);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-}
-
-/* 3D Hover Card Perspective Popover */
-.hover-card-perspective {
-  position: absolute;
-  bottom: 130%;
-  left: 50%;
-  perspective: 1000px;
-  width: 70px;
-  height: 100px;
-  z-index: 100;
-  pointer-events: auto;
-  transform: translate3d(-50%, 0, 50px);
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.hover-card-perspective:hover {
-  transform: translate3d(-50%, -10px, 120px) scale(2.2);
-  z-index: 150;
-}
-
-.jack-card {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
-  border-radius: 6px;
-}
-
-.card-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-radius: 8px;
-}
-
-/* Card Front */
-.card-front {
-  background: transparent;
-  border: none;
-  padding: 0;
-  transform: rotateY(0deg) translateZ(1px);
-}
-
-.jack-card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  border-radius: 6px;
-}
-
-/* Card Back */
-.card-back {
-  background: radial-gradient(circle at center, #140d11 0%, #070707 100%);
-  border: 1px solid var(--pink);
-  color: var(--white);
-  padding: 4px;
-  transform: rotateY(180deg) translateZ(1px);
-}
-
-.card-back-frame {
-  border: 1px dashed rgba(255, 255, 255, 0.1);
-  width: 100%;
-  height: 100%;
-  padding: 5px 3px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
-  border-radius: 4px;
-}
-
-.back-decor-tag {
-  font-family: var(--font-heading);
-  font-size: 7px;
-  letter-spacing: 0.1em;
-  color: var(--pink);
-  line-height: 1;
-}
-
-.back-skills-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.back-skills-list li {
-  font-family: var(--font-body);
-  font-size: 7px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 2px 4px;
-  border-radius: 2px;
-  line-height: 1;
-}
-
-.back-footer {
-  font-family: var(--font-heading);
-  font-size: 6px;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  line-height: 1;
-}
-
-/* ── Responsive adjustments ─────────────────────────────── */
-@media (max-width: 768px) {
-  .hero-section {
-    height: 520px;
-    padding: 0 16px 0 16px;
+@keyframes bulbFlicker {
+  0% {
+    opacity:0;
+    filter:blur(10px) brightness(0);
   }
-
-  .hero-container {
-    margin-top: 60px;
+  19.9% {
+    opacity:0;
+    filter:blur(10px) brightness(0);
   }
-
-  .hero-semicircle {
-    width: 90vw;
-    height: 350px;
-    top: 45%;
+  20% {
+    opacity:0.75;
+    filter:blur(2px) brightness(1.6);
   }
-
-  .hero-intro-text {
-    margin-bottom: 6px;
+  22% {
+    opacity:0.75;
+    filter:blur(2px) brightness(1.6);
   }
-
-  .hero-name-box.figma-select {
-    margin-bottom: 16px;
-    padding: 8px 16px;
+  22.1% {
+    opacity:0;
+    filter:blur(8px) brightness(0);
   }
-
-  .hero-accent-lead {
-    margin-bottom: 10px;
+  32% {
+    opacity:0;
+    filter:blur(8px) brightness(0);
   }
-
-  .word-rotator-wrapper {
-    margin-bottom: 16px;
+  32.1% {
+    opacity:0.9;
+    filter:blur(1px) brightness(1.4);
   }
-
-  .hero-spec-motto {
-    margin-bottom: 16px;
+  38% {
+    opacity:0.9;
+    filter:blur(1px) brightness(1.4);
   }
+  38.1% {
+    opacity:0.3;
+    filter:blur(4px) brightness(0.5);
+  }
+  52% {
+    opacity:0.3;
+    filter:blur(4px) brightness(0.5);
+  }
+  52.1% {
+    opacity:0.95;
+    filter:blur(0px) brightness(1.5);
+  }
+  56% {
+    opacity:0.95;
+    filter:blur(0px) brightness(1.5);
+  }
+  56.1% {
+    opacity:0.5;
+    filter:blur(2px) brightness(0.7);
+  }
+  66% {
+    opacity:0.5;
+    filter:blur(2px) brightness(0.7);
+  }
+  66.1% {
+    opacity:1;
+    filter:blur(0px) brightness(1);
+  }
+  100% {
+    opacity:1;
+    filter:blur(0px) brightness(1);
+  }
+}
+
+/* ---------------- HELLO I AM ---------------- */
+
+.hero-intro-text{
+    font-family:var(--font-body);
+
+    font-size:48px;
+
+    font-weight:300;
+
+    color:white;
+
+    opacity:.9;
+
+    margin-bottom:14px;
+}
+
+/* ---------------- NAME BOX ---------------- */
+
+.hero-name-box.figma-select{
+    position:relative;
+
+    padding:18px 42px;
+
+    border:1px solid #4EA1FF;
+
+    background:rgba(7,7,7,.85);
+
+    box-shadow:0 0 12px rgba(78,161,255,.15);
+
+    margin-bottom:18px;
+}
+
+/* ---------------- ARYAN VERMA ---------------- */
+
+.hero-display-name{
+    font-family:var(--font-heading);
+
+    font-size: clamp(4.8rem,6vw,6rem);
+
+    line-height:.82;
+
+    letter-spacing:0;
+
+    font-weight:500;
+
+    color:white;
+
+    margin:0;
+
+    text-transform:uppercase;
+}
+
+.hero-cursor {
+    display: inline-block;
+    color: white;
+    margin-left: 2px;
+    font-weight: 300;
+    vertical-align: bottom;
+    line-height: 0.82;
+}
+
+.hero-cursor.blinking {
+    animation: cursorBlink 0.7s step-end infinite;
+}
+
+@keyframes cursorBlink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ---------------- FIGMA HANDLES ---------------- */
+
+.figma-handle{
+    position:absolute;
+
+    width:8px;
+    height:8px;
+
+    background:#4EA1FF;
+
+    border:1px solid white;
+}
+
+.top-left{
+    top:-4px;
+    left:-4px;
+}
+
+.top-right{
+    top:-4px;
+    right:-4px;
+}
+
+.bottom-left{
+    bottom:-4px;
+    left:-4px;
+}
+
+.bottom-right{
+    bottom:-4px;
+    right:-4px;
+}
+
+/* ---------------- HEADLINE ---------------- */
+
+.hero-headline-group{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* ---------------- DESIGNER FUELED BY ---------------- */
+
+.hero-accent-lead{
+    font-family:var(--font-body);
+
+    font-size:40px;
+
+    font-weight:500;
+
+    color:white;
+
+    margin-bottom:2px;
+}
+
+/* ---------------- ROTATING WORD ---------------- */
+
+.word-rotator-wrapper{
+    position:relative;
+
+    width:100%;
+
+    height:52px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    margin-bottom:12px;
+}
+
+.flickering-word{
+    position:absolute;
+
+    white-space:nowrap;
+
+    display:inline-block;
+
+    font-size:40px;
+
+    line-height:1;
+
+    font-weight:400;
+
+    font-style:normal;
+
+    color:#BC0058;
+
+    text-shadow:
+        0 0 10px rgba(232,0,106,.8),
+        0 0 25px rgba(232,0,106,.3);
+}
+
+/* ---------------- JACK LINE ---------------- */
+
+.hero-spec-motto{
+    font-family:var(--font-body);
+
+    font-size:40px;
+
+    color:white;
+
+    margin-bottom:25px;
+}
+
+.hero-spec-motto strong{
+    font-weight:800;
+}
+
+.underline-jack{
+    font-weight:800;
+
+    text-decoration:underline;
+
+    text-decoration-thickness:2px;
+
+    text-underline-offset:5px;
+}
+
+/* ---------------- QUOTE ---------------- */
+
+.hero-quote{
+    font-family:var(--font-body);
+
+    font-size:36px;
+
+    font-style:italic;
+
+    color:#A1A1A1;
+
+    opacity:0;
+
+    max-width:934px;
+
+    margin-bottom:0;
+}
+
+.hero-section.revealed .hero-quote {
+    animation:quoteFadeIn 1.0s ease-out forwards;
+    animation-delay:3s;
+}
+
+@keyframes quoteFadeIn {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:.7;
+    }
+}
+
+/* ---------------- CARD ---------------- */
+
+.inline-card-trigger{
+    position:relative;
+
+    cursor:pointer;
+}
+
+.hover-card-perspective{
+    position:absolute;
+
+    left:50%;
+
+    bottom:130%;
+
+    transform:translateX(-50%);
+
+    width:70px;
+    height:100px;
+
+    perspective:1000px;
+
+    z-index:100;
+}
+
+.jack-card{
+    width:100%;
+    height:100%;
+
+    position:relative;
+
+    transform-style:preserve-3d;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.8);
+}
+
+.card-face{
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    backface-visibility:hidden;
+}
+
+.card-front{
+    background:transparent;
+}
+
+.jack-card-img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+.card-back{
+    transform:rotateY(180deg);
+}
+
+/* ---------------- MOBILE ---------------- */
+
+@media(max-width:768px){
+
+    .hero-section{
+        padding-top:110px;
+    }
+
+    .hero-semicircle{
+        width:95vw;
+
+        top:120px;
+
+        --semicircle-opacity:0.2;
+    }
+
+    .hero-intro-text{
+        font-size:28px;
+    }
+
+    .hero-name-box.figma-select{
+        padding:12px 22px;
+    }
+
+    .hero-display-name{
+        font-size:clamp(4rem,16vw,6rem);
+    }
+
+    .hero-accent-lead{
+        font-size:24px;
+    }
+
+    .word-rotator-wrapper{
+        height:40px;
+    }
+
+    .flickering-word{
+        font-size:24px;
+    }
+
+    .hero-spec-motto{
+        font-size:22px;
+
+        margin-bottom:18px;
+    }
+
+    .hero-quote{
+        font-size:16px;
+
+        max-width:90%;
+    }
 }

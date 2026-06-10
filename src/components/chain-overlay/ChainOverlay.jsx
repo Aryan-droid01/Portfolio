@@ -3,6 +3,12 @@ import { motion, useMotionValue, useTransform, useAnimationFrame } from 'framer-
 import chainSvg from './chain.svg';
 import lobeSvg from './Lobe.svg';
 import './ChainOverlay.css';
+import { 
+  playChainPullStep, 
+  playChainReleaseClick, 
+  playPowerOn, 
+  playChainRattle 
+} from '../../utils/audioManager';
 
 export default function ChainOverlay({ onRevealComplete }) {
   const [isDragging, setIsDragging] = useState(false);
@@ -13,48 +19,30 @@ export default function ChainOverlay({ onRevealComplete }) {
   const mousePosRef = useRef({ x: 0, y: 0 });
   const mouseActiveRef = useRef(false);
 
+  // 11 nodes for high fidelity Verlet rope simulation (10 segments)
+  const nodesRef = useRef([
+    { x: 0, y: 0, px: 0, py: 0 },
+    { x: 0, y: 32, px: 0, py: 32 },
+    { x: 0, y: 64, px: 0, py: 64 },
+    { x: 0, y: 96, px: 0, py: 96 },
+    { x: 0, y: 128, px: 0, py: 128 },
+    { x: 0, y: 160, px: 0, py: 160 },
+    { x: 0, y: 192, px: 0, py: 192 },
+    { x: 0, y: 224, px: 0, py: 224 },
+    { x: 0, y: 256, px: 0, py: 256 },
+    { x: 0, y: 288, px: 0, py: 288 },
+    { x: 0, y: 320, px: 0, py: 320 }
+  ]);
+
   // Lobe horizontal offset from center (0) and vertical offset from top (320)
   const lobeX = useMotionValue(0);
   const lobeY = useMotionValue(320);
 
-  // Clean mechanical click synthesizer using Web Audio API
-  const playClickSound = () => {
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-      const ctx = new AudioContext();
+  // Draggable proxy targets (initially at equilibrium)
+  const dragX = useMotionValue(0);
+  const dragY = useMotionValue(320);
 
-      // Sharp high-frequency mechanical snap
-      const osc1 = ctx.createOscillator();
-      const gain1 = ctx.createGain();
-      osc1.type = 'triangle';
-      osc1.frequency.setValueAtTime(850, ctx.currentTime);
-      osc1.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.04);
-      gain1.gain.setValueAtTime(0.35, ctx.currentTime);
-      gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.04);
-      osc1.connect(gain1);
-      gain1.connect(ctx.destination);
-      osc1.start();
-      osc1.stop(ctx.currentTime + 0.04);
-
-      // Low-frequency resonance drop
-      const osc2 = ctx.createOscillator();
-      const gain2 = ctx.createGain();
-      osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(220, ctx.currentTime + 0.01);
-      osc2.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.07);
-      gain2.gain.setValueAtTime(0.25, ctx.currentTime + 0.01);
-      gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.07);
-      osc2.connect(gain2);
-      gain2.connect(ctx.destination);
-      osc2.start(ctx.currentTime + 0.01);
-      osc2.stop(ctx.currentTime + 0.07);
-    } catch (e) {
-      console.warn('Audio click context block:', e);
-    }
-  };
-
-  // Track mouse coordinates for the magnetic attraction
+  // Track mouse coordinates for the magnetic cursor assist
   useEffect(() => {
     const handleMouseMove = (e) => {
       mousePosRef.current = { x: e.clientX, y: e.clientY };
@@ -64,99 +52,208 @@ export default function ChainOverlay({ onRevealComplete }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Monitor the lobe vertical position to trigger click immediately upon crossing threshold
+  // Track movement to play metal chain link slide step
+  const lastYRef = useRef(320);
   useEffect(() => {
     const unsubscribe = lobeY.on('change', (latestY) => {
-      if (latestY > 470 && !isFlyingAway) {
-        setIsFlyingAway(true);
-        playClickSound();
+      const diff = Math.abs(latestY - lastYRef.current);
+      if (diff > 10) {
+        playChainPullStep();
+        lastYRef.current = latestY;
       }
     });
     return () => unsubscribe();
-  }, [isFlyingAway]);
+  }, []);
 
-  // Frame loop for idle sway, cursor magnetic attraction, and SVG rendering
+  const maxDragYRef = useRef(320);
+
+  const onDragStart = () => {
+    setIsDragging(true);
+    maxDragYRef.current = nodesRef.current[10].y;
+    dragX.set(nodesRef.current[10].x);
+    dragY.set(nodesRef.current[10].y);
+  };
+
+  const onDragEnd = () => {
+    setIsDragging(false);
+    
+    // Add a natural lateral velocity kick on release to trigger the pendulum sway
+    nodesRef.current[10].px -= (Math.random() > 0.5 ? 1 : -1) * (2.2 + Math.random() * 2.8);
+
+    // If pulled past threshold (425px, i.e., >105px of pull), trigger light activation on release
+    if (maxDragYRef.current > 425 && !isFlyingAway) {
+      setIsFlyingAway(true);
+      playChainReleaseClick();
+      setTimeout(() => {
+        playPowerOn();
+      }, 100);
+    } else {
+      dragX.set(nodesRef.current[10].x);
+      dragY.set(nodesRef.current[10].y);
+    }
+  };
+
+  // Frame loop for physics simulation and SVG rendering
   useAnimationFrame((time) => {
     if (isFlyingAway) return;
 
     timeRef.current += 1;
 
-    // Calculate heavy sway and soft attraction if not dragging
-    if (!isDragging) {
-      // Extremely subtle sway (maximum ±4 degrees equivalent amplitude)
-      const swayX = Math.sin(timeRef.current * 0.01) * 4;
-      const swayY = 320 + Math.cos(timeRef.current * 0.018) * 1.2;
+    const nodes = nodesRef.current;
+    const numNodes = nodes.length;
 
-      let targetX = swayX;
-      let targetY = swayY;
+    // Apply gravity and Verlet integration
+    const damping = isDragging ? 0.84 : 0.991;
+    // Slow, organic wind breeze sway on X (amplitude is tiny, 2-3 degrees max)
+    const wind = Math.sin(timeRef.current * 0.011) * 0.013;
 
+    for (let j = 1; j < numNodes; j++) {
+      const node = nodes[j];
+      const tempX = node.x;
+      const tempY = node.y;
+
+      // Calculate velocity
+      const vx = (node.x - node.px) * damping;
+      const vy = (node.y - node.py) * damping;
+
+      node.px = tempX;
+      node.py = tempY;
+
+      node.x += vx + wind;
+      node.y += vy + 0.35; // gravityY = 0.35
+    }
+
+    // Drag attraction on bottom Node (Node 10)
+    if (isDragging) {
+      const tx = dragX.get();
+      const ty = dragY.get();
+      const k_drag = 0.20; // strong spring pull towards cursor
+      nodes[10].x += (tx - nodes[10].x) * k_drag;
+      nodes[10].y += (ty - nodes[10].y) * k_drag;
+      
+      // Record max drag Y
+      maxDragYRef.current = Math.max(maxDragYRef.current, nodes[10].y);
+    } else {
+      // Subtle magnetic cursor assist when NOT dragging (within 120px)
       if (mouseActiveRef.current) {
         const relMouseX = mousePosRef.current.x - window.innerWidth / 2;
         const relMouseY = mousePosRef.current.y;
-        
-        const dx = relMouseX - lobeX.get();
-        const dy = relMouseY - lobeY.get();
-        const dist = Math.sqrt(dx * dx + dy * dy);
 
-        // Soft magnetic attraction if within 80px
-        if (dist < 80) {
-          const force = (80 - dist) / 80;
-          targetX = swayX + dx * force * 0.45;
-          targetY = swayY + dy * force * 0.45;
+        const dx = relMouseX - nodes[10].x;
+        const dy = relMouseY - nodes[10].y;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+        if (dist < 120) {
+          const force = (120 - dist) / 120; // 0 (at 120px) to 1 (at 0px)
+          const targetOffsetDist = force * 16; // cap deflection at 16px max for high subtlety
+          const angle = Math.atan2(dy, dx);
+          
+          const tx = nodes[10].x + Math.cos(angle) * targetOffsetDist;
+          const ty = nodes[10].y + Math.sin(angle) * targetOffsetDist;
+          
+          const k_attract = 0.07; // smooth spring attraction
+          nodes[10].x += (tx - nodes[10].x) * k_attract;
+          nodes[10].y += (ty - nodes[10].y) * k_attract;
         }
       }
 
-      // Smooth interpolation for heavy feel
-      const curX = lobeX.get();
-      const curY = lobeY.get();
-      lobeX.set(curX + (targetX - curX) * 0.07);
-      lobeY.set(curY + (targetY - curY) * 0.07);
+      // Continuously sync the draggable proxy with the physics node while idle/swinging
+      // This ensures the invisible hitbox is always perfectly centered over the visual knob!
+      dragX.set(nodes[10].x);
+      dragY.set(nodes[10].y);
     }
 
-    // Direct DOM manipulation of chain segments in SVG for peak performance
+    // Constraints solver: 18 iterations for high stiffness/rigidity (avoids rubber stretching)
+    for (let iter = 0; iter < 18; iter++) {
+      // Node 0 is fixed at top center (0, 0)
+      nodes[0].x = 0;
+      nodes[0].y = 0;
+
+      for (let j = 0; j < numNodes - 1; j++) {
+        const A = nodes[j];
+        const B = nodes[j + 1];
+        const dx = B.x - A.x;
+        const dy = B.y - A.y;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+        const rest = 32;
+        const diff = rest - dist;
+        const stiffness = isDragging ? 0.78 : 0.98;
+        const percent = (diff / dist) * 0.5 * stiffness;
+        const ox = dx * percent;
+        const oy = dy * percent;
+
+        if (j === 0) {
+          // Node 0 is fixed, only Node 1 moves
+          B.x += ox * 2;
+          B.y += oy * 2;
+        } else {
+          A.x -= ox;
+          A.y -= oy;
+          B.x += ox;
+          B.y += oy;
+        }
+      }
+    }
+
+    // Enforce limits to prevent out of bounds
+    if (nodes[10].y < 150) {
+      nodes[10].y = 150;
+      nodes[10].py = 150;
+    }
+
+    // Subtle rattle sound during pendulum swing oscillation
+    if (!isDragging && !isFlyingAway) {
+      const vx = nodes[10].x - nodes[10].px;
+      const vy = nodes[10].y - nodes[10].py;
+      const speed = Math.sqrt(vx * vx + vy * vy);
+      if (speed > 0.15 && Math.random() < speed * 0.35) {
+        playChainRattle(Math.min(1.0, speed * 0.3));
+      }
+    }
+
+    // Update MotionValues for DOM rendering
+    lobeX.set(nodes[10].x);
+    lobeY.set(nodes[10].y);
+
+    // Update chain SVG rendering using Verlet nodes (30 larger beads total)
     if (chainGroupRef.current) {
       const children = chainGroupRef.current.children;
       const startX = window.innerWidth / 2;
-      const startY = 0;
-      const endX = startX + lobeX.get();
-      const endY = lobeY.get();
+      const totalLinks = children.length; // 30
+      const linksPerSegment = totalLinks / (numNodes - 1); // 3 beads per segment
 
-      const dx = endX - startX;
-      const dy = endY - startY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      let linkIdx = 0;
+      for (let j = 0; j < numNodes - 1; j++) {
+        const A = nodes[j];
+        const B = nodes[j + 1];
 
-      // Chain sag gets tighter (approaching straight line) as it stretches
-      const sag = Math.max(0, 15 - (dist - 300) * 0.1);
-      const swayVal = Math.sin(timeRef.current * 0.01) * 3;
-      const ctrlX = (startX + endX) / 2 + (isDragging ? 0 : swayVal);
-      const ctrlY = endY / 2 + (isDragging ? 0 : sag);
+        const dx = B.x - A.x;
+        const dy = B.y - A.y;
+        const segAngle = (Math.atan2(dy, dx) * 180) / Math.PI - 90;
 
-      const n = children.length;
-      for (let i = 0; i < n; i++) {
-        const t = i / n;
+        for (let k = 0; k < linksPerSegment; k++) {
+          if (linkIdx >= totalLinks) break;
 
-        // Quadratic Bezier coordinates
-        const lx = (1 - t) ** 2 * startX + 2 * (1 - t) * t * ctrlX + t ** 2 * endX;
-        const ly = (1 - t) ** 2 * startY + 2 * (1 - t) * t * ctrlY + t ** 2 * endY;
+          const t = k / linksPerSegment;
+          const lx = startX + A.x + t * dx;
+          const ly = A.y + t * dy;
 
-        // Curve tangent vector
-        const tdx = 2 * (1 - t) * (ctrlX - startX) + 2 * t * (endX - ctrlX);
-        const tdy = 2 * (1 - t) * (ctrlY - startY) + 2 * t * (endY - ctrlY);
-        const angle = (Math.atan2(tdy, tdx) * 180) / Math.PI - 90;
+          const img = children[linkIdx];
+          img.setAttribute('x', String(lx - 3.75)); // center the 7.5px wide bead
+          img.setAttribute('y', String(ly - 6.75)); // center the 13.5px tall bead
+          img.setAttribute('transform', `rotate(${segAngle}, ${lx}, ${ly})`);
 
-        const img = children[i];
-        img.setAttribute('x', String(lx - 2)); // Centering offset for bead (width 4)
-        img.setAttribute('y', String(ly - 4.5)); // Centering offset for bead (height 9)
-        img.setAttribute('transform', `rotate(${angle}, ${lx}, ${ly})`);
+          linkIdx++;
+        }
       }
     }
   });
 
-  // Pull label positions offset relative to the lobe position (always stays locked to the lobe)
-  const labelX = useTransform(lobeX, (xVal) => xVal + 30);
-  const labelY = useTransform(lobeY, (yVal) => yVal + 8);
+  // Keep text vertically aligned with the middle of the bulb
+  const labelY = useTransform(lobeY, (yVal) => yVal + 12);
 
-  // Fly away animation configs (unified single object)
+  // Fly away animation configs
   const flyAwayVariants = {
     idle: { y: 0, rotate: 0, opacity: 1 },
     fly: {
@@ -167,8 +264,8 @@ export default function ChainOverlay({ onRevealComplete }) {
     }
   };
 
-  // 55 links for dense beaded chain look (spacing = 7 equivalent density)
-  const linksArray = Array.from({ length: 55 });
+  // 30 larger beads for a realistic, less-dense industrial ball chain
+  const linksArray = Array.from({ length: 30 });
 
   return (
     <div className="chain-overlay-container">
@@ -184,28 +281,17 @@ export default function ChainOverlay({ onRevealComplete }) {
           }
         }}
       >
-        {/* Full-screen SVG for chain link rendering */}
-        <svg className="chain-svg-canvas">
-          <g ref={chainGroupRef}>
+        {/* Full-screen SVG for chain link rendering (pointer-events: none) */}
+        <svg className="chain-svg-canvas" style={{ pointerEvents: 'none' }}>
+          <g ref={chainGroupRef} style={{ pointerEvents: 'none' }}>
             {linksArray.map((_, i) => (
-              <image key={i} href={chainSvg} width="4" height="9" />
+              <image key={i} href={chainSvg} width="7.5" height="13.5" style={{ pointerEvents: 'none' }} />
             ))}
           </g>
         </svg>
 
-        {/* Lobe handle (interactive Framer Motion Draggable) */}
+        {/* Visible Lobe handle rendered using the physics-based lobeX/lobeY (pointer-events: none) */}
         <motion.div
-          drag
-          dragConstraints={{
-            top: 150,
-            bottom: 550,
-            left: -180,
-            right: 180
-          }}
-          dragElastic={0.15}
-          dragMomentum={false}
-          onDragStart={() => setIsDragging(true)}
-          onDragEnd={() => setIsDragging(false)}
           style={{
             position: 'absolute',
             left: '50%',
@@ -214,32 +300,61 @@ export default function ChainOverlay({ onRevealComplete }) {
             y: lobeY,
             translateX: '-50%',
             translateY: 0,
-            cursor: isDragging ? 'grabbing' : 'grab',
-            zIndex: 10
+            pointerEvents: 'none',
+            zIndex: 9
           }}
           className="lobe-handle-box"
         >
-          <img src={lobeSvg} alt="Pull Lobe" className="lobe-graphic" draggable="false" />
+          <img src={lobeSvg} alt="Pull Lobe" className="lobe-graphic" draggable="false" style={{ pointerEvents: 'none' }} />
         </motion.div>
 
-        {/* Pull instruction tag following the lobe precisely */}
+        {/* Generous invisible draggable proxy container (180px width, 180px height) */}
         <motion.div
-          className="pull-label-tag"
+          drag
+          dragConstraints={{
+            top: 320,
+            bottom: 440,
+            left: -80,
+            right: 80
+          }}
+          dragElastic={0.15}
+          dragMomentum={false}
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
           style={{
             position: 'absolute',
             left: '50%',
             top: 0,
-            x: labelX,
-            y: labelY,
-            translateX: 0,
-            translateY: '-50%',
-            zIndex: 6
+            x: dragX,
+            y: dragY,
+            translateX: '-50%',
+            translateY: 0,
+            width: 180,
+            height: 180,
+            cursor: isDragging ? 'grabbing' : 'grab',
+            zIndex: 10,
+            background: 'rgba(0,0,0,0.001)',
+            pointerEvents: 'auto'
           }}
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        {/* Pull instruction tag positioned to the left of the lobe (pointer-events: none) */}
+        <motion.div
+          className="pull-label-tag"
+          style={{
+            position: 'absolute',
+            right: 'calc(50% + 24px)',
+            top: 0,
+            x: lobeX,
+            y: labelY,
+            translateY: '-50%',
+            zIndex: 6,
+            pointerEvents: 'none'
+          }}
+          animate={{ opacity: [0.55, 1, 0.55] }}
+          transition={{ duration: 2.0, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <span className="pull-line-connector"></span>
-          <span className="pull-tag-text">PULL TO REVEAL</span>
+          <span className="pull-tag-text" style={{ pointerEvents: 'none' }}>Pull To Reveal —</span>
         </motion.div>
       </motion.div>
     </div>

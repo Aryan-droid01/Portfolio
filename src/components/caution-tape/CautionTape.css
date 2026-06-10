@@ -1,171 +1,210 @@
-/* ── CautionTape Component ────────────────────────────────────────
-   Design Goal:
-   - Two crossing caution tapes (X-shape)
-   - Full-width coverage without vertical clipping
-   - Distinct, solid white borders on both top/bottom edges
-   - High stripe density (thin white diagonal stripes on black background)
-   - Seamless infinite stripe animation
-   - Desktop + Mobile responsive
- ──────────────────────────────────────────────────────────────── */
-.caution-tapes-wrapper {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible; /* Let the tapes overflow freely */
-  pointer-events: none;
-  z-index: 3; /* Top layer (Warning tapes) */
+/* ===========================
+   CAUTION TAPE
+=========================== */
+
+.caution-tapes-wrapper{
+    position:absolute;
+
+    left:0;
+
+    bottom:80px;
+
+    width:100%;
+
+    height:140px;
+
+    overflow:visible;
+
+    pointer-events:none;
+
+    z-index:15;
+
+    opacity:0;
+    transform:translateY(40px);
 }
 
-/* ── Static Rotation Tracks ──────────────────────────────────── */
-.tape-track {
-  position: absolute;
-  overflow: visible;
+.hero-section.revealed .caution-tapes-wrapper {
+    animation:cautionTapeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay:1.5s;
 }
 
-/* Upper tape (ascending - overlaps on top) */
-.tape-track-top {
-  width: calc(1459px + (100vw - 1440px));
-  height: 63px; /* Exact height from spec */
-  left: -12.84px;
-  top: 590px; /* Positioned lower directly above Projects/MY WORK section */
-  transform: rotate(4.88deg);
-  z-index: 2; /* Upper tape on top */
+@keyframes cautionTapeSlideUp {
+    from {
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to {
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-/* Lower tape (ascending more steeply - crosses center) */
-.tape-track-bottom {
-  width: calc(1459px + (100vw - 1440px));
-  height: 63px; /* Exact height from spec */
-  left: -0.42px;
-  top: 610px; /* Slightly below the top tape, crosses near center */
-  transform: rotate(-3.99deg);
-  z-index: 1; /* Lower tape underneath */
+/* tracks */
+
+.tape-track{
+    position:absolute;
+
+    left:50%;
+
+    top:50%;
+
+    transform-origin:center center;
+
+    overflow:visible;
 }
 
-/* ── Tape Strip ──────────────────────────────────────────────── */
-.caution-tape {
-  position: absolute;
-  left: -50%;
-  width: 200%;
-  height: 100%; /* Fill the track height (63px) */
 
-  /* Thinner white stripes (12px) and larger black gaps (24px) for industrial caution tape */
-  background: repeating-linear-gradient(
-    -45deg,
-    white 0px,
-    white 12px,
-    black 12px,
-    black 36px
-  );
+/* TOP STRIP */
 
-  /* No borders framing to ensure it matches the PDF warning tape cleanly */
-  border-top: none;
-  border-bottom: none;
-  border-radius: 0;
+.tape-track-top{
 
-  box-shadow: none;
-  opacity: 1; /* 100% opacity */
-  will-change: transform;
+    width:1800px;
+
+    height:48px;
+
+    transform:
+        translate(-50%,-50%)
+        rotate(4.88deg);
+
+    z-index:2;
 }
 
-/* ── Seamless Animation ──────────────────────────────────────── */
-/* Match animation distance exactly to the repeating period (36px) of the warning tape gradient */
 
-@keyframes tapeScrollLeftDesktop {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-36px); /* Seamlessly loop over 36px repeating period */
-  }
+/* BOTTOM STRIP */
+
+.tape-track-bottom{
+
+    width:1800px;
+
+    height:48px;
+
+    transform:
+        translate(-50%,-50%)
+        rotate(-3.99deg);
+
+    z-index:1;
 }
 
-@keyframes tapeScrollRightDesktop {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(36px); /* Seamlessly loop over 36px repeating period */
-  }
-}
 
-@keyframes tapeScrollLeftMobile {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-24px); /* Seamlessly loop over 24px repeating period */
-  }
-}
+/* STRIPE */
 
-@keyframes tapeScrollRightMobile {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(24px); /* Seamlessly loop over 24px repeating period */
-  }
-}
+.caution-tape{
 
-.tape-top {
-  animation: tapeScrollLeftDesktop 1.8s linear infinite;
-}
+    position:absolute;
 
-.tape-bottom {
-  animation: tapeScrollRightDesktop 1.8s linear infinite;
-}
+    left:-100%;
 
-/* ── Mobile & Tablet ─────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .caution-tapes-wrapper {
-    height: 100%;
-  }
+    width:300%;
 
-  .tape-track {
-    left: -10%;
-    width: 120%;
-  }
+    height:100%;
 
-  .tape-track-top {
-    left: -10%;
-    width: 120%;
-    top: 75%; /* Lower position on mobile */
-    height: 36px; /* Reduced tape thickness */
-    transform: rotate(4.88deg);
-    z-index: 2;
-  }
+    background:
 
-  .tape-track-bottom {
-    left: -10%;
-    width: 120%;
-    top: 78%; /* Lower position on mobile */
-    height: 36px; /* Reduced tape thickness */
-    transform: rotate(-3.99deg);
-    z-index: 1;
-  }
+    repeating-linear-gradient(
 
-  .caution-tape {
-    height: 100%;
-    background: repeating-linear-gradient(
-      -45deg,
-      white 0px,
-      white 8px,
-      black 8px,
-      black 24px
+        -45deg,
+
+        #fff 0px,
+        #fff 9px,
+
+        #000 9px,
+        #000 18px
+
     );
-    width: 220%;
-    left: -60%;
-    border-top: none;
-    border-bottom: none;
-  }
 
-  .tape-top {
-    animation: tapeScrollLeftMobile 1.8s linear infinite;
-  }
+    border-top:2px solid rgb(0, 0, 0);
 
-  .tape-bottom {
-    animation: tapeScrollRightMobile 1.8s linear infinite;
-  }
+    border-bottom:2px solid rgb(0, 0, 0);
+
+}
+
+
+/* animation */
+
+@keyframes tapeScrollLeft{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        transform:translateX(-18px);
+
+    }
+
+}
+
+
+@keyframes tapeScrollRight{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        transform:translateX(18px);
+
+    }
+
+}
+
+
+.tape-top{
+
+    animation:
+        tapeScrollLeft
+        1.5s
+        linear
+        infinite;
+
+}
+
+
+.tape-bottom{
+
+    animation:
+        tapeScrollRight
+        1.5s
+        linear
+        infinite;
+
+}
+
+
+/* =====================
+ MOBILE
+===================== */
+
+@media(max-width:768px){
+
+    .caution-tapes-wrapper{
+
+        bottom:60px;
+
+        height:100px;
+
+    }
+
+    .tape-track-top{
+
+        width:1400px;
+
+        height:36px;
+
+    }
+
+    .tape-track-bottom{
+
+        width:1400px;
+
+        height:36px;
+
+    }
+
 }

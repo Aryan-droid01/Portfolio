@@ -2,7 +2,7 @@
   width: 100%;
   background-color: var(--black);
   color: var(--white);
-  padding: 100px 24px;
+  padding: 60px 24px 100px 24px; /* Move MY WORK content closer to caution tape */
   box-sizing: border-box;
   display: flex;
   justify-content: center;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Loader from './components/loader/Loader';
 import ChainOverlay from './components/chain-overlay/ChainOverlay';
@@ -9,6 +9,7 @@ import About from './sections/about/About';
 import Projects from './sections/projects/Projects';
 import Contact from './sections/contact/Contact';
 import CaseStudy from './components/case-study/CaseStudy';
+import { preloadAudio } from './utils/audioManager';
 
 // Import project mockup assets
 import chayanKaroImg from './assets/chayan_karo.png';
@@ -21,6 +22,10 @@ export default function App() {
   const [showFlicker, setShowFlicker] = useState(false);
   const [siteVisible, setSiteVisible] = useState(false);
   const [currentCaseStudy, setCurrentCaseStudy] = useState(null);
+
+  useEffect(() => {
+    preloadAudio();
+  }, []);
 
   const projectImages = {
     'chayan-karo': chayanKaroImg,
@@ -71,7 +76,7 @@ export default function App() {
           <>
             <Navbar />
             <main>
-              <Hero />
+              <Hero isRevealed={siteVisible} />
               <Projects onViewCaseStudy={setCurrentCaseStudy} />
               <About />
               <Contact />

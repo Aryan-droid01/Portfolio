@@ -5,7 +5,7 @@
   width: 100vw;
   height: 100vh;
   z-index: 9990;
-  pointer-events: auto; /* Allow dragging lobe */
+  pointer-events: auto;
   overflow: hidden;
   background: radial-gradient(circle at 50% 0%, #0d0d0d 0%, #000000 100%);
 }
@@ -73,15 +73,12 @@
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
-  filter: 
-    drop-shadow(0 0 15px rgba(255, 255, 255, 0.25))
-    drop-shadow(0 0 40px rgba(255, 255, 255, 0.18));
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.15));
 }
 
 .pull-label-tag {
   position: absolute;
   top: 0;
-  left: 0;
   display: flex;
   align-items: center;
   pointer-events: none;

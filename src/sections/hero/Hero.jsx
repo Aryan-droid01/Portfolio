@@ -2,46 +2,102 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Hero.css';
 import CautionTape from '../../components/caution-tape/CautionTape';
-import SemiCircleSvg from './Semi circle.svg';
+import SemiCircleSvg from './semi-circle.svg';
 import JackCardSvg from './Jack Card 1.svg';
+import { playBulbFlickerSound, playTypewriterKey, playQuoteWhoosh } from '../../utils/audioManager';
 
-export default function Hero() {
+export default function Hero({ isRevealed }) {
   const words = ["Designs", "Late Nights", "Ui/Ux", "Binge Watching"];
   const [wordIndex, setWordIndex] = useState(0);
   const [cardActive, setCardActive] = useState(false);
 
-  // Cycle rotating words every 2 seconds
+  const nameText = "ARYAN VERMA";
+  const [typedName, setTypedName] = useState("");
+  const [isTypingFinished, setIsTypingFinished] = useState(false);
+  const [startTyping, setStartTyping] = useState(false);
+
+  // Start typing after bulb flicker finishes (1.5s) and isRevealed is true
   useEffect(() => {
+    if (!isRevealed) return;
+
+    // Play bulb flicker sound immediately when revealed
+    playBulbFlickerSound();
+
+    // Play quote sound after 3 seconds
+    const quoteSoundTimeout = setTimeout(() => {
+      playQuoteWhoosh();
+    }, 3000);
+
+    const startTimeout = setTimeout(() => {
+      setStartTyping(true);
+    }, 1500);
+
+    return () => {
+      clearTimeout(quoteSoundTimeout);
+      clearTimeout(startTimeout);
+    };
+  }, [isRevealed]);
+
+  // Character by character typing effect
+  useEffect(() => {
+    if (!startTyping) return;
+
+    let currentIdx = 0;
+    const interval = setInterval(() => {
+      if (currentIdx <= nameText.length) {
+        setTypedName(nameText.slice(0, currentIdx));
+        
+        // Play click sound for each character
+        if (currentIdx > 0 && currentIdx <= nameText.length) {
+          playTypewriterKey();
+        }
+        currentIdx++;
+      } else {
+        clearInterval(interval);
+        setIsTypingFinished(true);
+      }
+    }, 110); // ~110ms per character
+
+    return () => clearInterval(interval);
+  }, [startTyping]);
+
+  // Cycle rotating words every 2 seconds, but ONLY after typing is finished
+  useEffect(() => {
+    if (!isTypingFinished) return;
+
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % words.length);
     }, 2000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isTypingFinished]);
 
   return (
-    <section id="home" className="hero-section">
-      {/* Giant background circle acting as framing semicircle */}
-      <div className="hero-background-circle"></div>
+    <section id="home" className={`hero-section ${isRevealed ? 'revealed' : ''}`}>
+      {/* Dark background semicircle framing the hero section */}
+      <img
+        src={SemiCircleSvg}
+        className="hero-semicircle"
+        alt="Hero Background Semicircle"
+      />
 
       <div className="hero-container">
-        <div className="hero-centered-content">
+        <div className="hero-centered-content hero-reveal">
           
           {/* Introductory label */}
           <div className="hero-intro-text">Hello, I am</div>
           
           {/* Name Box with Figma selection border & handles */}
           <div className="hero-name-box figma-select">
-            <h1 className="hero-display-name">ARYAN VERMA</h1>
+            <h1 className="hero-display-name">
+              {typedName}
+              <span className={`hero-cursor ${isTypingFinished ? 'blinking' : ''}`}>|</span>
+            </h1>
             
-            {/* 8 Figma-style handles */}
+            {/* 4 corner Figma-style handles */}
             <div className="figma-handle top-left"></div>
-            <div className="figma-handle top-center"></div>
             <div className="figma-handle top-right"></div>
             <div className="figma-handle bottom-left"></div>
-            <div className="figma-handle bottom-center"></div>
             <div className="figma-handle bottom-right"></div>
-            <div className="figma-handle mid-left"></div>
-            <div className="figma-handle mid-right"></div>
           </div>
 
           {/* Headline and rotating word (stacked) */}
@@ -50,28 +106,30 @@ export default function Hero() {
             
             <div className="word-rotator-wrapper">
               <AnimatePresence mode="wait">
-                <motion.span
-                  key={wordIndex}
-                  className="flickering-word"
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
-                >
-                  {words[wordIndex]}
-                </motion.span>
+                {isTypingFinished && (
+                  <motion.span
+                    key={wordIndex}
+                    className="flickering-word"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                  >
+                    {words[wordIndex]}
+                  </motion.span>
+                )}
               </AnimatePresence>
             </div>
 
             <div className="hero-spec-motto">
-              {/* "Jack" triggers the 3D flipping card popup */}
+              {/* "Jack of All Trade" triggers the 3D flipping card popup */}
               <span
                 className="inline-card-trigger"
                 onMouseEnter={() => setCardActive(true)}
                 onMouseLeave={() => setCardActive(false)}
                 onClick={() => setCardActive((p) => !p)}
               >
-                <span className="underline-jack">Jack</span>
+                <span className="underline-jack">Jack of All Trade</span>
 
                 {/* Card popover — always shows FRONT face only */}
                 <AnimatePresence>
@@ -113,7 +171,7 @@ export default function Hero() {
                   )}
                 </AnimatePresence>
               </span>{' '}
-              of All trade Master Of <strong>Some</strong>
+              Master Of <strong>Some</strong>
             </div>
 
             <p className="hero-quote">
