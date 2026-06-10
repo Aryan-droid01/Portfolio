@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Contact.css';
+import CautionTape from '../../components/caution-tape/CautionTape';
 
 export default function Contact() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
@@ -139,6 +140,7 @@ export default function Contact() {
       <div className="footer-copyright">
         @2026 LOREM IPSUM ASSSHEUIOWIBABXBIOE
       </div>
+      <CautionTape />
     </section>
   );
 }

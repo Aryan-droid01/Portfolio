@@ -10,6 +10,7 @@
     align-items:flex-start;
 
     padding-top:170px;
+    padding-bottom:240px;
 }
 
 .hero-semicircle{
@@ -434,6 +435,7 @@
 
     .hero-section{
         padding-top:110px;
+        padding-bottom:180px;
     }
 
     .hero-semicircle{

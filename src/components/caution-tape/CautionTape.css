@@ -18,7 +18,10 @@
     pointer-events:none;
 
     z-index:15;
+}
 
+/* Initially hidden in hero section; animated on reveal */
+.hero-section .caution-tapes-wrapper {
     opacity:0;
     transform:translateY(40px);
 }
@@ -58,7 +61,7 @@
 
 .tape-track-top{
 
-    width:1800px;
+    width:300vw;
 
     height:48px;
 
@@ -74,7 +77,7 @@
 
 .tape-track-bottom{
 
-    width:1800px;
+    width:300vw;
 
     height:48px;
 
@@ -193,7 +196,7 @@
 
     .tape-track-top{
 
-        width:1400px;
+        width:300vw;
 
         height:36px;
 
@@ -201,7 +204,7 @@
 
     .tape-track-bottom{
 
-        width:1400px;
+        width:300vw;
 
         height:36px;
 

@@ -2,7 +2,7 @@
   width: 100%;
   background-color: var(--black);
   color: var(--white);
-  padding: 100px 24px 40px 24px;
+  padding: 100px 24px 240px 24px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -242,16 +242,16 @@
 }
 
 .footer-copyright {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
   width: 100%;
   text-align: center;
   font-family: var(--font-body);
   font-size: 14px;
   color: rgba(255, 255, 255, 0.35);
   letter-spacing: 0.02em;
-  margin-top: 100px;
-  padding-bottom: 20px;
-  position: relative;
-  z-index: 1;
+  z-index: 20;
 }
 
 @keyframes bannerSlideIn {
@@ -267,6 +267,10 @@
 }
 
 @media (max-width: 768px) {
+  .contact-section {
+    padding-bottom: 180px;
+  }
+
   .contact-section::before {
     width: 800px;
     height: 800px;
@@ -274,6 +278,6 @@
   }
 
   .footer-copyright {
-    margin-top: 60px;
+    bottom: 15px;
   }
 }

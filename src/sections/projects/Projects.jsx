@@ -61,25 +61,30 @@ export default function Projects({ onViewCaseStudy }) {
         {/* MY WORK: Large Horizontal stacked panels */}
         <div className="projects-stack">
           {primaryProjects.map((project, idx) => (
-            <div key={idx} className="project-panel-card">
-              {/* Left Column: Details */}
-              <div className="project-panel-left">
-                <span className="project-category">{project.category}</span>
-                <h3 className="project-title">{project.title}</h3>
-                <p className="project-description">{project.description}</p>
-                
-                <button 
-                  onClick={() => onViewCaseStudy(project.id)} 
-                  className="project-link-btn"
-                >
-                  VIEW CASE STUDY <span className="arrow">→</span>
-                </button>
+            <div key={idx} className="project-card-wrapper">
+              <div className="project-card-bg-caution">
+                <CautionTape />
               </div>
+              <div className="project-panel-card">
+                {/* Left Column: Details */}
+                <div className="project-panel-left">
+                  <span className="project-category">{project.category}</span>
+                  <h3 className="project-title">{project.title}</h3>
+                  <p className="project-description">{project.description}</p>
+                  
+                  <button 
+                    onClick={() => onViewCaseStudy(project.id)} 
+                    className="project-link-btn"
+                  >
+                    VIEW CASE STUDY <span className="arrow">→</span>
+                  </button>
+                </div>
 
-              {/* Right Column: Visual Preview (Project Image) */}
-              <div className="project-panel-right">
-                <div className="project-visual-wrapper">
-                  <img src={project.image} alt={project.title} className="project-mockup-img" />
+                {/* Right Column: Visual Preview (Project Image) */}
+                <div className="project-panel-right">
+                  <div className="project-visual-wrapper">
+                    <img src={project.image} alt={project.title} className="project-mockup-img" />
+                  </div>
                 </div>
               </div>
             </div>
