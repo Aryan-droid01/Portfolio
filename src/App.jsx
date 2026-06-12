@@ -9,7 +9,10 @@ import About from './sections/about/About';
 import Projects from './sections/projects/Projects';
 import Contact from './sections/contact/Contact';
 import CaseStudy from './components/case-study/CaseStudy';
+import DotGrid from './components/dot-grid/DotGrid';
+import TargetCursor from './components/target-cursor/TargetCursor';
 import { preloadAudio } from './utils/audioManager';
+
 
 // Import project mockup assets
 import chayanKaroImg from './assets/chayan_karo.png';
@@ -54,8 +57,31 @@ export default function App() {
 
       {showFlicker && <FlickerLayer />}
 
-      {/* Render Navbar fixed relative to viewport outside of transformed container */}
-      {siteVisible && !currentCaseStudy && <Navbar />}
+      {!loading && (
+        <TargetCursor
+          targetSelector="a, button, input, textarea, select, [role='button'], .inline-card-trigger, .project-panel-card, .project-card-secondary, .skill-card-compact, .contact-card-item, .nav-link, .chain-handle"
+          spinDuration={2}
+          hideDefaultCursor={true}
+          parallaxOn={true}
+        />
+      )}
+
+      {/* Dotted Background Grid - Rendered globally at viewport level to bypass containing blocks */}
+      {siteVisible && !currentCaseStudy && (
+        <div className="landing-background">
+          <DotGrid
+            dotSize={3}
+            gap={24}
+            baseColor="#333333"
+            activeColor="#BC0058"
+            proximity={120}
+            shockRadius={250}
+            shockStrength={5}
+            resistance={750}
+            returnDuration={1.5}
+          />
+        </div>
+      )}
 
       {/* Main website wrapper (revealed when pulled) */}
       <motion.div 
@@ -76,12 +102,15 @@ export default function App() {
             images={projectImages}
           />
         ) : (
-          <main>
-            <Hero isRevealed={siteVisible} />
-            <Projects onViewCaseStudy={setCurrentCaseStudy} />
-            <About />
-            <Contact />
-          </main>
+          <>
+            <Navbar />
+            <main style={{ position: 'relative' }}>
+              <Hero isRevealed={siteVisible} />
+              <Projects onViewCaseStudy={setCurrentCaseStudy} />
+              <About />
+              <Contact />
+            </main>
+          </>
         )}
       </motion.div>
     </>

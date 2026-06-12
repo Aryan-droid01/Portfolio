@@ -4,11 +4,11 @@ import './Hero.css';
 import CautionTape from '../../components/caution-tape/CautionTape';
 import SemiCircleSvg from './semi-circle.svg';
 import JackCardSvg from './Jack Card 1.svg';
+import RotatingText from '../../components/rotating-text/RotatingText';
 import { playBulbFlickerSound, playTypewriterKey, playQuoteWhoosh } from '../../utils/audioManager';
 
 export default function Hero({ isRevealed }) {
   const words = ["Designs", "Late Nights", "Ui/Ux", "Binge Watching"];
-  const [wordIndex, setWordIndex] = useState(0);
   const [cardActive, setCardActive] = useState(false);
 
   const nameText = "ARYAN VERMA";
@@ -61,15 +61,7 @@ export default function Hero({ isRevealed }) {
     return () => clearInterval(interval);
   }, [startTyping]);
 
-  // Cycle rotating words every 2 seconds, but ONLY after typing is finished
-  useEffect(() => {
-    if (!isTypingFinished) return;
 
-    const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % words.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, [isTypingFinished]);
 
   return (
     <section id="home" className={`hero-section ${isRevealed ? 'revealed' : ''}`}>
@@ -105,20 +97,20 @@ export default function Hero({ isRevealed }) {
             <div className="hero-accent-lead">A Designer Fueled by</div>
             
             <div className="word-rotator-wrapper">
-              <AnimatePresence mode="wait">
-                {isTypingFinished && (
-                  <motion.span
-                    key={wordIndex}
-                    className="flickering-word"
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
-                  >
-                    {words[wordIndex]}
-                  </motion.span>
-                )}
-              </AnimatePresence>
+              {isTypingFinished && (
+                <RotatingText
+                  texts={words}
+                  mainClassName="flickering-word"
+                  staggerFrom="last"
+                  initial={{ y: "100%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: "-120%", opacity: 0 }}
+                  staggerDuration={0.025}
+                  splitLevelClassName="overflow-hidden"
+                  transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                  rotationInterval={2000}
+                />
+              )}
             </div>
 
             <div className="hero-spec-motto">

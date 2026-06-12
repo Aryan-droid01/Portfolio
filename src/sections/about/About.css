@@ -1,6 +1,6 @@
 .about-section {
   width: 100%;
-  background-color: var(--black);
+  background-color: transparent;
   color: var(--white);
   padding: 100px 24px 240px 24px;
   box-sizing: border-box;

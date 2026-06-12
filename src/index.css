@@ -157,3 +157,24 @@ button {
   width: 1px;
   height: 100%;
 }
+
+/* Fixed background for DotGrid */
+.landing-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Ensure all page sections are transparent to show DotGrid background */
+body .hero-section,
+body .projects-section,
+body .about-section,
+body .contact-section {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
