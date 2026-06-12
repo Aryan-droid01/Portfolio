@@ -1,64 +1,191 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Contact.css';
 
-// Inline Confetti SVGs for pixel-perfect design accuracy
-const ConfettiLeft = () => (
-  <svg className="confetti-left-svg" width="220" height="90" viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Stars */}
-    <path d="M40 30 L43 37 L50 38 L45 43 L46 50 L40 46 L34 50 L35 43 L30 38 L37 37 Z" fill="#FF2D55" />
-    <path d="M120 15 L122 20 L127 21 L123 25 L124 30 L120 27 L116 30 L117 25 L113 21 L118 20 Z" fill="#007AFF" />
-    <path d="M180 55 L182 60 L187 61 L183 65 L184 70 L180 67 L176 70 L177 65 L173 61 L178 60 Z" fill="#FFCC00" />
-    
-    {/* Squiggles */}
-    <path d="M15 65 Q25 55 35 65 T55 65" fill="none" stroke="#4CD964" strokeWidth="3" strokeLinecap="round" />
-    <path d="M85 70 Q95 80 105 70 T125 70" fill="none" stroke="#FF2D55" strokeWidth="3" strokeLinecap="round" />
-    <path d="M140 25 Q150 15 160 25 T180 25" fill="none" stroke="#FFCC00" strokeWidth="3" strokeLinecap="round" />
-    
-    {/* Dots */}
-    <circle cx="20" cy="25" r="5" fill="#4CD964" />
-    <circle cx="70" cy="15" r="4" fill="#FFCC00" />
-    <circle cx="100" cy="40" r="5" fill="#007AFF" />
-    <circle cx="150" cy="60" r="4" fill="#4CD964" />
-    <circle cx="210" cy="35" r="5" fill="#007AFF" />
-    <circle cx="195" cy="15" r="4" fill="#FF2D55" />
-    
-    {/* Dashes */}
-    <line x1="60" y1="45" x2="68" y2="53" stroke="#4CD964" strokeWidth="3" strokeLinecap="round" />
-    <line x1="130" y1="45" x2="138" y2="37" stroke="#FF2D55" strokeWidth="3" strokeLinecap="round" />
-    <line x1="165" y1="45" x2="173" y2="53" stroke="#FFCC00" strokeWidth="3" strokeLinecap="round" />
-  </svg>
-);
 
-const ConfettiRight = () => (
-  <svg className="confetti-right-svg" width="220" height="90" viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Stars */}
-    <path d="M180 30 L183 37 L190 38 L185 43 L186 50 L180 46 L174 50 L175 43 L170 38 L177 37 Z" fill="#FF2D55" />
-    <path d="M100 15 L102 20 L107 21 L103 25 L104 30 L100 27 L96 30 L97 25 L93 21 L98 20 Z" fill="#007AFF" />
-    <path d="M40 55 L42 60 L47 61 L43 65 L44 70 L40 67 L36 70 L37 65 L33 61 L38 60 Z" fill="#FFCC00" />
-    
-    {/* Squiggles */}
-    <path d="M165 65 Q175 55 185 65 T205 65" fill="none" stroke="#4CD964" strokeWidth="3" strokeLinecap="round" />
-    <path d="M95 70 Q105 80 115 70 T135 70" fill="none" stroke="#FF2D55" strokeWidth="3" strokeLinecap="round" />
-    <path d="M50 25 Q60 15 70 25 T90 25" fill="none" stroke="#FFCC00" strokeWidth="3" strokeLinecap="round" />
-    
-    {/* Dots */}
-    <circle cx="200" cy="25" r="5" fill="#4CD964" />
-    <circle cx="150" cy="15" r="4" fill="#FFCC00" />
-    <circle cx="120" cy="40" r="5" fill="#007AFF" />
-    <circle cx="70" cy="60" r="4" fill="#4CD964" />
-    <circle cx="10" cy="35" r="5" fill="#007AFF" />
-    <circle cx="25" cy="15" r="4" fill="#FF2D55" />
-    
-    {/* Dashes */}
-    <line x1="160" y1="45" x2="168" y2="53" stroke="#4CD964" strokeWidth="3" strokeLinecap="round" />
-    <line x1="90" y1="45" x2="98" y2="37" stroke="#FF2D55" strokeWidth="3" strokeLinecap="round" />
-    <line x1="55" y1="45" x2="63" y2="53" stroke="#FFCC00" strokeWidth="3" strokeLinecap="round" />
-  </svg>
-);
+
+const COLORS = ['#FFD400', '#FF3366', '#00D1FF', '#31D158', '#FFFFFF'];
+
+const createParticleSvgHtml = (type, color) => {
+  switch (type) {
+    case 'star':
+      return `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 0 L13 7 L20 8 L15 13 L16 20 L10 16 L4 20 L5 13 L0 8 L7 7 Z" fill="${color}" />
+              </svg>`;
+    case 'dot':
+      return `<svg width="8" height="8" viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="4" cy="4" r="3" fill="${color}" />
+              </svg>`;
+    case 'circle':
+      return `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="6" cy="6" r="4" stroke="${color}" stroke-width="2" />
+              </svg>`;
+    case 'squiggle':
+      return `<svg width="30" height="15" viewBox="0 0 30 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 10 Q7.5 0 15 10 T30 10" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" />
+              </svg>`;
+    case 'stick':
+      return `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="2" y1="2" x2="10" y2="10" stroke="${color}" stroke-width="2.5" stroke-linecap="round" />
+              </svg>`;
+    case 'rect':
+    default:
+      return `<svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg">
+                <rect width="10" height="6" fill="${color}" rx="1" />
+              </svg>`;
+  }
+};
 
 export default function Contact() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('idle'); // idle | transmitting | success | error
+
+  const sectionRef = useRef(null);
+  const containerRef = useRef(null);
+  const isPlayingRef = useRef(false);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (!isPlayingRef.current) {
+              isPlayingRef.current = true;
+              startConfettiShower(entry.boundingClientRect.height);
+            }
+          } else {
+            isPlayingRef.current = false;
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
+
+  const startConfettiShower = (sectionHeight) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.innerHTML = '';
+    container.style.setProperty('--fall-height', `${sectionHeight}px`);
+
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+
+    const SHAPES = ['star', 'dot', 'circle', 'squiggle', 'stick', 'rect'];
+    const emissionDuration = 1200;
+    const spawnInterval = 15;
+    const startTime = Date.now();
+
+    timerRef.current = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      if (elapsed >= emissionDuration) {
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
+        return;
+      }
+
+      const type = SHAPES[Math.floor(Math.random() * SHAPES.length)];
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+
+      const particle = document.createElement('div');
+      particle.className = 'confetti-particle';
+
+      const left = Math.random() * 100;
+      const duration = 3.5 + Math.random() * 2.0; // 3.5s to 5.5s total fall time
+      const delay = Math.random() * 0.3; // 0s to 0.3s
+      
+      // Explosion/Burst and Gravity parameters
+      const burstX = (Math.random() * 160 - 80) + 'px'; // -80px to 80px outward
+      const burstY = (Math.random() * -50 - 30) + 'px'; // -30px to -80px upward climb
+      const driftX = (Math.random() * 240 - 120) + 'px'; // -120px to 120px drift wind
+      const opacityMax = 0.85 + Math.random() * 0.15;
+
+      particle.style.left = `${left}%`;
+      particle.style.animationDuration = `${duration}s`;
+      particle.style.animationDelay = `${delay}s`;
+      particle.style.setProperty('--opacity-max', opacityMax);
+      particle.style.setProperty('--burst-x', burstX);
+      particle.style.setProperty('--burst-y', burstY);
+      particle.style.setProperty('--drift-x', driftX);
+
+      // Sway parameters
+      const swayAmp = (20 + Math.random() * 30) + 'px'; // 20px to 50px amplitude
+      const swayDuration = (1.2 + Math.random() * 1.2) + 's'; // 1.2s to 2.4s oscillation frequency
+      
+      const swayWrapper = document.createElement('div');
+      swayWrapper.className = 'confetti-sway-wrapper';
+      swayWrapper.style.animationDuration = swayDuration;
+      swayWrapper.style.animationDelay = `${delay}s`;
+      swayWrapper.style.setProperty('--sway-amp', swayAmp);
+
+      // Spin and flutter parameters (3D rotations + wobble)
+      const rotAxisX = Math.random().toFixed(2);
+      const rotAxisY = Math.random().toFixed(2);
+      const rotAxisZ = (Math.random() * 0.5).toFixed(2);
+      const rotStart = (Math.random() * 360) + 'deg';
+      const rotDirection = Math.random() > 0.5 ? 1 : -1;
+      const rotMid = (rotDirection * (180 + Math.random() * 540)) + 'deg';
+      const rotEnd = (rotDirection * (360 + Math.random() * 1440)) + 'deg'; // 1 to 5 full turns
+      const rotDuration = (2.0 + Math.random() * 1.5) + 's'; // 2s to 3.5s spin period
+      const flutterY = (Math.random() * 10 - 5) + 'px';
+      const flutterZ = (Math.random() * 14 - 7) + 'px';
+
+      const spinWrapper = document.createElement('div');
+      spinWrapper.className = 'confetti-spin-wrapper';
+      spinWrapper.style.animationDuration = rotDuration;
+      spinWrapper.style.animationDelay = `${delay}s`;
+      spinWrapper.style.setProperty('--rot-axis-x', rotAxisX);
+      spinWrapper.style.setProperty('--rot-axis-y', rotAxisY);
+      spinWrapper.style.setProperty('--rot-axis-z', rotAxisZ);
+      spinWrapper.style.setProperty('--rot-start', rotStart);
+      spinWrapper.style.setProperty('--rot-mid', rotMid);
+      spinWrapper.style.setProperty('--rot-end', rotEnd);
+      spinWrapper.style.setProperty('--flutter-y', flutterY);
+      spinWrapper.style.setProperty('--flutter-z', flutterZ);
+
+      // Scale pulse parameters (avoiding robotic rigid shapes)
+      const scaleBase = (0.4 + Math.random() * 0.6).toFixed(2);
+      const scaleVar = (0.80 + Math.random() * 0.15).toFixed(2);
+      const scaleDuration = (1.0 + Math.random() * 1.0) + 's';
+
+      const scaleWrapper = document.createElement('div');
+      scaleWrapper.className = 'confetti-scale-wrapper';
+      scaleWrapper.style.animationDuration = scaleDuration;
+      scaleWrapper.style.animationDelay = `${delay}s`;
+      scaleWrapper.style.setProperty('--scale-base', scaleBase);
+      scaleWrapper.style.setProperty('--scale-var', scaleVar);
+      scaleWrapper.innerHTML = createParticleSvgHtml(type, color);
+
+      // Nest the DOM hierarchy
+      spinWrapper.appendChild(scaleWrapper);
+      swayWrapper.appendChild(spinWrapper);
+      particle.appendChild(swayWrapper);
+
+      particle.addEventListener('animationend', () => {
+        particle.remove();
+      });
+
+      container.appendChild(particle);
+    }, spawnInterval);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -106,14 +233,13 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="contact-section">
+    <section id="contact" ref={sectionRef} className="contact-section">
+      <div ref={containerRef} className="confetti-system"></div>
       <div className="contact-container">
         {/* Section Header */}
         <div className="contact-section-header">
           <div className="contact-title-wrapper">
-            <ConfettiLeft />
             <h2 className="contact-section-title">CONNECT WITH ME</h2>
-            <ConfettiRight />
           </div>
         </div>
 

@@ -1,547 +1,655 @@
 /* ==========================================================================
-   CASE STUDY MODERN REDESIGN (APPLE × LINEAR STYLE)
+   CASE STUDY — PORTFOLIO LAYOUT
+   Synced exactly to CaseStudy.jsx BEM class names
+   PDF reference: dark bg #0d0d0d, orange headings #e47830,
+   warm hero gradient, ghost section numbers, phone mockup cards
    ========================================================================== */
 
-/* Base Case Study Canvas - Full Screen Glassmorphic Overlay */
-.case-study-page {
+/* ─── Page shell ─────────────────────────────────────────────────────────── */
+
+.cs-page {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
   overflow-y: auto;
-  z-index: 1000;
-  background: rgba(7, 7, 7, 0.86);
-  /* Beautiful dark transparency */
-  backdrop-filter: blur(25px) saturate(120%);
-  -webkit-backdrop-filter: blur(25px) saturate(120%);
-  color: var(--white);
-  box-sizing: border-box;
-  padding-bottom: 0;
   overflow-x: hidden;
-  font-family: var(--font-body);
-  scrollbar-gutter: stable;
+  z-index: 1000;
+  background: #0d0d0d;
+  color: #ffffff;
+  box-sizing: border-box;
   scroll-behavior: smooth;
+  font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 }
 
-.case-study-error {
+.cs-error {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--black);
-  color: var(--white);
-  gap: 20px;
+  background: #0d0d0d;
+  color: #ffffff;
+  gap: 24px;
 }
 
-/* Floating Back Button - Glassmorphic Pillow Button */
-.case-study-close-btn {
-  position: fixed;
-  top: 24px;
-  left: 24px;
-  z-index: 1100;
-  padding: 10px 20px;
-  background: rgba(15, 15, 15, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--white);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 40px;
-  font-family: var(--font-body);
+/* ─── Shared back button ─────────────────────────────────────────────────── */
+
+.cs-back-btn {
+  display: inline-block;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  padding: 0;
+  transition: color 0.25s ease;
+  font-family: inherit;
 }
 
-.case-study-close-btn:hover {
-  background: var(--white);
-  color: var(--black);
-  border-color: var(--white);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+.cs-back-btn:hover {
+  color: #ffffff;
 }
 
-/* Hero Banner radial glow style matching screenshots */
-.case-study-banner {
-  width: 100%;
-  height: 520px;
-  background: radial-gradient(circle at center, #1c1815 0%, #070707 100%);
-  /* warm dark gradient */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.cs-hero {
   position: relative;
-}
-
-.banner-img {
-  height: 90%;
-  width: auto;
-  max-width: 90%;
-  object-fit: contain;
-  opacity: 0.95;
-  filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.7));
-}
-
-/* Container */
-.case-study-content-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 40px 24px 100px 24px;
+  width: 100%;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
-/* Hero text area */
-.case-study-hero-text {
-  text-align: left;
-  margin-bottom: 48px;
+/* Warm amber → deep brown → near-black — matches PDF gradient exactly */
+.cs-hero__banner {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    175deg,
+    #c9a882 0%,
+    #8b4e1f 30%,
+    #2c1005 60%,
+    #0d0d0d 100%
+  );
+  z-index: 0;
 }
 
-.case-study-title {
-  font-family: var(--font-body);
-  font-size: clamp(3.2rem, 6.5vw, 5.5rem);
+/* Phone mockup image — right-aligned, tall, partially cropped at edges */
+.cs-hero__banner-img {
+
+  position:absolute;
+
+  top:-100px;
+
+  right:-120px;
+
+  height:135%;
+
+  width:auto;
+
+  max-width:70%;
+
+  object-fit:contain;
+
+  z-index:1;
+
+  transform:rotate(-10deg);
+
+  animation:heroFloat 8s ease-in-out infinite;
+}
+/* Left-side vignette so text stays readable over the image */
+.cs-hero__banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(13, 13, 13, 0.75) 0%,
+    rgba(13, 13, 13, 0.35) 55%,
+    transparent 100%
+  );
+  z-index: 2;
+}
+
+/* Hero text stack — positioned above everything */
+.cs-hero__content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 44px 80px 64px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* "← BACK TO HOME" sits at the very top */
+.cs-hero__content > .cs-back-btn {
+  align-self: flex-start;
+  margin-bottom: 0;
+}
+
+.cs-hero__title{
+
+    font-size:clamp(70px,9vw,105px);
+
+    line-height:.85;
+
+    letter-spacing:-.07em;
+
+    margin-top:110px;
+
+    font-weight:900;
+}
+
+.cs-hero__tagline {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 20px 0 0;
+  max-width: 720px;
+  font-weight: 400;
+}
+
+/* ── Meta strip (ROLE / DELIVERABLES / TIMELINE / PLATFORM) ── */
+
+.cs-hero__meta {
+  display: flex;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 24px 0;
+  margin-top: 44px;
+}
+
+.cs-meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  padding-right: 20px;
+}
+
+/* Divider between columns */
+.cs-meta-col + .cs-meta-col {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 20px;
+}
+
+.cs-meta-label {
+  font-size: 10px;
   font-weight: 700;
-  color: var(--white);
-  margin: 0 0 24px 0;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+}
+
+.cs-meta-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   SECTION SHELL  (.cs-section)
+   Every content section: #01 Problem → #05 Learnings
+   ========================================================================== */
+
+.cs-section {
+  position: relative;
+ padding:80px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  background: #0d0d0d;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* Scroll-reveal — animates in on load; nth-of-type adds stagger */
+  opacity: 0;
+  transform: translateY(32px);
+  animation: csFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.cs-section:nth-of-type(1) { animation-delay: 0.10s; }
+.cs-section:nth-of-type(2) { animation-delay: 0.20s; }
+.cs-section:nth-of-type(3) { animation-delay: 0.30s; }
+.cs-section:nth-of-type(4) { animation-delay: 0.40s; }
+.cs-section:nth-of-type(5) { animation-delay: 0.50s; }
+
+/* Ghost number — very large, low-opacity, upper-left corner */
+.cs-section__ghost-num{
+
+    top:-15px;
+
+    left:0;
+
+    font-size:320px;
+
+    line-height:.8;
+
+    letter-spacing:-.08em;
+
+    color:white;
+
+    opacity:.025;
+}
+
+/* Content wrapper inside each section */
+.cs-section__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 80px;
+  box-sizing: border-box;
+}
+
+/* Orange section heading — exactly matches PDF colour */
+.cs-section__heading {
+  font-size:46px;
+  font-weight: 900;
+  color:#ff5c9d;
+  margin: 0 0 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
   line-height: 1.05;
 }
 
-.case-study-tagline {
-  font-family: var(--font-body);
-  font-size: 18px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
-  max-width: 900px;
+/* Body copy */
+.cs-section__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.65);
   margin: 0;
+  max-width: 760px;
+  font-weight: 400;
 }
 
-/* Metadata strip - Borderless with top and bottom lines */
-.case-study-meta-table {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  background: transparent;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 40px 0;
-  margin-bottom: 0;
-  box-sizing: border-box;
+/* ==========================================================================
+   #01 PROBLEM — two-column split
+   ========================================================================== */
+
+.cs-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 72px;
+  align-items: center;
 }
 
-.meta-col {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
+.cs-split__left {
+  /* heading + body text live here — no extra styles needed */
 }
 
-.meta-label {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.4);
-  text-transform: uppercase;
-}
-
-.meta-value {
-  font-family: var(--font-body);
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--white);
-}
-
-/* Streamlined Borderless Sections with divider lines */
-.case-study-section {
-  position: relative;
-  padding: 100px 0;
-  min-height: 380px; /* Ensure container is tall enough to prevent bg numbers overlapping */
-  background: transparent;
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  margin-bottom: 0;
-  box-sizing: border-box;
-  overflow: visible;
-}
-
-/* Giant background numbers using a bold sans-serif font matching screenshots */
-.section-bg-num {
-  position: absolute;
-  top: 80px; /* Shifted down to be fully below the horizontal divider line */
-  left: 0;
-  font-family: var(--font-body), sans-serif;
-  font-size: clamp(180px, 23vw, 320px);
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 0.8;
-  color: rgba(255, 255, 255, 0.08);
-  /* Increased for clear visibility */
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  transform: none; /* Kept below horizontal linings */
-}
-
-.section-heading {
-  font-family: var(--font-body), sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: #BC0058;
-  /* warm orange/coral accent */
-  letter-spacing: 0.03em;
-  margin: 0 0 24px 0;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 2;
-}
-
-.section-heading.white-heading {
-  color: var(--white);
-}
-
-.section-text {
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.75;
-  color: rgba(255, 255, 255, 0.75);
-  margin: 0;
-  position: relative;
-  z-index: 2;
-}
-
-/* Split layout (Problem) */
-.section-content-split {
-  display: flex;
-  gap: 60px;
-  width: 100%;
-  align-items: flex-start;
-  position: relative;
-  z-index: 2;
-}
-
-.split-left {
-  flex: 1.25;
-}
-
-.split-right {
-  flex: 0.75;
+.cs-split__right {
   display: flex;
   justify-content: flex-end;
-}
-
-/* Vertical Gray Placeholder Card */
-.video-placeholder-card {
-  width: 100%;
-  max-width: 260px;
-  height: 380px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
 }
 
-.video-placeholder-text {
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.3);
+/* "For Video" placeholder card — matches the rounded-rect in PDF */
+.cs-video-placeholder{
+
+  width:260px;
+
+  height:320px;
+
+  background:#ddd;
+
+  border:none;
+
+  border-radius:12px;
 }
 
-/* Solution mockups row (flat/borderless display) */
-.solution-mockups-row {
-  margin-top: 48px;
-  width: 100%;
+.cs-video-placeholder__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+/* ==========================================================================
+   #02 SOLUTION — four phone mockup cards
+   ========================================================================== */
+
+.cs-mockups-row {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 24px;
-  position: relative;
-  z-index: 2;
+  gap: 18px;
+  margin-top: 52px;
+  width: 100%;
+  align-items: flex-end;
 }
 
-.solution-screenshot-placeholder {
+/* Tall phone-screen ratio cards — matches PDF screenshot panels */
+.cs-mockup-card {
   flex: 1;
-  max-width: 220px;
-  aspect-ratio: 9 / 19.5; /* Vertical phone aspect ratio */
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  aspect-ratio: 9 / 19;
+  background: #161616;
+  border: 1px solid #222222;
+  border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-sizing: border-box;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.solution-screenshot-placeholder:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-6px);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+.cs-mockup-card:hover {
+  transform: translateY(-16px);
 }
 
-.screenshot-placeholder-text {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.25);
+.cs-mockup-card__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.15);
 }
 
-/* System Blueprint styling */
-.blueprint-details-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 60px;
-  margin-top: 48px;
-  width: 100%;
-  position: relative;
-  z-index: 2;
+/* ==========================================================================
+   #03 SYSTEM BLUEPRINT — fonts + colour swatches
+   ========================================================================== */
+
+.cs-blueprint-block {
+  margin-top: 52px;
 }
 
-/* Borderless Blueprint Blocks */
-.blueprint-block {
-  background: transparent;
-  border: none;
-  padding: 0;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  box-shadow: none;
-  box-sizing: border-box;
+.cs-blueprint-block + .cs-blueprint-block {
+  margin-top: 64px;
+  padding-top: 64px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.blueprint-subheading {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.4);
-  margin: 0 0 16px 0;
+/* "FONTS USED" / "COLOUR PALETTE USED" sub-labels */
+.cs-blueprint-block__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0 0 20px;
 }
 
-.font-letters-display {
-  font-family: monospace;
-  font-size: 15px;
-  letter-spacing: 0.15em;
-  line-height: 1.8;
-  color: var(--white);
-  margin-bottom: 24px;
-  word-break: break-all;
+/* Large bold alphabet row */
+.cs-font-alphabet {
+  font-size: clamp(16px, 2.4vw, 28px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  margin: 0 0 28px;
+  word-break: break-word;
+  font-family: -apple-system, 'SF Pro Display', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 }
 
-.font-weights-display {
+/* Bold / Semibold / Regular weight samples */
+.cs-font-weights {
   display: flex;
-  flex-direction: row;
+  gap: 52px;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.cs-font-weight {
+  font-size: 16px;
+  color: #ffffff;
+  font-family: inherit;
+}
+
+.cs-font-weight--bold     { font-weight: 700; }
+.cs-font-weight--semibold { font-weight: 600; }
+.cs-font-weight--regular  { font-weight: 400; color: rgba(255, 255, 255, 0.5); }
+
+/* Colour swatches — circle + hex code below */
+.cs-swatches {
+  display: flex;
   gap: 32px;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
-.font-weight-sample {
-  font-family: var(--font-body);
-  font-size: 14px;
-  color: var(--white);
-}
-
-.font-weight-sample.bold {
-  font-weight: 700;
-}
-
-.font-weight-sample.semibold {
-  font-weight: 600;
-}
-
-.font-weight-sample.regular {
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.65);
-}
-
-/* Color Swatches horizontal row display */
-.color-swatches-row {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.color-swatch-item {
+.cs-swatch {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
 
-.color-circle {
-  width: 64px;
-  height: 64px;
+.cs-swatch__circle {
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.color-hex {
-  font-family: monospace;
+.cs-swatch__hex {
+  font-family: 'SF Mono', 'Fira Mono', 'Courier New', monospace;
   font-size: 11px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-/* Footer & project navigation */
-.case-study-footer {
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.cs-footer {
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0d0d0d;
+  padding: 88px 0;
+  box-sizing: border-box;
+}
+
+.cs-footer__inner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 80px;
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 0;
-  margin-top: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.next-project-btn {
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--white);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 14px 28px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.next-project-btn:hover {
-  background: var(--white);
-  color: var(--black);
-  border-color: var(--white);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08);
-}
-
-.back-home-btn {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.4);
+.cs-footer__next-btn {
+  font-size: clamp(20px, 2.8vw, 34px);
+  font-weight: 900;
+  color: #ffffff;
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: color 0.3s ease;
+  padding: 0;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  font-family: inherit;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.back-home-btn:hover {
-  color: var(--white);
+.cs-footer__next-btn:hover {
+  transform: translateX(10px);
+  color: #e47830;
 }
 
-/* Mobile responsive styles */
+.cs-footer__home-btn {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-family: inherit;
+  transition: color 0.25s ease;
+  padding: 0;
+}
+
+.cs-footer__home-btn:hover {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes csFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFloat{
+
+  0%,100%{
+
+      transform:
+      rotate(-10deg)
+      translateY(0);
+  }
+
+  50%{
+
+      transform:
+      rotate(-10deg)
+      translateY(-16px);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1100px) {
+  .cs-hero__content,
+  .cs-section__inner,
+  .cs-footer__inner {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .cs-section__ghost-num {
+    left: 44px;
+  }
+}
+
 @media (max-width: 768px) {
-  .case-study-close-btn {
-    position: absolute;
-    top: 16px;
-    left: 16px;
+  .cs-hero__content,
+  .cs-section__inner,
+  .cs-footer__inner {
+    padding-left: 24px;
+    padding-right: 24px;
   }
 
-  .case-study-banner {
-    height: 320px;
+  .cs-hero {
+    min-height: 560px;
   }
 
-  .banner-img {
-    height: 85%;
-    max-width: 85%;
+  .cs-hero__banner-img {
+    max-width: 70%;
+    opacity: 0.6;
   }
 
-  .case-study-content-container {
-    padding: 30px 16px 80px 16px;
+  .cs-section__ghost-num {
+    left: 20px;
+    font-size: 90px;
   }
 
-  .case-study-title {
-    font-size: 40px;
+  .cs-section {
+    padding: 72px 0 60px;
   }
 
-  .case-study-meta-table {
-    flex-direction: column;
-    gap: 24px;
-    padding: 30px 0;
-  }
-
-  .meta-col {
-    gap: 4px;
-  }
-
-  .case-study-section {
-    padding: 60px 0;
-  }
-
-  .section-content-split {
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  .split-right {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .video-placeholder-card {
-    max-width: 100%;
-    height: 320px;
-  }
-
-  .blueprint-details-grid {
+  /* Problem: stack vertically */
+  .cs-split {
     grid-template-columns: 1fr;
     gap: 36px;
-    margin-top: 32px;
   }
 
-  .font-weights-display {
-    gap: 20px;
-  }
-
-  .color-swatches-row {
-    gap: 16px;
+  .cs-split__right {
     justify-content: flex-start;
   }
 
-  .solution-mockups-row {
+  .cs-video-placeholder {
+    max-width: 100%;
+  }
+
+  /* Solution mockups: 2-column grid */
+  .cs-mockups-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  /* Meta strip: 2×2 grid */
+  .cs-hero__meta {
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
+    gap: 0;
   }
 
-  .solution-screenshot-placeholder {
-    width: calc(50% - 12px);
-    max-width: 180px;
+  .cs-meta-col {
+    flex: unset;
+    width: 50%;
+    border-left: none !important;
+    padding-left: 0 !important;
+    padding-bottom: 20px;
   }
 
-  .case-study-footer {
+  .cs-meta-col:nth-child(2n) {
+    padding-left: 16px !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .cs-font-weights {
     flex-direction: column;
-    gap: 24px;
-    text-align: center;
-    padding: 48px 0;
+    gap: 12px;
   }
 
-  .section-bg-num {
-    font-size: clamp(130px, 20vw, 190px);
-    top: 50px;
-    left: -10px;
-    transform: none;
+  .cs-footer {
+    padding: 56px 0;
+  }
+
+  .cs-footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
   }
 }
 
 @media (max-width: 480px) {
-  .solution-screenshot-placeholder {
-    width: 90%;
-    max-width: 240px;
-    margin: 0 auto;
+  .cs-hero__title {
+    font-size: 40px;
+  }
+
+  .cs-mockups-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-meta-col {
+    width: 100% !important;
+    padding-left: 0 !important;
+    border-left: none !important;
+  }
+
+  .cs-font-alphabet {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+
+  .cs-swatches {
+    gap: 20px;
+  }
+
+  .cs-swatch__circle {
+    width: 56px;
+    height: 56px;
   }
 }

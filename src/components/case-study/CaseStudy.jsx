@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './CaseStudy.css';
 
-// Structured data for case studies matching the casestudyuidesign.png specifications
+// Structured data for case studies
 const CASE_STUDIES_DATA = {
   'chayan-karo': {
     title: 'Chayan karo',
@@ -12,7 +12,6 @@ const CASE_STUDIES_DATA = {
     deliverables: 'Product Design',
     platform: 'iOS/Android',
 
-    // Section contents matching the design text exactly
     problem: 'Chayan Karo suffered from fragmented design patterns across its various mobile and web touchpoints. Different product teams built UI components in isolation, resulting in a inconsistent user experience, high design debt, and prolonged development cycles. The challenge was to establish a single source of truth—a unified design system—that scales across iOS, Android, and Web platforms.',
     solution: 'We created a centralized, tokens-based design system named "Chayan Karo". By auditing existing UI components, standardizing typographic scales, and defining color variables, we established a consistent components library. This library drastically reduced design-to-development handoff times, unified the brand expression, and provided a cohesive, seamless experience for all end-users.',
     blueprint: 'Built on atomic design principles, the design system utilizes modular design tokens for colors, sizing, and spacing. We implemented a unified typeface scale using SF Pro for digital screens, paired with highly accessible contrast ratios. Every component is fully responsive, supporting interactive states, dark mode, and multi-brand themes.',
@@ -21,10 +20,10 @@ const CASE_STUDIES_DATA = {
 
     fontMain: 'SF PRO',
     colorPalette: [
-      { hex: '#DF763D' },
-      { hex: '#F69051' },
-      { hex: '#F7D6C2' },
-      { hex: '#FFEBE0' }
+      { hex: '#E47830' },
+      { hex: '#FA9441' },
+      { hex: '#FFD9BE' },
+      { hex: '#FFEDE0' }
     ],
     nextId: 'love-cupid',
     nextTitle: 'Love Cupid'
@@ -81,179 +80,232 @@ const CASE_STUDIES_DATA = {
   }
 };
 
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+export function CaseStudyHero({ data, projectImage, onClose }) {
+  return (
+    <section className="cs-hero">
+      {/* Gradient + mockup banner */}
+      <div className="cs-hero__banner">
+        {projectImage && (
+          <img src={projectImage} alt={data.title} className="cs-hero__banner-img" />
+        )}
+        <div className="cs-hero__banner-overlay" />
+      </div>
+
+      {/* Text content sits over the banner */}
+      <div className="cs-hero__content">
+        <button onClick={onClose} className="cs-back-btn" aria-label="Close Case Study">
+          ← BACK TO HOME
+        </button>
+
+        <h1 className="cs-hero__title">{data.title}</h1>
+        <p className="cs-hero__tagline">{data.tagline}</p>
+
+        {/* Meta strip */}
+        <div className="cs-hero__meta">
+          <div className="cs-meta-col">
+            <span className="cs-meta-label">ROLE</span>
+            <span className="cs-meta-value">{data.role}</span>
+          </div>
+          <div className="cs-meta-col">
+            <span className="cs-meta-label">DELIVERABLES</span>
+            <span className="cs-meta-value">{data.deliverables}</span>
+          </div>
+          <div className="cs-meta-col">
+            <span className="cs-meta-label">TIMELINE</span>
+            <span className="cs-meta-value">{data.timeline}</span>
+          </div>
+          <div className="cs-meta-col">
+            <span className="cs-meta-label">PLATFORM</span>
+            <span className="cs-meta-value">{data.platform}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────
+   SECTION WRAPPER — ghost number + content
+───────────────────────────────────────── */
+function SectionShell({ num, modifier, children }) {
+  return (
+    <section className={`cs-section cs-section--${modifier}`}>
+      <span className="cs-section__ghost-num" aria-hidden="true">{num}</span>
+      <div className="cs-section__inner">{children}</div>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────
+   #01 PROBLEM
+───────────────────────────────────────── */
+export function ProblemSection({ problem }) {
+  return (
+    <SectionShell num="#01" modifier="problem">
+      <div className="cs-split">
+        <div className="cs-split__left">
+          <h2 className="cs-section__heading">THE PROBLEM</h2>
+          <p className="cs-section__body">{problem}</p>
+        </div>
+        <div className="cs-split__right">
+          <div className="cs-video-placeholder">
+            <span className="cs-video-placeholder__label">For Video</span>
+          </div>
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+
+/* ─────────────────────────────────────────
+   #02 SOLUTION
+───────────────────────────────────────── */
+export function SolutionSection({ solution }) {
+  return (
+    <SectionShell num="#02" modifier="solution">
+      <h2 className="cs-section__heading">THE SOLUTION</h2>
+      <p className="cs-section__body">{solution}</p>
+
+      <div className="cs-mockups-row">
+        {[1, 2, 3, 4].map(n => (
+          <div key={n} className="cs-mockup-card">
+            <span className="cs-mockup-card__label">Mockup {n}</span>
+          </div>
+        ))}
+      </div>
+    </SectionShell>
+  );
+}
+
+/* ─────────────────────────────────────────
+   #03 SYSTEM BLUEPRINT
+───────────────────────────────────────── */
+export function SystemBlueprintSection({ blueprint, fontMain, colorPalette }) {
+  return (
+    <SectionShell num="#03" modifier="blueprint">
+      <h2 className="cs-section__heading">SYSTEM BLUEPRINT</h2>
+      <p className="cs-section__body">{blueprint}</p>
+
+      {/* Fonts block */}
+      <div className="cs-blueprint-block">
+        <h3 className="cs-blueprint-block__label">FONTS USED</h3>
+        <p className="cs-font-alphabet">
+          A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 1 2 3 4 5 6 7 8 9 0
+        </p>
+        <div className="cs-font-weights">
+          <span className="cs-font-weight cs-font-weight--bold">{fontMain} Bold</span>
+          <span className="cs-font-weight cs-font-weight--semibold">{fontMain} Semibold</span>
+          <span className="cs-font-weight cs-font-weight--regular">{fontMain} Regular</span>
+        </div>
+      </div>
+
+      {/* Colors block */}
+      <div className="cs-blueprint-block">
+        <h3 className="cs-blueprint-block__label">COLOUR PALETTE USED</h3>
+        <div className="cs-swatches">
+          {colorPalette.map((col, i) => (
+            <div key={i} className="cs-swatch">
+              <div
+                className="cs-swatch__circle"
+                style={{ backgroundColor: col.hex }}
+              />
+              <span className="cs-swatch__hex">{col.hex}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+
+/* ─────────────────────────────────────────
+   #04 CHALLENGES
+───────────────────────────────────────── */
+export function ChallengesSection({ challenges }) {
+  return (
+    <SectionShell num="#04" modifier="challenges">
+      <h2 className="cs-section__heading">CHALLENGES</h2>
+      <p className="cs-section__body">{challenges}</p>
+    </SectionShell>
+  );
+}
+
+/* ─────────────────────────────────────────
+   #05 LEARNINGS
+───────────────────────────────────────── */
+export function LearningsSection({ learnings }) {
+  return (
+    <SectionShell num="#05" modifier="learnings">
+      <h2 className="cs-section__heading">LEARNINGS</h2>
+      <p className="cs-section__body">{learnings}</p>
+    </SectionShell>
+  );
+}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+export function CaseStudyFooter({ nextTitle, nextId, onNavigateNext, onClose }) {
+  return (
+    <footer className="cs-footer">
+      <div className="cs-footer__inner">
+        <button
+          onClick={() => onNavigateNext(nextId)}
+          className="cs-footer__next-btn"
+        >
+          Next Project: {nextTitle} →
+        </button>
+        <button onClick={onClose} className="cs-footer__home-btn">
+          Return to Home
+        </button>
+      </div>
+    </footer>
+  );
+}
+
+/* ─────────────────────────────────────────
+   ROOT EXPORT
+───────────────────────────────────────── */
 export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
   const data = CASE_STUDIES_DATA[id];
 
-  // Scroll to top on load and lock body scroll
   useEffect(() => {
-    // Scroll the case-study container to top
-    const pageEl = document.querySelector('.case-study-page');
-    if (pageEl) {
-      pageEl.scrollTop = 0;
-    }
-
+    const pageEl = document.querySelector('.cs-page');
+    if (pageEl) pageEl.scrollTop = 0;
     document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
+    return () => { document.body.style.overflow = ''; };
   }, [id]);
 
   if (!data) {
     return (
-      <div className="case-study-error">
+      <div className="cs-error">
         <h2>Case Study Not Found</h2>
-        <button onClick={onClose} className="back-btn">Back to Home</button>
+        <button onClick={onClose} className="cs-back-btn">Back to Home</button>
       </div>
     );
   }
 
-  const projectImage = images[id];
-
   return (
-    <article className="case-study-page">
-      {/* Floating Close Button */}
-      <button onClick={onClose} className="case-study-close-btn" aria-label="Close Case Study">
-        ← BACK TO HOME
-      </button>
-
-      {/* Hero Banner Mockup */}
-      <div className="case-study-banner">
-        {projectImage && (
-          <img src={projectImage} alt={data.title} className="banner-img" />
-        )}
-      </div>
-
-      {/* Title & Description section */}
-      <div className="case-study-content-container">
-        <header className="case-study-hero-text">
-          <h1 className="case-study-title">{data.title}</h1>
-          <p className="case-study-tagline">{data.tagline}</p>
-        </header>
-
-        {/* Metadata Horizontal strip */}
-        <section className="case-study-meta-table">
-          <div className="meta-col">
-            <span className="meta-label">ROLE</span>
-            <span className="meta-value">{data.role}</span>
-          </div>
-          <div className="meta-col">
-            <span className="meta-label">DELIVERABLES</span>
-            <span className="meta-value">{data.deliverables}</span>
-          </div>
-          <div className="meta-col">
-            <span className="meta-label">TIMELINE</span>
-            <span className="meta-value">{data.timeline}</span>
-          </div>
-          <div className="meta-col">
-            <span className="meta-label">PLATFORM</span>
-            <span className="meta-value">{data.platform}</span>
-          </div>
-        </section>
-
-        {/* #01 THE PROBLEM */}
-        <section className="case-study-section">
-          <div className="section-bg-num">#01</div>
-          <div className="section-content-split">
-            <div className="split-left">
-              <h2 className="section-heading">THE PROBLEM</h2>
-              <p className="section-text">{data.problem}</p>
-            </div>
-            <div className="split-right">
-              <div className="video-placeholder-card">
-                <span className="video-placeholder-text">For Video</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* #02 THE SOLUTION */}
-        <section className="case-study-section">
-          <div className="section-bg-num">#02</div>
-          <div className="section-content-full">
-            <h2 className="section-heading">THE SOLUTION</h2>
-            <p className="section-text">{data.solution}</p>
-            <div className="solution-mockups-row">
-              <div className="solution-screenshot-placeholder">
-                <span className="screenshot-placeholder-text">Screenshot 1</span>
-              </div>
-              <div className="solution-screenshot-placeholder">
-                <span className="screenshot-placeholder-text">Screenshot 2</span>
-              </div>
-              <div className="solution-screenshot-placeholder">
-                <span className="screenshot-placeholder-text">Screenshot 3</span>
-              </div>
-              <div className="solution-screenshot-placeholder">
-                <span className="screenshot-placeholder-text">Screenshot 4</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* #03 SYSTEM BLUEPRINT */}
-        <section className="case-study-section">
-          <div className="section-bg-num">#03</div>
-          <div className="section-content-full">
-            <h2 className="section-heading">SYSTEM BLUEPRINT</h2>
-            <p className="section-text">{data.blueprint}</p>
-
-            <div className="blueprint-details-grid">
-              {/* Fonts block */}
-              <div className="blueprint-block font-showcase">
-                <h3 className="blueprint-subheading">FONTS USED</h3>
-                <div className="font-letters-display">
-                  A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 1 2 3 4 5 6 7 8 9 0
-                </div>
-                <div className="font-weights-display">
-                  <span className="font-weight-sample bold">{data.fontMain} Bold</span>
-                  <span className="font-weight-sample semibold">{data.fontMain} Semibold</span>
-                  <span className="font-weight-sample regular">{data.fontMain} Regular</span>
-                </div>
-              </div>
-
-              {/* Colors block */}
-              <div className="blueprint-block color-showcase">
-                <h3 className="blueprint-subheading">COLOUR PALETTE USED</h3>
-                <div className="color-swatches-row">
-                  {data.colorPalette.map((col, idx) => (
-                    <div key={idx} className="color-swatch-item">
-                      <div className="color-circle" style={{ backgroundColor: col.hex }}></div>
-                      <span className="color-hex">{col.hex}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* #04 CHALLENGES */}
-        <section className="case-study-section">
-          <div className="section-bg-num">#04</div>
-          <div className="section-content-full">
-            <h2 className="section-heading">CHALLENGES</h2>
-            <p className="section-text">{data.challenges}</p>
-          </div>
-        </section>
-
-        {/* #05 LEARNINGS */}
-        <section className="case-study-section">
-          <div className="section-bg-num">#05</div>
-          <div className="section-content-full">
-            <h2 className="section-heading">LEARNINGS</h2>
-            <p className="section-text">{data.learnings}</p>
-          </div>
-        </section>
-
-        {/* Footer Navigation */}
-        <footer className="case-study-footer">
-          <button onClick={() => onNavigateNext(data.nextId)} className="next-project-btn">
-            Next Project: {data.nextTitle} →
-          </button>
-          <button onClick={onClose} className="back-home-btn">
-            Return to Home
-          </button>
-        </footer>
-      </div>
+    <article className="cs-page">
+      <CaseStudyHero data={data} projectImage={images?.[id]} onClose={onClose} />
+      <ProblemSection problem={data.problem} />
+      <SolutionSection solution={data.solution} />
+      <SystemBlueprintSection
+        blueprint={data.blueprint}
+        fontMain={data.fontMain}
+        colorPalette={data.colorPalette}
+      />
+      <ChallengesSection challenges={data.challenges} />
+      <LearningsSection learnings={data.learnings} />
+      <CaseStudyFooter
+        nextTitle={data.nextTitle}
+        nextId={data.nextId}
+        onNavigateNext={onNavigateNext}
+        onClose={onClose}
+      />
     </article>
   );
 }

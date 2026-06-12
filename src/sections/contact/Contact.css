@@ -312,3 +312,101 @@
     display: none;
   }
 }
+
+/* Confetti system layout */
+.confetti-system {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1; /* Floating behind inputs/forms but in front of tactical black background */
+}
+
+.confetti-particle {
+  position: absolute;
+  top: 0;
+  will-change: transform, opacity;
+  animation-name: fall-gravity;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  pointer-events: none;
+}
+
+.confetti-sway-wrapper {
+  will-change: transform;
+  animation-name: sway-oscillate;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  pointer-events: none;
+}
+
+.confetti-spin-wrapper {
+  will-change: transform;
+  animation-name: spin-flutter;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  pointer-events: none;
+}
+
+.confetti-scale-wrapper {
+  will-change: transform;
+  animation-name: scale-pulsate;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  pointer-events: none;
+}
+
+@keyframes fall-gravity {
+  0% {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+    animation-timing-function: cubic-bezier(0.1, 0.8, 0.3, 1); /* Quick initial burst outward/upward */
+  }
+  15% {
+    transform: translate3d(var(--burst-x, 0px), var(--burst-y, -40px), 0);
+    opacity: var(--opacity-max, 1);
+    animation-timing-function: cubic-bezier(0.35, 0.45, 0.65, 0.85); /* Smooth natural gravity fall deceleration/acceleration */
+  }
+  85% {
+    opacity: var(--opacity-max, 1);
+  }
+  100% {
+    transform: translate3d(var(--drift-x, 0px), var(--fall-height), 0);
+    opacity: 0;
+  }
+}
+
+@keyframes sway-oscillate {
+  0% {
+    transform: translate3d(calc(var(--sway-amp, 20px) * -1), 0, 0);
+  }
+  100% {
+    transform: translate3d(var(--sway-amp, 20px), 0, 0);
+  }
+}
+
+@keyframes spin-flutter {
+  0% {
+    transform: rotate3d(var(--rot-axis-x, 1), var(--rot-axis-y, 0), var(--rot-axis-z, 0), var(--rot-start, 0deg)) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate3d(var(--rot-axis-x, 1), var(--rot-axis-y, 0), var(--rot-axis-z, 0), var(--rot-mid, 180deg)) translate3d(0, var(--flutter-y, 4px), var(--flutter-z, 5px));
+  }
+  100% {
+    transform: rotate3d(var(--rot-axis-x, 1), var(--rot-axis-y, 0), var(--rot-axis-z, 0), var(--rot-end, 360deg)) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scale-pulsate {
+  0% {
+    transform: scale(var(--scale-base, 1));
+  }
+  100% {
+    transform: scale(calc(var(--scale-base, 1) * var(--scale-var, 0.9)));
+  }
+}
