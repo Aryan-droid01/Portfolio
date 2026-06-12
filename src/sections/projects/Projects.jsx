@@ -72,9 +72,9 @@ export default function Projects({ onViewCaseStudy }) {
                   <span className="project-category">{project.category}</span>
                   <h3 className="project-title">{project.title}</h3>
                   <p className="project-description">{project.description}</p>
-                  
-                  <button 
-                    onClick={() => onViewCaseStudy(project.id)} 
+
+                  <button
+                    onClick={() => onViewCaseStudy(project.id)}
                     className="project-link-btn"
                   >
                     VIEW CASE STUDY <img src={bulletSvg} className="bullet-icon" alt="pointer" />
@@ -104,9 +104,9 @@ export default function Projects({ onViewCaseStudy }) {
                 <span className="project-category">{project.category}</span>
                 <h3 className="project-title">{project.title}</h3>
                 <p className="project-description">{project.description}</p>
-                
-                <button 
-                  onClick={() => onViewCaseStudy(project.id)} 
+
+                <button
+                  onClick={() => onViewCaseStudy(project.id)}
                   className="project-link-btn"
                 >
                   VIEW <img src={bulletSvg} className="bullet-icon" alt="pointer" />

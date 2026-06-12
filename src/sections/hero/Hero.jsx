@@ -46,7 +46,7 @@ export default function Hero({ isRevealed }) {
     const interval = setInterval(() => {
       if (currentIdx <= nameText.length) {
         setTypedName(nameText.slice(0, currentIdx));
-        
+
         // Play click sound for each character
         if (currentIdx > 0 && currentIdx <= nameText.length) {
           playTypewriterKey();
@@ -74,17 +74,17 @@ export default function Hero({ isRevealed }) {
 
       <div className="hero-container">
         <div className="hero-centered-content hero-reveal">
-          
+
           {/* Introductory label */}
           <div className="hero-intro-text">Hello, I am</div>
-          
+
           {/* Name Box with Figma selection border & handles */}
           <div className="hero-name-box figma-select">
             <h1 className="hero-display-name">
               {typedName}
               <span className={`hero-cursor ${isTypingFinished ? 'blinking' : ''}`}>|</span>
             </h1>
-            
+
             {/* 4 corner Figma-style handles */}
             <div className="figma-handle top-left"></div>
             <div className="figma-handle top-right"></div>
@@ -95,7 +95,7 @@ export default function Hero({ isRevealed }) {
           {/* Headline and rotating word (stacked) */}
           <div className="hero-headline-group">
             <div className="hero-accent-lead">A Designer Fueled by</div>
-            
+
             <div className="word-rotator-wrapper">
               {isTypingFinished && (
                 <RotatingText
@@ -129,7 +129,7 @@ export default function Hero({ isRevealed }) {
                     <motion.div
                       className="hover-card-perspective"
                       initial={{ opacity: 0, rotateY: -90, x: '-50%' }}
-                      animate={{ opacity: 1, rotateY: 0,  x: '-50%' }}
+                      animate={{ opacity: 1, rotateY: 0, x: '-50%' }}
                       whileHover={{ scale: 2.2, y: -10, x: '-50%', zIndex: 150 }}
                       exit={{ opacity: 0, rotateY: 90, x: '-50%' }}
                       transition={{ duration: 0.45, ease: [0.34, 1.56, 0.64, 1] }}
@@ -148,7 +148,7 @@ export default function Hero({ isRevealed }) {
                         <div className="card-face card-back">
                           <div className="card-back-frame">
                             <span className="back-decor-tag">LOADOUT</span>
-                            
+
                             <ul className="back-skills-list">
                               <li>UI/UX Designer</li>
                               <li>Android Developer</li>
