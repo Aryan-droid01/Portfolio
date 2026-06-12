@@ -222,11 +222,15 @@
   opacity: 0.8;
 }
 
-.project-link-btn .arrow {
+.project-link-btn .bullet-icon {
+  height: 9px;
+  width: auto;
   transition: transform 0.3s ease;
+  display: inline-block;
+  vertical-align: middle;
 }
 
-.project-link-btn:hover .arrow {
+.project-link-btn:hover .bullet-icon {
   transform: translateX(4px);
 }
 

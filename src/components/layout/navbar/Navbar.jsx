@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './Navbar.css';
+import gunSvg from '../../../assets/gun.svg';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -63,7 +64,7 @@ export default function Navbar() {
 
         <div className="navbar-cta">
           <button onClick={() => scrollToSection('contact')} className="nav-btn">
-            Lets Talk
+            Lets Talk <img src={gunSvg} className="nav-btn-icon" alt="cta gun icon" />
           </button>
         </div>
       </div>

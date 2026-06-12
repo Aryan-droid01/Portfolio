@@ -4,6 +4,7 @@ import chayanKaroImg from '../../assets/chayan_karo.png';
 import loveCupidImg from '../../assets/love_cupid.png';
 import agritechMarketplaceImg from '../../assets/agritech_marketplace.png';
 import CautionTape from '../../components/caution-tape/CautionTape';
+import bulletSvg from '../../assets/bullet.svg';
 
 export default function Projects({ onViewCaseStudy }) {
   const primaryProjects = [
@@ -76,7 +77,7 @@ export default function Projects({ onViewCaseStudy }) {
                     onClick={() => onViewCaseStudy(project.id)} 
                     className="project-link-btn"
                   >
-                    VIEW CASE STUDY <span className="arrow">→</span>
+                    VIEW CASE STUDY <img src={bulletSvg} className="bullet-icon" alt="pointer" />
                   </button>
                 </div>
 
@@ -108,7 +109,7 @@ export default function Projects({ onViewCaseStudy }) {
                   onClick={() => onViewCaseStudy(project.id)} 
                   className="project-link-btn"
                 >
-                  VIEW <span className="arrow">→</span>
+                  VIEW <img src={bulletSvg} className="bullet-icon" alt="pointer" />
                 </button>
               </div>
             </div>

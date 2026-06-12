@@ -138,7 +138,7 @@
 
     height:40px;
 
-    padding:0 28px;
+    padding:0 20px;
 
     background:transparent;
 
@@ -153,6 +153,20 @@
     cursor:pointer;
 
     transition:.3s;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    justify-content: center;
+}
+
+.nav-btn-icon {
+    width: 16px;
+    height: 16px;
+    transition: filter 0.3s ease;
 }
 
 .nav-btn:hover{
@@ -160,6 +174,10 @@
     background:white;
 
     color:#070707;
+}
+
+.nav-btn:hover .nav-btn-icon {
+    filter: invert(1);
 }
 
 /* ========================= */

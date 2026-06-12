@@ -67,7 +67,7 @@ export default function App() {
       )}
 
       {/* Dotted Background Grid - Rendered globally at viewport level to bypass containing blocks */}
-      {siteVisible && !currentCaseStudy && (
+      {siteVisible && (
         <div className="landing-background">
           <DotGrid
             dotSize={3}
@@ -94,25 +94,23 @@ export default function App() {
           display: siteVisible ? 'block' : 'none' 
         }}
       >
-        {currentCaseStudy ? (
-          <CaseStudy 
-            id={currentCaseStudy} 
-            onClose={() => setCurrentCaseStudy(null)} 
-            onNavigateNext={(nextId) => setCurrentCaseStudy(nextId)}
-            images={projectImages}
-          />
-        ) : (
-          <>
-            <Navbar />
-            <main style={{ position: 'relative' }}>
-              <Hero isRevealed={siteVisible} />
-              <Projects onViewCaseStudy={setCurrentCaseStudy} />
-              <About />
-              <Contact />
-            </main>
-          </>
-        )}
+        <Navbar />
+        <main style={{ position: 'relative' }}>
+          <Hero isRevealed={siteVisible} />
+          <Projects onViewCaseStudy={setCurrentCaseStudy} />
+          <About />
+          <Contact />
+        </main>
       </motion.div>
+
+      {currentCaseStudy && (
+        <CaseStudy 
+          id={currentCaseStudy} 
+          onClose={() => setCurrentCaseStudy(null)} 
+          onNavigateNext={(nextId) => setCurrentCaseStudy(nextId)}
+          images={projectImages}
+        />
+      )}
     </>
   );
 }
