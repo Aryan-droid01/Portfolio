@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import './CaseStudy.css';
 
+// Import mockup images for project solutions
+import chayanKaroImg from '../../assets/chayan_karo.png';
+import loveCupidImg from '../../assets/love_cupid.png';
+import agritechMarketplaceImg from '../../assets/agritech_marketplace.png';
+import caseStudyUiDesignImg from '../../assets/casestudyuidesign.png';
+
 // Structured data for case studies
 const CASE_STUDIES_DATA = {
   'chayan-karo': {
@@ -12,11 +18,11 @@ const CASE_STUDIES_DATA = {
     deliverables: 'Product Design',
     platform: 'iOS/Android',
 
-    problem: 'Chayan Karo suffered from fragmented design patterns across its various mobile and web touchpoints. Different product teams built UI components in isolation, resulting in a inconsistent user experience, high design debt, and prolonged development cycles. The challenge was to establish a single source of truth—a unified design system—that scales across iOS, Android, and Web platforms.',
-    solution: 'We created a centralized, tokens-based design system named "Chayan Karo". By auditing existing UI components, standardizing typographic scales, and defining color variables, we established a consistent components library. This library drastically reduced design-to-development handoff times, unified the brand expression, and provided a cohesive, seamless experience for all end-users.',
-    blueprint: 'Built on atomic design principles, the design system utilizes modular design tokens for colors, sizing, and spacing. We implemented a unified typeface scale using SF Pro for digital screens, paired with highly accessible contrast ratios. Every component is fully responsive, supporting interactive states, dark mode, and multi-brand themes.',
-    challenges: 'Auditing over 150 distinct screens to identify inconsistencies was a massive manual effort. The biggest challenge was aligning stakeholders and multiple developer groups around a unified system, ensuring active adoption, and managing breaking changes without disrupting live production environments.',
-    learnings: 'Building a design system is 20% design and 80% communication. Documenting components thoroughly and creating an interactive playground for developers was key to successful adoption. We also learned that design systems must remain living libraries that evolve continuously with user feedback.',
+    problem: 'DriveCentric (formerly DriveVelocity) underwent a complete rebrand overnight. Despite an existing user base, leadership wanted to overhaul everything from company branding to all web and mobile applications. The challenge was rapidly establishing a new brand identity while translating it into a cohesive application experience, refining existing features, and forging the path forward for how users would perceive both the company and the platform.',
+    solution: 'DriveCentric (formerly DriveVelocity) underwent a complete rebrand overnight. Despite an existing user base, leadership wanted to overhaul everything from company branding to all web and mobile applications. The challenge was rapidly establishing a new brand identity while translating it into a cohesive application experience, refining existing features, and forging the path forward for how users would perceive both the company and the platform.',
+    blueprint: 'DriveCentric (formerly DriveVelocity) underwent a complete rebrand overnight. Despite an existing user base, leadership wanted to overhaul everything from company branding to all web and mobile applications. The challenge was rapidly establishing a new brand identity while translating it into a cohesive application experience, refining existing features, and forging the path forward for how users would perceive both the company and the platform.',
+    challenges: 'DriveCentric (formerly DriveVelocity) underwent a complete rebrand overnight. Despite an existing user base, leadership wanted to overhaul everything from company branding to all web and mobile applications. The challenge was rapidly establishing a new brand identity while translating it into a cohesive application experience, refining existing features, and forging the path forward for how users would perceive both the company and the platform.',
+    learnings: 'DriveCentric (formerly DriveVelocity) underwent a complete rebrand overnight. Despite an existing user base, leadership wanted to overhaul everything from company branding to all web and mobile applications. The challenge was rapidly establishing a new brand identity while translating it into a cohesive application experience, refining existing features, and forging the path forward for how users would perceive both the company and the platform.',
 
     fontMain: 'SF PRO',
     colorPalette: [
@@ -24,6 +30,12 @@ const CASE_STUDIES_DATA = {
       { hex: '#FA9441' },
       { hex: '#FFD9BE' },
       { hex: '#FFEDE0' }
+    ],
+    mockups: [
+      chayanKaroImg,
+      loveCupidImg,
+      agritechMarketplaceImg,
+      caseStudyUiDesignImg
     ],
     nextId: 'love-cupid',
     nextTitle: 'Love Cupid'
@@ -50,6 +62,12 @@ const CASE_STUDIES_DATA = {
       { hex: '#242424' },
       { hex: '#FFB300' }
     ],
+    mockups: [
+      loveCupidImg,
+      chayanKaroImg,
+      agritechMarketplaceImg,
+      caseStudyUiDesignImg
+    ],
     nextId: 'agritech-marketplace',
     nextTitle: 'Agritech-Marketplace'
   },
@@ -74,6 +92,12 @@ const CASE_STUDIES_DATA = {
       { hex: '#080907' },
       { hex: '#2E322A' },
       { hex: '#FF9100' }
+    ],
+    mockups: [
+      agritechMarketplaceImg,
+      chayanKaroImg,
+      loveCupidImg,
+      caseStudyUiDesignImg
     ],
     nextId: 'chayan-karo',
     nextTitle: 'Chayan Karo'
@@ -163,18 +187,26 @@ export function ProblemSection({ problem }) {
 /* ─────────────────────────────────────────
    #02 SOLUTION
 ───────────────────────────────────────── */
-export function SolutionSection({ solution }) {
+export function SolutionSection({ solution, mockups }) {
   return (
     <SectionShell num="#02" modifier="solution">
       <h2 className="cs-section__heading">THE SOLUTION</h2>
       <p className="cs-section__body">{solution}</p>
 
       <div className="cs-mockups-row">
-        {[1, 2, 3, 4].map(n => (
-          <div key={n} className="cs-mockup-card">
-            <span className="cs-mockup-card__label">Mockup {n}</span>
-          </div>
-        ))}
+        {mockups && mockups.length > 0 ? (
+          mockups.map((imgUrl, i) => (
+            <div key={i} className="cs-mockup-card">
+              <img src={imgUrl} alt={`Mockup ${i + 1}`} className="cs-mockup-img-el" />
+            </div>
+          ))
+        ) : (
+          [1, 2, 3, 4].map(n => (
+            <div key={n} className="cs-mockup-card">
+              <span className="cs-mockup-card__label">Mockup {n}</span>
+            </div>
+          ))
+        )}
       </div>
     </SectionShell>
   );
@@ -288,11 +320,22 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
     );
   }
 
+  const primaryColor = data.colorPalette?.[0]?.hex || '#E47830';
+  const secondaryColor = data.colorPalette?.[1]?.hex || '#FA9441';
+  const tertiaryColor = data.colorPalette?.[2]?.hex || '#FFD9BE';
+
   return (
-    <article className="cs-page">
+    <article 
+      className="cs-page"
+      style={{
+        '--cs-primary': primaryColor,
+        '--cs-secondary': secondaryColor,
+        '--cs-tertiary': tertiaryColor
+      }}
+    >
       <CaseStudyHero data={data} projectImage={images?.[id]} onClose={onClose} />
       <ProblemSection problem={data.problem} />
-      <SolutionSection solution={data.solution} />
+      <SolutionSection solution={data.solution} mockups={data.mockups} />
       <SystemBlueprintSection
         blueprint={data.blueprint}
         fontMain={data.fontMain}

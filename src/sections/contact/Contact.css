@@ -12,21 +12,6 @@
   overflow: hidden;
 }
 
-/* Semicircle arc background matching the design */
-.contact-section::before {
-  content: '';
-  position: absolute;
-  bottom: -350px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1200px;
-  height: 1200px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 50%;
-  z-index: 0;
-  pointer-events: none;
-}
-
 .contact-container {
   width: 100%;
   max-width: 1200px;

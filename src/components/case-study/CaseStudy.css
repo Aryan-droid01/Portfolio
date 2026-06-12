@@ -74,9 +74,9 @@
   inset: 0;
   background: linear-gradient(
     175deg,
-    #c9a882 0%,
-    #8b4e1f 30%,
-    #2c1005 60%,
+    var(--cs-tertiary, #c9a882) 0%,
+    var(--cs-secondary, #8b4e1f) 30%,
+    var(--cs-primary, #2c1005) 60%,
     #0d0d0d 100%
   );
   z-index: 0;
@@ -225,20 +225,15 @@
 
 /* Ghost number — very large, low-opacity, upper-left corner */
 .cs-section__ghost-num{
-
+    position: absolute;
     top:-15px;
-
     left:0;
-
     font-size:320px;
-
     line-height:.8;
-
     letter-spacing:-.08em;
-
     color:white;
-
     opacity:.025;
+    pointer-events: none;
 }
 
 /* Content wrapper inside each section */
@@ -256,7 +251,7 @@
 .cs-section__heading {
   font-size:46px;
   font-weight: 900;
-  color:#ff5c9d;
+  color: var(--cs-primary, #ff5c9d);
   margin: 0 0 24px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -353,6 +348,13 @@
   color: rgba(255, 255, 255, 0.15);
 }
 
+.cs-mockup-img-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
 /* ==========================================================================
    #03 SYSTEM BLUEPRINT — fonts + colour swatches
    ========================================================================== */
@@ -426,6 +428,8 @@
   width: 90px;
   height: 90px;
   border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 .cs-swatch__hex {
@@ -476,7 +480,7 @@
 
 .cs-footer__next-btn:hover {
   transform: translateX(10px);
-  color: #e47830;
+  color: var(--cs-primary, #e47830);
 }
 
 .cs-footer__home-btn {

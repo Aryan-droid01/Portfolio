@@ -65,12 +65,13 @@ export default function Hero({ isRevealed }) {
 
   return (
     <section id="home" className={`hero-section ${isRevealed ? 'revealed' : ''}`}>
-      {/* Dark background semicircle framing the hero section */}
+      {/* Dark background semicircle framing the hero section
       <img
         src={SemiCircleSvg}
         className="hero-semicircle"
         alt="Hero Background Semicircle"
       />
+      */}
 
       <div className="hero-container">
         <div className="hero-centered-content hero-reveal">
