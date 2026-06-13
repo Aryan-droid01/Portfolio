@@ -11,6 +11,7 @@ import caseStudyUiDesignImg from '../../assets/casestudyuidesign.png';
 const CASE_STUDIES_DATA = {
   'chayan-karo': {
     title: 'Chayan karo',
+    subtitle: 'Building Trust With Chayan Karo',
     tagline: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
     category: 'UX Research, Branding + UX/UI Designing',
     role: 'UI/UX Lead Designer',
@@ -42,6 +43,7 @@ const CASE_STUDIES_DATA = {
   },
   'love-cupid': {
     title: 'Love Cupid',
+    subtitle: 'Personality-Focused Matchmaking',
     tagline: 'Personality-focused matching mechanics and guided dating workflows creating meaningful connections.',
     category: 'UX Research, Branding + UX/UI Designing',
     role: 'Lead UX Researcher & Designer',
@@ -73,6 +75,7 @@ const CASE_STUDIES_DATA = {
   },
   'agritech-marketplace': {
     title: 'Agritech-Marketplace',
+    subtitle: 'Connecting Farmers and Wholesale Buyers',
     tagline: 'Connecting farmers directly to wholesale buyers, securing supply chain logistics and crop ledger systems.',
     category: 'UX Research, Branding + UX/UI Designing',
     role: 'Senior Product Designer',
@@ -106,7 +109,7 @@ const CASE_STUDIES_DATA = {
 
 /* ─────────────────────────────────────────
    HERO
-───────────────────────────────────────── */
+   ───────────────────────────────────────── */
 export function CaseStudyHero({ data, projectImage, onClose }) {
   return (
     <section className="cs-hero">
@@ -125,6 +128,7 @@ export function CaseStudyHero({ data, projectImage, onClose }) {
         </button>
 
         <h1 className="cs-hero__title">{data.title}</h1>
+        {data.subtitle && <h2 className="cs-hero__subtitle">{data.subtitle}</h2>}
         <p className="cs-hero__tagline">{data.tagline}</p>
 
         {/* Meta strip */}
@@ -154,12 +158,17 @@ export function CaseStudyHero({ data, projectImage, onClose }) {
 /* ─────────────────────────────────────────
    SECTION WRAPPER — ghost number + content
 ───────────────────────────────────────── */
-function SectionShell({ num, modifier, children }) {
+function SectionShell({ num, title, modifier, children }) {
   return (
     <section className={`cs-section cs-section--${modifier}`}>
       <div className="cs-section__inner">
-        <span className="cs-section__ghost-num" aria-hidden="true">{num}</span>
-        {children}
+        <div className="section-header">
+          <div className="section-number">{num}</div>
+          <h2 className="section-title">{title}</h2>
+        </div>
+        <div className="cs-section__content">
+          {children}
+        </div>
       </div>
     </section>
   );
@@ -170,10 +179,9 @@ function SectionShell({ num, modifier, children }) {
 ───────────────────────────────────────── */
 export function ProblemSection({ problem }) {
   return (
-    <SectionShell num="#01" modifier="problem">
+    <SectionShell num="#01" title="THE PROBLEM" modifier="problem">
       <div className="cs-split">
         <div className="cs-split__left">
-          <h2 className="cs-section__heading">THE PROBLEM</h2>
           <p className="cs-section__body">{problem}</p>
         </div>
         <div className="cs-split__right">
@@ -191,8 +199,7 @@ export function ProblemSection({ problem }) {
 ───────────────────────────────────────── */
 export function SolutionSection({ solution, mockups }) {
   return (
-    <SectionShell num="#02" modifier="solution">
-      <h2 className="cs-section__heading">THE SOLUTION</h2>
+    <SectionShell num="#02" title="THE SOLUTION" modifier="solution">
       <p className="cs-section__body">{solution}</p>
 
       <div className="cs-mockups-row">
@@ -219,8 +226,7 @@ export function SolutionSection({ solution, mockups }) {
 ───────────────────────────────────────── */
 export function SystemBlueprintSection({ blueprint, fontMain, colorPalette }) {
   return (
-    <SectionShell num="#03" modifier="blueprint">
-      <h2 className="cs-section__heading">SYSTEM BLUEPRINT</h2>
+    <SectionShell num="#03" title="SYSTEM BLUEPRINT" modifier="blueprint">
       <p className="cs-section__body">{blueprint}</p>
 
       {/* Fonts block */}
@@ -260,8 +266,7 @@ export function SystemBlueprintSection({ blueprint, fontMain, colorPalette }) {
 ───────────────────────────────────────── */
 export function ChallengesSection({ challenges }) {
   return (
-    <SectionShell num="#04" modifier="challenges">
-      <h2 className="cs-section__heading">CHALLENGES</h2>
+    <SectionShell num="#04" title="CHALLENGES" modifier="challenges">
       <p className="cs-section__body">{challenges}</p>
     </SectionShell>
   );
@@ -272,8 +277,7 @@ export function ChallengesSection({ challenges }) {
 ───────────────────────────────────────── */
 export function LearningsSection({ learnings }) {
   return (
-    <SectionShell num="#05" modifier="learnings">
-      <h2 className="cs-section__heading">LEARNINGS</h2>
+    <SectionShell num="#05" title="LEARNINGS" modifier="learnings">
       <p className="cs-section__body">{learnings}</p>
     </SectionShell>
   );
