@@ -361,39 +361,54 @@
     0 30px 80px rgba(0, 0, 0, 0.35);
 }
 
-/* "For Video" placeholder card — matches the rounded-rect in PDF */
-.cs-video-placeholder {
+/* Reusable Phone Frame Component styling */
+.cs-phone-frame {
   width: 340px;
-  height: 600px;
+  height: 700px;
   aspect-ratio: 9 / 16;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: #121212;
   border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
   flex-shrink: 0;
   box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.25),
-    0 30px 80px rgba(0, 0, 0, 0.35);
-  transition: transform 0.4s ease, border-color 0.4s ease;
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    0 50px 120px rgba(0, 0, 0, 0.45);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.45s ease, box-shadow 0.45s ease;
 }
 
-.cs-video-placeholder video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.cs-video-placeholder:hover {
-  transform: scale(1.02);
+.cs-phone-frame:hover {
+  transform: translateY(-12px);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.45),
+    0 60px 140px rgba(0, 0, 0, 0.55);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.cs-video-placeholder__label {
+.media-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.media-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.media-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cs-phone-frame__label {
   font-size: 14px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.85);
@@ -408,40 +423,11 @@
 
 .cs-mockups-row {
   display: flex;
-  gap: 24px;
+  gap: 32px;
   margin-top: 52px;
   margin-left: 70px;
   width: calc(100% - 70px);
-  align-items: flex-end;
-}
-
-/* Tall phone-screen ratio cards — matches PDF screenshot panels */
-.cs-mockup-card {
-  width: 340px;
-  height: 600px;
-  aspect-ratio: 9 / 16;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  flex-shrink: 0;
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.25),
-    0 30px 80px rgba(0, 0, 0, 0.35);
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.cs-mockup-card:hover {
-  transform: translateY(-12px);
-  box-shadow:
-    0 15px 45px rgba(0, 0, 0, 0.35),
-    0 35px 90px rgba(0, 0, 0, 0.45);
-  border-color: rgba(255, 255, 255, 0.15);
+  align-items: flex-start;
 }
 
 .cs-mockup-card__label {
@@ -688,8 +674,7 @@
     width: calc(100% - 36px);
   }
 
-  .cs-video-placeholder,
-  .cs-mockup-card {
+  .cs-phone-mockup {
     width: 300px;
     height: 533px;
   }
@@ -820,7 +805,7 @@
     width: 100%;
   }
 
-  .cs-video-placeholder {
+  .cs-phone-frame {
     width: 100%;
     max-width: 320px;
     height: auto;
@@ -845,13 +830,8 @@
     display: none; /* Hide scrollbar for clean UI */
   }
 
-  .cs-mockup-card {
+  .cs-mockups-row .cs-phone-frame {
     flex: 0 0 320px;
-    width: 100%;
-    max-width: 320px;
-    height: auto;
-    aspect-ratio: 9 / 16;
-    border-radius: 24px;
     scroll-snap-align: start;
   }
 
@@ -939,13 +919,11 @@
     top: clamp(30px, 8vw, 45px);
   }
 
-  .cs-video-placeholder {
-    width: 220px;
-    height: 400px;
+  .cs-phone-frame {
+    max-width: 280px;
   }
-
-  .cs-mockup-card {
-    flex: 0 0 190px;
+  .cs-mockups-row .cs-phone-frame {
+    flex: 0 0 280px;
   }
 
   .cs-meta-col {

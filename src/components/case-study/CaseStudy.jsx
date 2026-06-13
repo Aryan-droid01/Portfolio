@@ -156,6 +156,27 @@ export function CaseStudyHero({ data, projectImage, onClose }) {
 }
 
 /* ─────────────────────────────────────────
+   REUSABLE PHONE FRAME COMPONENT
+───────────────────────────────────────── */
+export function PhoneFrame({ image, video, children, label, className = '' }) {
+  return (
+    <div className={`cs-phone-frame ${className}`}>
+      <div className="media-wrapper">
+        {video ? (
+          <video src={video} autoPlay loop muted playsInline />
+        ) : image ? (
+          <img src={image} alt={label || "Mockup"} />
+        ) : children ? (
+          children
+        ) : (
+          <span className="cs-phone-frame__label">{label || "Mockup"}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────
    SECTION WRAPPER — ghost number + content
 ───────────────────────────────────────── */
 function SectionShell({ num, title, modifier, children }) {
@@ -185,9 +206,7 @@ export function ProblemSection({ problem }) {
           <p className="cs-section__body">{problem}</p>
         </div>
         <div className="cs-split__right">
-          <div className="cs-video-placeholder">
-            <span className="cs-video-placeholder__label">For Video</span>
-          </div>
+          <PhoneFrame video={null} label="For Video" />
         </div>
       </div>
     </SectionShell>
@@ -205,15 +224,11 @@ export function SolutionSection({ solution, mockups }) {
       <div className="cs-mockups-row">
         {mockups && mockups.length > 0 ? (
           mockups.map((imgUrl, i) => (
-            <div key={i} className="cs-mockup-card">
-              <img src={imgUrl} alt={`Mockup ${i + 1}`} className="cs-mockup-img-el" />
-            </div>
+            <PhoneFrame key={i} image={imgUrl} label={`Mockup ${i + 1}`} />
           ))
         ) : (
           [1, 2, 3, 4].map(n => (
-            <div key={n} className="cs-mockup-card">
-              <span className="cs-mockup-card__label">Mockup {n}</span>
-            </div>
+            <PhoneFrame key={n} label={`Mockup ${n}`} />
           ))
         )}
       </div>
