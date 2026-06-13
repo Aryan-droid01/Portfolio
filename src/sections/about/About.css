@@ -19,7 +19,7 @@
 .about-text-content {
   text-align: center;
   margin-bottom: 40px;
-  max-width: 850px;
+  max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -37,11 +37,17 @@
 .about-tagline {
   font-family: Georgia, serif;
   font-size: clamp(18px, 2.5vw, 24px);
-  font-style: italic;
+  font-style: normal;
   font-weight: 500;
   line-height: 1.4;
   color: #BC0058;
   margin: 0 0 32px 0;
+}
+
+@media (min-width: 768px) {
+  .about-tagline {
+    white-space: nowrap;
+  }
 }
 
 .about-description p {

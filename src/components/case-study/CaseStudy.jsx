@@ -157,8 +157,10 @@ export function CaseStudyHero({ data, projectImage, onClose }) {
 function SectionShell({ num, modifier, children }) {
   return (
     <section className={`cs-section cs-section--${modifier}`}>
-      <span className="cs-section__ghost-num" aria-hidden="true">{num}</span>
-      <div className="cs-section__inner">{children}</div>
+      <div className="cs-section__inner">
+        <span className="cs-section__ghost-num" aria-hidden="true">{num}</span>
+        {children}
+      </div>
     </section>
   );
 }
