@@ -374,7 +374,7 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
           CLOSE <span className="cs-posts-close-x">✕</span>
         </button>
         <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-          <InfiniteMenu items={postItems} />
+          <InfiniteMenu items={postItems} onClose={onClose} />
         </div>
       </article>
     );

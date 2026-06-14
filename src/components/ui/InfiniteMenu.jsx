@@ -601,7 +601,7 @@ class ArcballControl {
 
 class InfiniteGridMenu {
   TARGET_FRAME_DURATION = 1000 / 60;
-  SPHERE_RADIUS = 3.5;
+  SPHERE_RADIUS = 2.5;
 
   #time = 0;
   #deltaTime = 0;
@@ -614,7 +614,7 @@ class InfiniteGridMenu {
     far: 40,
     fov: Math.PI / 4,
     aspect: 1,
-    position: vec3.fromValues(0, 0, 5),
+    position: vec3.fromValues(0, 0, 3),
     up: vec3.fromValues(0, 1, 0),
     matrices: {
       view: mat4.create(),
@@ -800,7 +800,7 @@ class InfiniteGridMenu {
     let positions = this.instancePositions.map(p => vec3.transformQuat(vec3.create(), p, this.control.orientation));
     
     // Apple Vision Pro floating card scale: 0.26
-    const scale = 0.42;
+    const scale = 0.30;
     const SCALE_INTENSITY = 0.6;
     positions.forEach((p, ndx) => {
       const s = (Math.abs(p[2]) / this.SPHERE_RADIUS) * SCALE_INTENSITY + (1 - SCALE_INTENSITY);
@@ -963,7 +963,7 @@ const defaultItems = [
   }
 ];
 
-export default function InfiniteMenu({ items = [], scale = 1.0 }) {
+export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
   const canvasRef = useRef(null);
   const [activeItem, setActiveItem] = useState(null);
   const [isMoving, setIsMoving] = useState(false);
@@ -1017,6 +1017,20 @@ export default function InfiniteMenu({ items = [], scale = 1.0 }) {
   return (
     <div className="infinite-menu-container">
       <canvas id="infinite-grid-menu-canvas" ref={canvasRef} />
+
+      <div className="infinite-menu-header">
+        <h1 className="infinite-menu-title">POSTS</h1>
+        <p className="infinite-menu-subtitle">Drag To see all the creatives ive created</p>
+      </div>
+
+      <div className="infinite-menu-footer">
+        <button className="return-home-button" onClick={() => onClose ? onClose() : window.history.back()}>
+          Return To Home
+          <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="return-icon">
+            <path d="M1 6H22M22 6L17 1M22 6L17 11" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
 
       {activeItem && (
         <div className="infinite-menu-overlay">

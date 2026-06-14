@@ -117,6 +117,63 @@
   transform: translate(-50%, -50%) scale(0.8);
 }
 
+/* Header POSTS */
+.infinite-menu-header {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 20;
+  color: #fff;
+  pointer-events: none;
+}
+
+.infinite-menu-title {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.infinite-menu-subtitle {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 4px 0 0 0;
+}
+
+/* Footer Return To Home */
+.infinite-menu-footer {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  z-index: 20;
+}
+
+.return-home-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  transition: opacity 0.3s ease;
+}
+
+.return-home-button:hover {
+  opacity: 0.7;
+}
+
+.return-icon {
+  display: inline-block;
+}
+
 /* Responsive styles */
 @media (max-width: 1024px) {
   .face-title {
