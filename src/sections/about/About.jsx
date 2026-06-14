@@ -1,6 +1,7 @@
 import React from 'react';
 import './About.css';
 import CautionTape from '../../components/caution-tape/CautionTape';
+import GlareHover from '../../components/ui/GlareHover';
 
 export default function About() {
   const skills = [
@@ -39,7 +40,20 @@ export default function About() {
 
         <div className="skills-grid-4x2">
           {skills.map((skill, idx) => (
-            <div key={idx} className="skill-card-compact">
+            <GlareHover
+              key={idx}
+              className="skill-card-compact"
+              width="100%"
+              height="auto"
+              background="rgba(255, 255, 255, 0.01)"
+              borderColor="var(--grey)"
+              borderRadius="0px"
+              glareColor="#ffffff"
+              glareOpacity={0.12}
+              glareAngle={-45}
+              glareSize={200}
+              transitionDuration={800}
+            >
               <div className="skill-card-header">
                 <div className="skill-card-titles">
                   <h4 className="skill-name">{skill.name}</h4>
@@ -68,7 +82,7 @@ export default function About() {
                   </div>
                 </div>
               </div>
-            </div>
+            </GlareHover>
           ))}
         </div>
       </div>

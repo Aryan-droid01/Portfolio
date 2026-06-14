@@ -33,31 +33,38 @@
   gap: 24px;
 }
 
-/* ─── Shared back button ─────────────────────────────────────────────────── */
-
 .cs-back-btn {
-  display: inline-block;
-  background: rgba(13, 13, 13, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
-  padding: 8px 16px;
-  border-radius: 20px;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 8px 0;
+  opacity: 0.7;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: inherit;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .cs-back-btn:hover {
-  background: rgba(13, 13, 13, 0.8);
+  opacity: 1;
+  background: transparent;
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
+  transform: translateX(-4px);
+}
+
+.cs-bullet-icon-left {
+  width: 32px;
+  height: auto;
+  transform: rotate(180deg);
+  display: inline-block;
 }
 
 /* ==========================================================================

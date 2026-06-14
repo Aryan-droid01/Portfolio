@@ -83,6 +83,8 @@ export default function App() {
         </div>
       )}
 
+      {siteVisible && <Navbar />}
+
       {/* Main website wrapper (revealed when pulled) */}
       <motion.div 
         className="app-wrapper"
@@ -94,7 +96,6 @@ export default function App() {
           display: siteVisible ? 'block' : 'none' 
         }}
       >
-        <Navbar />
         <main style={{ position: 'relative' }}>
           <Hero isRevealed={siteVisible} />
           <Projects onViewCaseStudy={setCurrentCaseStudy} />

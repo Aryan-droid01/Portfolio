@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './CaseStudy.css';
+import bulletSvg from '../../assets/bullet.svg';
 
 // Import mockup images for project solutions
 import chayanKaroImg from '../../assets/chayan_karo.png';
@@ -124,7 +125,7 @@ export function CaseStudyHero({ data, projectImage, onClose }) {
       {/* Text content sits over the banner */}
       <div className="cs-hero__content">
         <button onClick={onClose} className="cs-back-btn" aria-label="Close Case Study">
-          ← BACK TO HOME
+          <img src={bulletSvg} className="cs-bullet-icon-left" alt="back pointer" /> BACK TO HOME
         </button>
 
         <h1 className="cs-hero__title">{data.title}</h1>
@@ -336,7 +337,9 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
     return (
       <div className="cs-error">
         <h2>Case Study Not Found</h2>
-        <button onClick={onClose} className="cs-back-btn">Back to Home</button>
+        <button onClick={onClose} className="cs-back-btn">
+          <img src={bulletSvg} className="cs-bullet-icon-left" alt="back pointer" /> BACK TO HOME
+        </button>
       </div>
     );
   }

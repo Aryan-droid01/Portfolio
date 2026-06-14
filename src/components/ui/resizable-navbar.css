@@ -1,0 +1,335 @@
+/* Resizable Navbar Root CSS */
+
+.resizable-navbar-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: transparent;
+  pointer-events: none; /* Let pointer events pass through to DotGrid backgrounds */
+}
+
+/* Inner wrapper for centering */
+.resizable-navbar-inner {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   DESKTOP NAVBAR LAYOUT
+   ========================================================================== */
+
+.nav-body-desktop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 48px;
+  pointer-events: auto; /* Re-enable pointer events for interactions */
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              margin-top 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Floating centered pill styling when page scrolled */
+.nav-body-desktop.scrolled {
+  width: 80%;
+  max-width: 900px;
+  margin-top: 16px;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  background-color: rgba(7, 7, 7, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* Hide desktop menu on mobile viewports */
+@media (max-width: 768px) {
+  .nav-body-desktop {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   MOBILE NAVBAR LAYOUT
+   ========================================================================== */
+
+.nav-body-mobile-wrapper {
+  display: none;
+  width: 100%;
+  padding: 16px 24px;
+  pointer-events: auto;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-body-mobile-wrapper.scrolled {
+  width: 92%;
+  max-width: 500px;
+  margin: 12px auto 0 auto;
+  padding: 12px 20px;
+  border-radius: 20px;
+  background-color: rgba(7, 7, 7, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .nav-body-mobile-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* ==========================================================================
+   LOGO
+   ========================================================================== */
+
+.navbar-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.logo-indicator {
+  width: 8px;
+  height: 8px;
+  background-color: var(--pink);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--pink), 0 0 20px var(--pink);
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+.logo-text {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: var(--white);
+  line-height: 1;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(0.95);
+    box-shadow: 0 0 8px var(--pink);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--pink), 0 0 25px var(--pink);
+  }
+}
+
+/* ==========================================================================
+   NAVIGATION LINKS (DESKTOP)
+   ========================================================================== */
+
+.nav-items-container {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-item-link {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-item-link:hover,
+.nav-item-link.active {
+  color: var(--white);
+}
+
+/* Small custom dots for active indicators */
+.nav-active-dot {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--pink);
+  box-shadow: 0 0 6px var(--pink);
+}
+
+/* ==========================================================================
+   BUTTONS (TACTICAL/INDUSTRIAL AESTHETICS)
+   ========================================================================== */
+
+.nav-custom-btn {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 400;
+  height: 38px;
+  padding: 0 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 0; /* Flat edge industrial theme */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nav-custom-btn.btn-primary {
+  background-color: var(--white);
+  color: var(--black);
+  border: 1px solid var(--white);
+}
+
+.nav-custom-btn.btn-primary:hover {
+  background-color: transparent;
+  color: var(--white);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.nav-custom-btn.btn-secondary {
+  background-color: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.nav-custom-btn.btn-secondary:hover {
+  background-color: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.nav-custom-btn.btn-secondary:hover .nav-btn-icon {
+  filter: invert(1) !important;
+}
+
+/* ==========================================================================
+   MOBILE TOGGLE BURGER BUTTON
+   ========================================================================== */
+
+.mobile-nav-toggle-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;
+}
+
+.toggle-burger-line {
+  width: 100%;
+  height: 2px;
+  background-color: var(--white);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-toggle-btn.open .line-top {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-nav-toggle-btn.open .line-middle {
+  opacity: 0;
+}
+
+.mobile-nav-toggle-btn.open .line-bottom {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ==========================================================================
+   MOBILE DRAWER & BACKDROP OVERLAY
+   ========================================================================== */
+
+.mobile-menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+
+.mobile-menu-drawer {
+  position: fixed;
+  top: 76px;
+  left: 4vw;
+  width: 92vw;
+  background-color: rgba(7, 7, 7, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1050;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+
+.nav-body-mobile-wrapper.scrolled + .mobile-menu-backdrop + .mobile-menu-drawer,
+.nav-body-mobile-wrapper.scrolled ~ .mobile-menu-drawer {
+  top: 84px;
+}
+
+.mobile-menu-content {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.mobile-menu-content a {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 8px 16px;
+  width: 100%;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu-content a:hover {
+  color: var(--white);
+}
+
+.mobile-menu-content .nav-custom-btn {
+  font-size: 15px;
+  height: 40px;
+}

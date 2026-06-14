@@ -92,7 +92,7 @@
   border-radius: 0;
   padding: 24px;
   transition: all 0.4s ease;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   justify-content: space-between;
   min-height: 220px;
