@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './CaseStudy.css';
 import bulletSvg from '../../assets/bullet.svg';
+import FuzzyText from '../ui/FuzzyText';
+import InfiniteMenu from '../ui/InfiniteMenu';
 
 // Import mockup images for project solutions
 import chayanKaroImg from '../../assets/chayan_karo.png';
 import loveCupidImg from '../../assets/love_cupid.png';
 import agritechMarketplaceImg from '../../assets/agritech_marketplace.png';
 import caseStudyUiDesignImg from '../../assets/casestudyuidesign.png';
+import chayanKaroWomensDayImg from '../../assets/chayan_karo_womens_day.png';
 
 // Structured data for case studies
 const CASE_STUDIES_DATA = {
@@ -186,7 +189,19 @@ function SectionShell({ num, title, modifier, children }) {
       <div className="cs-section__inner">
         <div className="section-header">
           <div className="section-number">{num}</div>
-          <h2 className="section-title">{title}</h2>
+          <h2 className="section-title">
+            <FuzzyText
+              fontSize="clamp(2.5rem, 5vw, 4rem)"
+              fontWeight={700}
+              fontFamily="inherit"
+              color="#e2006a"
+              baseIntensity={0.15}
+              hoverIntensity={0.4}
+              fuzzRange={12}
+            >
+              {title}
+            </FuzzyText>
+          </h2>
         </div>
         <div className="cs-section__content">
           {children}
@@ -324,10 +339,52 @@ export function CaseStudyFooter({ nextTitle, nextId, onNavigateNext, onClose }) 
    ROOT EXPORT
 ───────────────────────────────────────── */
 export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
+  // Intercept 'posts-brand' case study to display WebGL InfiniteMenu
+  if (id === 'posts-brand') {
+    const postItems = [
+      {
+        image: chayanKaroWomensDayImg,
+        link: 'https://google.com/',
+        title: 'Chayan Karo "Women\'s Day"',
+        description: 'Social media creative highlighting women empowerment and security features.'
+      },
+      {
+        image: loveCupidImg,
+        link: 'https://google.com/',
+        title: 'Love Cupid "Valentine\'s Day"',
+        description: 'Guided conversation and matching promotion.'
+      },
+      {
+        image: agritechMarketplaceImg,
+        link: 'https://google.com/',
+        title: 'Agritech "Harvest Festival"',
+        description: 'Logistics coordination and crop trading campaign.'
+      },
+      {
+        image: caseStudyUiDesignImg,
+        link: 'https://google.com/',
+        title: 'Chayan Karo Design Guidelines',
+        description: 'Design system core color palette and typography assets.'
+      }
+    ];
+
+    return (
+      <article className="cs-page" style={{ backgroundColor: '#000', overflow: 'hidden', height: '100vh', width: '100vw' }}>
+        <button onClick={onClose} className="cs-posts-close-btn">
+          CLOSE <span className="cs-posts-close-x">✕</span>
+        </button>
+        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+          <InfiniteMenu items={postItems} />
+        </div>
+      </article>
+    );
+  }
+
   const data = CASE_STUDIES_DATA[id];
+  const pageRef = useRef(null);
 
   useEffect(() => {
-    const pageEl = document.querySelector('.cs-page');
+    const pageEl = pageRef.current;
     if (pageEl) pageEl.scrollTop = 0;
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
@@ -350,6 +407,7 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
 
   return (
     <article 
+      ref={pageRef}
       className="cs-page"
       style={{
         '--cs-primary': primaryColor,
@@ -358,15 +416,16 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
       }}
     >
       <CaseStudyHero data={data} projectImage={images?.[id]} onClose={onClose} />
-      <ProblemSection problem={data.problem} />
-      <SolutionSection solution={data.solution} mockups={data.mockups} />
+      <ProblemSection problem={data.problem} scrollContainerRef={pageRef} />
+      <SolutionSection solution={data.solution} mockups={data.mockups} scrollContainerRef={pageRef} />
       <SystemBlueprintSection
         blueprint={data.blueprint}
         fontMain={data.fontMain}
         colorPalette={data.colorPalette}
+        scrollContainerRef={pageRef}
       />
-      <ChallengesSection challenges={data.challenges} />
-      <LearningsSection learnings={data.learnings} />
+      <ChallengesSection challenges={data.challenges} scrollContainerRef={pageRef} />
+      <LearningsSection learnings={data.learnings} scrollContainerRef={pageRef} />
       <CaseStudyFooter
         nextTitle={data.nextTitle}
         nextId={data.nextId}

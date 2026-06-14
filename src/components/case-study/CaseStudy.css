@@ -270,7 +270,7 @@
   position: absolute;
   left: 70px;
   top: 80px;
-  width: 375px;
+  width: max-content;
   height: 92px;
   z-index: 2;
   font-family: 'Teko', sans-serif;
@@ -280,6 +280,13 @@
   letter-spacing: 0;
   text-transform: uppercase;
   color: #e2006a; /* Bold pink color matching case study.png design */
+  display: flex;
+  align-items: center;
+}
+
+.section-title canvas {
+  margin-left: -32px;
+  display: block;
 }
 
 /* Content wrapper inside each section */

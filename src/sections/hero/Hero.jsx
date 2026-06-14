@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Hero.css';
 import CautionTape from '../../components/caution-tape/CautionTape';
+import FuzzyText from '../../components/ui/FuzzyText';
 import SemiCircleSvg from './semi-circle.svg';
 import JackCardSvg from './Jack Card 1.svg';
 import RotatingText from '../../components/rotating-text/RotatingText';
@@ -168,7 +169,17 @@ export default function Hero({ isRevealed }) {
             </div>
 
             <p className="hero-quote">
-              "Probably Redesigning Something in my head right now"
+              <FuzzyText
+                fontSize="36px"
+                fontWeight="italic bold"
+                fontFamily="inherit"
+                color="#ffffff"
+                baseIntensity={0.15}
+                hoverIntensity={0.4}
+                fuzzRange={10}
+              >
+                "Probably Redesigning Something in my head right now"
+              </FuzzyText>
             </p>
           </div>
 
