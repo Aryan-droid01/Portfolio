@@ -1,22 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './About.css';
 import CautionTape from '../../components/caution-tape/CautionTape';
 import GlareHover from '../../components/ui/GlareHover';
 
+// Import tool icons from assets
+import photoshopIcon from '../../assets/photoshop.svg';
+import figmaIcon from '../../assets/figma.svg';
+import illustratorIcon from '../../assets/illustrator.svg';
+import antigravityIcon from '../../assets/antigravity.svg';
+import chatgptIcon from '../../assets/chatgpt.svg';
+import androidStudioIcon from '../../assets/android studio.svg';
+import githubIcon from '../../assets/github.svg';
+import vsCodeIcon from '../../assets/logos_visual-studio-code.svg';
+
 export default function About() {
   const skills = [
-    { name: 'UI/UX', category: 'Design', badge: 'Fg', mastery: 95, workflow: 90, creativity: 90 },
-    { name: 'Three.js', category: 'WebGL', badge: '3j', mastery: 88, workflow: 85, creativity: 95 },
-    { name: 'React.js', category: 'Core', badge: 'Re', mastery: 94, workflow: 90, creativity: 85 },
-    { name: 'TypeScript', category: 'Modules', badge: 'Ts', mastery: 90, workflow: 80, creativity: 75 },
-    { name: 'Git', category: 'Versioning', badge: 'Gt', mastery: 96, workflow: 85, creativity: 75 },
-    { name: 'Vite', category: 'Bundler', badge: 'Vt', mastery: 92, workflow: 90, creativity: 90 },
-    { name: 'GLSL', category: 'Shaders', badge: 'Sh', mastery: 85, workflow: 80, creativity: 90 },
-    { name: 'Next.js', category: 'Systems', badge: 'Nx', mastery: 91, workflow: 85, creativity: 85 }
+    { name: 'Photoshop', category: 'Visual Design', icon: photoshopIcon, mastery: 89, workflow: 92, creativity: 96 },
+    { name: 'Figma', category: 'Product Design', icon: figmaIcon, mastery: 96, workflow: 98, creativity: 95 },
+    { name: 'Illustrator', category: 'Vector Art', icon: illustratorIcon, mastery: 84, workflow: 88, creativity: 94 },
+    { name: 'Antigravity', category: 'Web Development', icon: antigravityIcon, mastery: 91, workflow: 94, creativity: 87 },
+    { name: 'ChatGPT', category: 'AI Workflow', icon: chatgptIcon, mastery: 95, workflow: 97, creativity: 91 },
+    { name: 'Android Studio', category: 'Android Apps', icon: androidStudioIcon, mastery: 76, workflow: 82, creativity: 79 },
+    { name: 'GitHub', category: 'Version Control', icon: githubIcon, mastery: 84, workflow: 92, creativity: 74 },
+    { name: 'VS Code', category: 'Code Editor', icon: vsCodeIcon, mastery: 93, workflow: 96, creativity: 86 }
   ];
 
+  const [animate, setAnimate] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setAnimate(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="about" className="about-section">
+    <section id="about" ref={sectionRef} className="about-section">
       <div className="about-container">
         {/* ABOUT ME Section */}
         <div className="about-text-content">
@@ -46,7 +75,7 @@ export default function About() {
               width="100%"
               height="auto"
               background="rgba(255, 255, 255, 0.01)"
-              borderColor="var(--grey)"
+              borderColor="rgba(255, 255, 255, 0.08)"
               borderRadius="0px"
               glareColor="#ffffff"
               glareOpacity={0.12}
@@ -59,26 +88,37 @@ export default function About() {
                   <h4 className="skill-name">{skill.name}</h4>
                   <span className="skill-category">{skill.category}</span>
                 </div>
-                <div className="skill-badge">{skill.badge}</div>
+                <div className="skill-icon-wrapper">
+                  <img src={skill.icon} className="skill-icon-img" alt={`${skill.name} icon`} />
+                </div>
               </div>
               
               <div className="skill-card-details">
                 <div className="skill-progress-item">
-                  <span className="progress-label">Mastery</span>
+                  <div className="progress-label">
+                    <span>Mastery</span>
+                    <span>{skill.mastery}%</span>
+                  </div>
                   <div className="progress-track">
-                    <div className="progress-fill" style={{ width: `${skill.mastery}%` }}></div>
+                    <div className="progress-fill" style={{ width: animate ? `${skill.mastery}%` : '0%' }}></div>
                   </div>
                 </div>
                 <div className="skill-progress-item">
-                  <span className="progress-label">Workflow</span>
+                  <div className="progress-label">
+                    <span>Workflow</span>
+                    <span>{skill.workflow}%</span>
+                  </div>
                   <div className="progress-track">
-                    <div className="progress-fill" style={{ width: `${skill.workflow}%` }}></div>
+                    <div className="progress-fill" style={{ width: animate ? `${skill.workflow}%` : '0%' }}></div>
                   </div>
                 </div>
                 <div className="skill-progress-item">
-                  <span className="progress-label">Creativity</span>
+                  <div className="progress-label">
+                    <span>Creativity</span>
+                    <span>{skill.creativity}%</span>
+                  </div>
                   <div className="progress-track">
-                    <div className="progress-fill" style={{ width: `${skill.creativity}%` }}></div>
+                    <div className="progress-fill" style={{ width: animate ? `${skill.creativity}%` : '0%' }}></div>
                   </div>
                 </div>
               </div>
