@@ -11,9 +11,9 @@ const usePathname = () => {
     window.addEventListener('popstate', handleLocationChange);
     window.addEventListener('pushState', handleLocationChange);
     window.addEventListener('replaceState', handleLocationChange);
-    
+
     const interval = setInterval(handleLocationChange, 200);
-    
+
     return () => {
       window.removeEventListener('popstate', handleLocationChange);
       window.removeEventListener('pushState', handleLocationChange);
@@ -120,8 +120,8 @@ export const StaggeredMenu = ({
         });
       } else if (currentY > lastScrollY.current) {
         gsap.to(headerRef.current, {
-          y: -120,
-          opacity: 0,
+          y: 0,
+          opacity: 1,
           duration: 0.5,
           ease: "power4.out",
           overwrite: "auto"
@@ -502,8 +502,8 @@ export const StaggeredMenu = ({
                 height={24}
               />
             ) : (
-              <div 
-                className="navbar-logo-circle" 
+              <div
+                className="navbar-logo-circle"
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                   closeMenu();
@@ -551,10 +551,10 @@ export const StaggeredMenu = ({
             {items && items.length ? (
               items.map((it, idx) => (
                 <li className="sm-panel-itemWrap" key={it.label + idx}>
-                  <a 
-                    className="sm-panel-item" 
-                    href={it.link} 
-                    aria-label={it.ariaLabel} 
+                  <a
+                    className="sm-panel-item"
+                    href={it.link}
+                    aria-label={it.ariaLabel}
                     data-index={idx + 1}
                     onClick={(e) => {
                       if (it.link.startsWith('#')) {

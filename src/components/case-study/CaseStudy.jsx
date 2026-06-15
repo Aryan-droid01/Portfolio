@@ -12,106 +12,155 @@ import agritechMarketplaceImg from '../../assets/agritech_marketplace.png';
 import caseStudyUiDesignImg from '../../assets/casestudyuidesign.png';
 import chayanKaroWomensDayImg from '../../assets/chayan_karo_womens_day.png';
 
-// Structured data for case studies
 const CASE_STUDIES_DATA = {
   'chayan-karo': {
-    title: 'Chayan karo',
+    title: 'Chayan Karo',
     subtitle: 'Building Trust With Chayan Karo',
-    tagline: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
+    tagline:
+      'A trust-first safety and community platform designed to help users feel secure, connected, and confident through intuitive experiences and accessible digital interactions.',
+
     category: 'UX Research, Branding + UX/UI Designing',
     role: 'UI/UX Lead Designer',
     timeline: '8 Weeks',
     deliverables: 'Product Design',
     platform: 'iOS/Android',
 
-    problem: 'DriveCentric (formerly DriveVelocity) underwent a complete rebrand overnight. Despite an existing user base, leadership wanted to overhaul everything from company branding to all web and mobile applications. The challenge was rapidly establishing a new brand identity while translating it into a cohesive application experience, refining existing features, and forging the path forward for how users would perceive both the company and the platform.',
-    solution: 'DriveCentric (formerly DriveVelocity) underwent a complete rebrand overnight. Despite an existing user base, leadership wanted to overhaul everything from company branding to all web and mobile applications. The challenge was rapidly establishing a new brand identity while translating it into a cohesive application experience, refining existing features, and forging the path forward for how users would perceive both the company and the platform.',
-    blueprint: 'DriveCentric (formerly DriveVelocity) underwent a complete rebrand overnight. Despite an existing user base, leadership wanted to overhaul everything from company branding to all web and mobile applications. The challenge was rapidly establishing a new brand identity while translating it into a cohesive application experience, refining existing features, and forging the path forward for how users would perceive both the company and the platform.',
-    challenges: 'DriveCentric (formerly DriveVelocity) underwent a complete rebrand overnight. Despite an existing user base, leadership wanted to overhaul everything from company branding to all web and mobile applications. The challenge was rapidly establishing a new brand identity while translating it into a cohesive application experience, refining existing features, and forging the path forward for how users would perceive both the company and the platform.',
-    learnings: 'DriveCentric (formerly DriveVelocity) underwent a complete rebrand overnight. Despite an existing user base, leadership wanted to overhaul everything from company branding to all web and mobile applications. The challenge was rapidly establishing a new brand identity while translating it into a cohesive application experience, refining existing features, and forging the path forward for how users would perceive both the company and the platform.',
+    problem:
+      'Women and families often hesitate to use safety and community platforms due to concerns around trust, verification, and usability. Existing solutions felt complicated, lacked transparency, and failed to create confidence during critical moments when users needed assistance.',
+
+    solution:
+      'Chayan Karo was designed as a trust-first platform that combines safety features, community engagement, and intuitive user flows. The experience focuses on simplicity, fast access to key actions, clear visual hierarchy, and a seamless onboarding journey that helps users feel confident from their first interaction.',
+
+    blueprint:
+      'The design system was built around accessibility, consistency, and emotional reassurance. A structured component library, scalable typography system, warm color palette, and reusable interaction patterns ensured a cohesive experience across every screen while accelerating future product development.',
+
+    challenges:
+      'Balancing strong safety messaging without creating fear was a major challenge. The product needed to communicate reliability and security while maintaining an approachable and welcoming experience. Designing for diverse user groups and varying levels of technical familiarity also required extensive iteration.',
+
+    learnings:
+      'Trust is built through small design decisions. Clear communication, intuitive navigation, transparent actions, and consistent visual feedback significantly improved user confidence. User testing revealed that simplicity and reassurance were more valuable than adding complex features.',
 
     fontMain: 'SF PRO',
+
     colorPalette: [
       { hex: '#E47830' },
       { hex: '#FA9441' },
       { hex: '#FFD9BE' },
       { hex: '#FFEDE0' }
     ],
+
     mockups: [
       chayanKaroImg,
       loveCupidImg,
       agritechMarketplaceImg,
       caseStudyUiDesignImg
     ],
+
     nextId: 'love-cupid',
-    nextTitle: 'Love Cupid'
+    nextTitle: 'Love Cupid',
+    demoUrl: 'https://chayankaro.com',
+
   },
+
   'love-cupid': {
     title: 'Love Cupid',
     subtitle: 'Personality-Focused Matchmaking',
-    tagline: 'Personality-focused matching mechanics and guided dating workflows creating meaningful connections.',
+    tagline:
+      'A dating experience focused on meaningful connections through personality-driven matching, guided conversations, and compatibility-first interactions.',
+
     category: 'UX Research, Branding + UX/UI Designing',
     role: 'Lead UX Researcher & Designer',
     timeline: '10 Weeks',
     deliverables: 'Branding & UX/UI',
     platform: 'iOS Mobile App',
 
-    problem: 'Modern dating apps often prioritize shallow metrics, leading to user fatigue and low match-to-meeting conversion rates. Users seek deeper matching criteria and icebreakers that encourage meaningful conversations.',
-    solution: 'Love Cupid introduces guided conversation flows, shared interactive challenges, and matching algorithms based on personality compatibility and communication preferences rather than purely swipe metrics.',
-    blueprint: 'Design system built for warm engagements, incorporating friendly typography, fluid custom shape overlays, and telemetry tools showing user compatibility scores in real-time.',
-    challenges: 'Structuring interaction friction to prevent user burnout and verify profiles dynamically using gesture-based selfie checks to prevent automated accounts.',
-    learnings: 'Continuous user feedback loop showed that safety features, clear pricing structures, and icebreaker games significantly increased user conversation times and date-conversion ratios.',
+    problem:
+      'Many dating applications focus heavily on appearance-based interactions, leading to superficial engagement and low-quality matches. Users struggled to build meaningful connections and often experienced conversation fatigue shortly after matching.',
+
+    solution:
+      'Love Cupid introduced personality-driven matchmaking, guided conversations, and compatibility-focused interactions. The platform encourages deeper engagement by helping users discover shared interests and reducing the pressure associated with traditional swipe-based experiences.',
+
+    blueprint:
+      'The visual system combines modern dating aesthetics with a warm and approachable personality. Soft gradients, expressive typography, carefully designed interaction states, and compatibility indicators help create an emotionally engaging experience.',
+
+    challenges:
+      'Designing engagement systems without overwhelming users required careful balance. The team needed to encourage meaningful interaction while avoiding unnecessary friction during onboarding, profile creation, and matching workflows.',
+
+    learnings:
+      'Users value authenticity over volume. Features that encouraged meaningful conversations generated stronger engagement than traditional growth-focused mechanics. Safety, transparency, and thoughtful interaction design played a key role in user retention.',
 
     fontMain: 'SF PRO',
+
     colorPalette: [
-      { hex: '#FF2E93' },
-      { hex: '#050505' },
-      { hex: '#242424' },
-      { hex: '#FFB300' }
+      { hex: '#F7B89C' },
+      { hex: '#E46A35' },
+      { hex: '#F4F7F5' },
+      { hex: '#000000' }
     ],
+
     mockups: [
       loveCupidImg,
       chayanKaroImg,
       agritechMarketplaceImg,
       caseStudyUiDesignImg
     ],
+
     nextId: 'agritech-marketplace',
-    nextTitle: 'Agritech-Marketplace'
+    nextTitle: 'Agritech Marketplace',
+    demoUrl: 'https://chayankaro.com',
+
+
   },
+
   'agritech-marketplace': {
-    title: 'Agritech-Marketplace',
+    title: 'Agritech Marketplace',
     subtitle: 'Connecting Farmers and Wholesale Buyers',
-    tagline: 'Connecting farmers directly to wholesale buyers, securing supply chain logistics and crop ledger systems.',
+    tagline:
+      'A digital marketplace that empowers farmers with direct market access, transparent pricing, and streamlined logistics management.',
+
     category: 'UX Research, Branding + UX/UI Designing',
     role: 'Senior Product Designer',
     timeline: '12 Weeks',
     deliverables: 'Responsive Web, Mobile App',
     platform: 'iOS, Android & Web',
 
-    problem: 'Farmers lack direct access to wholesale buyers, forcing them to rely on intermediaries who take high commissions. In addition, logistics coordination and real-time market crop pricing are highly opaque.',
-    solution: 'An end-to-end marketplace connecting farmers directly with large wholesale buyers, featuring real-time market price data, built-in logistics coordination tools, and transparent crop grading guides.',
-    blueprint: 'High-contrast design system optimized for readability on mid-to-low end mobile displays in bright outdoor lighting conditions, built around crop telemetry green.',
-    challenges: 'Integrating rapid-fluctuation index pricing data across multiple regional hubs, and designing highly simplified forms for users with low technical literacy.',
-    learnings: 'Offline capabilities are essential for agricultural topographies. Designing resilient local databases and visual indicators for synchronization status created trust and adoption.',
+    problem:
+      'Farmers often face limited access to buyers, inconsistent pricing information, and fragmented logistics processes. The lack of transparency across the agricultural supply chain creates inefficiencies that impact both profitability and trust.',
+
+    solution:
+      'The marketplace connects farmers directly with wholesale buyers through a unified digital platform. Real-time pricing, product listings, logistics coordination, and transaction visibility help streamline the entire trading process from listing to delivery.',
+
+    blueprint:
+      'The design system prioritizes clarity, readability, and accessibility in outdoor usage environments. Large touch targets, high-contrast interfaces, simplified workflows, and multilingual considerations ensure usability across a wide range of users.',
+
+    challenges:
+      'Designing for users with different levels of digital literacy required simplifying complex marketplace workflows without removing essential functionality. Network limitations and rural connectivity challenges also influenced product decisions.',
+
+    learnings:
+      'Successful agricultural products require reliability before innovation. Offline-friendly experiences, clear status indicators, and simplified workflows significantly increased user confidence and platform adoption.',
 
     fontMain: 'SF PRO',
+
     colorPalette: [
       { hex: '#00E676' },
       { hex: '#080907' },
       { hex: '#2E322A' },
       { hex: '#FF9100' }
     ],
+
     mockups: [
       agritechMarketplaceImg,
       chayanKaroImg,
       loveCupidImg,
       caseStudyUiDesignImg
     ],
+
     nextId: 'chayan-karo',
-    nextTitle: 'Chayan Karo'
+    nextTitle: 'Chayan Karo',
+    demoUrl: 'https://chayankaro.com',
+
   }
 };
-
 /* ─────────────────────────────────────────
    HERO
    ───────────────────────────────────────── */
@@ -318,19 +367,41 @@ export function LearningsSection({ learnings }) {
 /* ─────────────────────────────────────────
    FOOTER
 ───────────────────────────────────────── */
-export function CaseStudyFooter({ nextTitle, nextId, onNavigateNext, onClose }) {
+export function CaseStudyFooter({
+  nextTitle,
+  nextId,
+  demoUrl,
+  onNavigateNext,
+  onClose
+}) {
   return (
     <footer className="cs-footer">
       <div className="cs-footer__inner">
+
         <button
           onClick={() => onNavigateNext(nextId)}
           className="cs-footer__next-btn"
         >
           Next Project: {nextTitle} →
         </button>
-        <button onClick={onClose} className="cs-footer__home-btn">
-          Return to Home
-        </button>
+
+        <div className="cs-footer__right">
+          {demoUrl && (
+            <a
+              href={demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cs-footer__demo-btn"
+            >
+              View Live Demo ↗
+            </a>
+          )}
+
+          <button onClick={onClose} className="cs-footer__home-btn">
+            Return to Home
+          </button>
+        </div>
+
       </div>
     </footer>
   );
@@ -412,7 +483,7 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
   const tertiaryColor = data.colorPalette?.[2]?.hex || '#FFD9BE';
 
   return (
-    <article 
+    <article
       ref={pageRef}
       className="cs-page"
       style={{
@@ -435,6 +506,7 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
       <CaseStudyFooter
         nextTitle={data.nextTitle}
         nextId={data.nextId}
+        demoUrl={data.demoUrl}
         onNavigateNext={onNavigateNext}
         onClose={onClose}
       />

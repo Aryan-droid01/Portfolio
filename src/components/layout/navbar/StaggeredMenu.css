@@ -12,32 +12,32 @@
   z-index: 99999;
 }
 
-.staggered-menu-header{
-  position:fixed !important;
-  top:24px;
-  left:50%;
-  transform:translateX(-50%) !important;
+.staggered-menu-header {
+  position: fixed !important;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) !important;
 
-  width:min(82vw,1600px);
-  height:72px;
+  width: min(82vw, 1600px);
+  height: 72px;
 
-  padding:0 34px;
+  padding: 0 34px;
 
-  background:rgba(0,0,0,.45);
+  background: rgba(0, 0, 0, .45);
 
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 
-  border:1px solid rgba(255,255,255,.06);
+  border: 1px solid rgba(255, 255, 255, .06);
 
-  border-radius:999px;
+  border-radius: 999px;
 
   box-shadow:
-  0 20px 60px rgba(0,0,0,.5);
+    0 20px 60px rgba(0, 0, 0, .5);
 
-  z-index:99999;
+  z-index: 99999;
 
-  pointer-events:auto;
+  pointer-events: auto;
 }
 
 .sm-header-inner-float {
@@ -58,18 +58,18 @@
   width: min(82vw, 1600px) !important;
 }
 
-.staggered-menu-header:hover{
+.staggered-menu-header:hover {
 
-border-color:
-rgba(255,255,255,.12);
+  border-color:
+    rgba(255, 255, 255, .12);
 
-box-shadow:
-0 20px 60px rgba(0,0,0,.6),
-0 0 20px rgba(255,255,255,.03);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, .6),
+    0 0 20px rgba(255, 255, 255, .03);
 
 }
 
-.staggered-menu-header > * {
+.staggered-menu-header>* {
   pointer-events: auto;
 }
 
@@ -403,9 +403,11 @@ box-shadow:
     left: 0;
     right: 0;
   }
+
   .staggered-menu-header {
     width: 90vw;
   }
+
   [data-open] .staggered-menu-header {
     width: 90vw !important;
   }
@@ -416,6 +418,7 @@ box-shadow:
     width: 90vw;
     top: 20px;
   }
+
   [data-open] .staggered-menu-header {
     width: 90vw !important;
   }
@@ -428,15 +431,18 @@ box-shadow:
     right: 0;
     padding: 6em 2em 2em 2em;
   }
+
   .sm-panel-item {
     font-size: 3.5rem;
   }
+
   .staggered-menu-header {
     top: 16px;
     width: 94vw;
     height: 60px;
     padding: 0 20px;
   }
+
   [data-open] .staggered-menu-header {
     width: 94vw !important;
   }
