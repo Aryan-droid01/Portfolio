@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import TiltedCard from '../ui/TiltedCard';
+import LightRays from '../ui/LightRays';
+import FuzzyText from '../ui/FuzzyText';
 import './IllustrationsPage.css';
 import bulletSvg from '../../assets/bullet.svg';
 // We'll use the user's provided spotify image since we don't have the skull image in assets, 
@@ -14,21 +16,46 @@ export default function IllustrationsPage({ onClose }) {
 
   return (
     <article className="illustrations-page">
+      <div className="illustrations-light-rays">
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#ffffff"
+          raysSpeed={1.5}
+          lightSpread={0.8}
+          rayLength={1.2}
+          followMouse={true}
+          mouseInfluence={0.1}
+          noiseAmount={0.1}
+          distortion={0.05}
+        />
+      </div>
+      
       <header className="illustrations-header">
-        <h1 className="illustrations-title">ILLUSTRATIONS</h1>
+        <h1 className="illustrations-title">
+          <FuzzyText
+            fontSize="72px"
+            fontWeight={800}
+            fontFamily="'Instrument Sans', sans-serif"
+            color="#ffffff"
+            baseIntensity={0.15}
+            hoverIntensity={0.4}
+            fuzzRange={12}
+          >
+            ILLUSTRATIONS
+          </FuzzyText>
+        </h1>
         <p className="illustrations-subtitle">These are all the illustrations i have created</p>
       </header>
 
       <div className="illustrations-gallery">
-        <div className="illustration-item">
           <TiltedCard
             imageSrc={skullPlaceholder}
             altText="Illustration 1"
             captionText="Illustration 1"
-            containerHeight="400px"
-            containerWidth="350px"
-            imageHeight="400px"
-            imageWidth="350px"
+            containerHeight="525px"
+            containerWidth="400px"
+            imageHeight="525px"
+            imageWidth="400px"
             rotateAmplitude={12}
             scaleOnHover={1.05}
             showMobileWarning={false}
@@ -36,21 +63,19 @@ export default function IllustrationsPage({ onClose }) {
             displayOverlayContent={true}
             overlayContent={
               <div className="tilted-card-badge">
-                AS-001
+                SKULL // 01
               </div>
             }
           />
-        </div>
 
-        <div className="illustration-item">
           <TiltedCard
             imageSrc={skullPlaceholder}
             altText="Illustration 2"
             captionText="Illustration 2"
-            containerHeight="400px"
-            containerWidth="350px"
-            imageHeight="400px"
-            imageWidth="350px"
+            containerHeight="525px"
+            containerWidth="400px"
+            imageHeight="525px"
+            imageWidth="400px"
             rotateAmplitude={12}
             scaleOnHover={1.05}
             showMobileWarning={false}
@@ -58,11 +83,10 @@ export default function IllustrationsPage({ onClose }) {
             displayOverlayContent={true}
             overlayContent={
               <div className="tilted-card-badge">
-                AS-002
+                SKULL // 02
               </div>
             }
           />
-        </div>
       </div>
 
       <button onClick={onClose} className="illustrations-close-btn">

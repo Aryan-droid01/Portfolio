@@ -83,7 +83,7 @@ export default function App() {
         </div>
       )}
 
-      {siteVisible && <Navbar />}
+      {siteVisible && !currentCaseStudy && <Navbar />}
 
       {/* Main website wrapper (revealed when pulled) */}
       <motion.div 

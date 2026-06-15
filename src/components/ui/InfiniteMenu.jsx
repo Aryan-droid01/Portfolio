@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { mat4, quat, vec2, vec3 } from 'gl-matrix';
 import gsap from 'gsap';
+import FuzzyText from './FuzzyText';
+import bulletSvg from '../../assets/bullet.svg';
 import './InfiniteMenu.css';
 
 const discVertShaderSource = `#version 300 es
@@ -1085,16 +1087,26 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
       <canvas id="infinite-grid-menu-canvas" ref={canvasRef} />
 
       <div className={`infinite-menu-header ${isExpanded ? 'hidden' : ''}`}>
-        <h1 className="infinite-menu-title">POSTS</h1>
+        <h1 className="infinite-menu-title">
+          <FuzzyText
+            fontSize="72px"
+            fontWeight={800}
+            fontFamily="'Instrument Sans', sans-serif"
+            color="#ffffff"
+            baseIntensity={0.15}
+            hoverIntensity={0.4}
+            fuzzRange={12}
+          >
+            POSTS
+          </FuzzyText>
+        </h1>
         <p className="infinite-menu-subtitle">Drag To see all the creatives ive created</p>
       </div>
 
       <div className={`infinite-menu-footer ${isExpanded ? 'hidden' : ''}`}>
         <button className="return-home-button" onClick={() => onClose ? onClose() : window.history.back()}>
           Return To Home
-          <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="return-icon">
-            <path d="M1 6H22M22 6L17 1M22 6L17 11" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <img src={bulletSvg} alt="Bullet" className="bullet-icon-right" />
         </button>
       </div>
 
