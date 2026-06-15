@@ -27,6 +27,7 @@
   height: 100%;
   pointer-events: none; /* Allow events to pass through to canvas */
   z-index: 10;
+  transition: opacity 0.5s ease;
 }
 
 /* Title positioned to the right of the center card */
@@ -34,12 +35,12 @@
   user-select: none;
   position: absolute;
   top: 50%;
-  left: calc(50% + 160px); /* Half card width + margin */
+  left: 64%;
   transform: translateY(-50%);
   font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 500;
-  font-size: 1.8rem;
-  line-height: 1.35;
+  font-size: 42px;
+  line-height: 1.15;
   color: #fff;
   max-width: 280px;
   margin: 0;
@@ -68,19 +69,19 @@
 .action-button {
   position: absolute;
   left: 50%;
-  top: calc(50% + 180px); /* Placed right below the bottom of the card */
-  transform: translate(-50%, -50%) scale(1);
+  bottom: 135px;
+  transform: translateX(-50%) scale(1);
   width: 64px;
   height: 64px;
   display: grid;
   place-items: center;
   background: #000;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid #ffffff;
   border-radius: 50%;
   cursor: pointer;
   pointer-events: auto; /* Allow clicks */
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  box-shadow: none;
   padding: 0;
   box-sizing: border-box;
 }
@@ -88,8 +89,8 @@
 .action-button:hover {
   background: #fff;
   border-color: #fff;
-  transform: translate(-50%, -50%) scale(1.08);
-  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.15);
+  transform: translateX(-50%) scale(1.08);
+  box-shadow: none;
 }
 
 .action-button-icon {
@@ -114,7 +115,7 @@
 .action-button.inactive {
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.8);
+  transform: translateX(-50%) scale(0.8);
 }
 
 /* Header POSTS */
@@ -125,6 +126,7 @@
   z-index: 20;
   color: #fff;
   pointer-events: none;
+  transition: opacity 0.5s ease;
 }
 
 .infinite-menu-title {
@@ -149,6 +151,14 @@
   bottom: 40px;
   right: 40px;
   z-index: 20;
+  transition: opacity 0.5s ease;
+}
+
+.infinite-menu-header.hidden,
+.infinite-menu-footer.hidden,
+.infinite-menu-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .return-home-button {
@@ -173,6 +183,120 @@
 .return-icon {
   display: inline-block;
 }
+
+/* --- Expanded Modal UI --- */
+.expanded-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  pointer-events: none; /* Let canvas drag pass through to background */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
+}
+
+.expanded-modal-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.expanded-close-button {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.expanded-close-button:hover {
+  background: #fff;
+}
+
+.expanded-close-button:hover path {
+  stroke: #000;
+}
+
+.expanded-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.expanded-modal-overlay.visible .expanded-modal-content {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  transition-delay: 0.2s; /* delay on enter */
+}
+
+.expanded-modal-overlay.hidden .expanded-modal-content {
+  transition-delay: 0s; /* instant fade out on close */
+}
+
+.expanded-hero-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 56px;
+}
+
+.expanded-hero-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(75vw, 1100px);
+  max-height: 75vh;
+  object-fit: contain;
+  aspect-ratio: auto;
+  border-radius: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #111;
+}
+
+.expanded-title {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.expanded-description {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 22px;
+  line-height: 1.7;
+  color: #fff;
+  opacity: 0.75;
+  margin: 0;
+  max-width: 700px;
+  text-align: center;
+}
+
+
 
 /* Responsive styles */
 @media (max-width: 1024px) {

@@ -3,6 +3,7 @@ import './CaseStudy.css';
 import bulletSvg from '../../assets/bullet.svg';
 import FuzzyText from '../ui/FuzzyText';
 import InfiniteMenu from '../ui/InfiniteMenu';
+import IllustrationsPage from './IllustrationsPage';
 
 // Import mockup images for project solutions
 import chayanKaroImg from '../../assets/chayan_karo.png';
@@ -378,6 +379,11 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
         </div>
       </article>
     );
+  }
+
+  // Intercept 'illustrations' case study
+  if (id === 'illustrations') {
+    return <IllustrationsPage onClose={onClose} />;
   }
 
   const data = CASE_STUDIES_DATA[id];

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { mat4, quat, vec2, vec3 } from 'gl-matrix';
+import gsap from 'gsap';
 import './InfiniteMenu.css';
 
 const discVertShaderSource = `#version 300 es
@@ -84,21 +85,33 @@ void main() {
     // Cards aspect ratio is 1.0 : 1.25
     float containerAspect = 1.0 / 1.25;
     
-    // Perform object-fit: cover scaling
+    // Perform object-fit: contain scaling
     float scaleX = 1.0;
     float scaleY = 1.0;
     if (imageAspect > containerAspect) {
-        scaleX = imageAspect / containerAspect;
-    } else {
         scaleY = containerAspect / imageAspect;
+    } else {
+        scaleX = imageAspect / containerAspect;
     }
+    
+    // Add 16px equivalent padding by scaling UVs outward
+    float paddingScale = 1.1;
+    scaleX *= paddingScale;
+    scaleY *= paddingScale;
     
     vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
     st = (st - 0.5) * vec2(scaleX, scaleY) + 0.5;
+    
+    // Determine bounds for padding background
+    float inBounds = step(0.0, st.x) * step(st.x, 1.0) * step(0.0, st.y) * step(st.y, 1.0);
+    
     st = clamp(st, 0.0, 1.0);
     st = st * cellSize + cellOffset;
     
-    outColor = texture(uTex, st);
+    vec4 texColor = texture(uTex, st);
+    vec4 bgColor = vec4(0.05, 0.05, 0.05, 1.0); // Flat minimal dark background for padding
+    
+    outColor = mix(bgColor, texColor, inBounds);
     outColor.a *= vAlpha;
 }
 `;
@@ -627,6 +640,9 @@ class InfiniteGridMenu {
   smoothRotationVelocity = 0;
   scaleFactor = 1.0;
   movementActive = false;
+  expandProgress = 0;
+  expandedIndex = -1;
+  isExpanding = false;
 
   constructor(canvas, items, onActiveItemChange, onMovementChange, onInit = null, scale = 1.0) {
     this.canvas = canvas;
@@ -660,6 +676,29 @@ class InfiniteGridMenu {
     this.#render();
 
     this.animationFrameId = requestAnimationFrame(t => this.run(t));
+  }
+
+  expand(index) {
+    this.expandedIndex = index;
+    this.isExpanding = true;
+    this.control.isPointerDown = false; // Disable dragging
+    gsap.to(this, {
+      expandProgress: 1,
+      duration: 0.6,
+      ease: "power3.inOut"
+    });
+  }
+
+  collapse() {
+    this.isExpanding = false;
+    gsap.to(this, {
+      expandProgress: 0,
+      duration: 0.6,
+      ease: "power3.inOut",
+      onComplete: () => {
+        this.expandedIndex = -1;
+      }
+    });
   }
 
   #init(onInit) {
@@ -697,7 +736,7 @@ class InfiniteGridMenu {
 
     // Custom RoundedRectangleGeometry matching the exact specifications
     this.discGeo = new RoundedRectangleGeometry(
-    1.8,
+    1.44,
     1.45,
     0.25,
     12
@@ -811,6 +850,14 @@ class InfiniteGridMenu {
       mat4.multiply(matrix, matrix, mat4.fromScaling(mat4.create(), [finalScale, finalScale, finalScale]));
       mat4.multiply(matrix, matrix, mat4.fromTranslation(mat4.create(), [0, 0, -this.SPHERE_RADIUS]));
 
+      if (this.expandProgress > 0) {
+        // Fade/shrink all cards to black out the WebGL background
+        const shrinkMatrix = mat4.create();
+        const shrinkScale = 1 - this.expandProgress;
+        mat4.multiply(shrinkMatrix, shrinkMatrix, mat4.fromScaling(mat4.create(), [shrinkScale, shrinkScale, shrinkScale]));
+        mat4.multiply(matrix, matrix, shrinkMatrix);
+      }
+
       mat4.copy(this.discInstances.matrices[ndx], matrix);
     });
 
@@ -892,6 +939,8 @@ class InfiniteGridMenu {
   }
 
   #onControlUpdate(deltaTime) {
+    if (this.isExpanding || this.expandProgress > 0) return; // Freeze control during expansion
+    
     const timeScale = deltaTime / this.TARGET_FRAME_DURATION + 0.0001;
     let damping = 5 / timeScale;
     let cameraTargetZ = 3 * this.scaleFactor;
@@ -965,12 +1014,13 @@ const defaultItems = [
 
 export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
   const canvasRef = useRef(null);
+  const sketchRef = useRef(null);
   const [activeItem, setActiveItem] = useState(null);
   const [isMoving, setIsMoving] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    let sketch;
 
     const handleActiveItem = index => {
       const itemIndex = index % items.length;
@@ -978,7 +1028,7 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
     };
 
     if (canvas) {
-      sketch = new InfiniteGridMenu(
+      sketchRef.current = new InfiniteGridMenu(
         canvas,
         items.length ? items : defaultItems,
         handleActiveItem,
@@ -989,8 +1039,8 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
     }
 
     const handleResize = () => {
-      if (sketch) {
-        sketch.resize();
+      if (sketchRef.current) {
+        sketchRef.current.resize();
       }
     };
 
@@ -999,31 +1049,47 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (sketch) {
-        sketch.destroy();
+      if (sketchRef.current) {
+        sketchRef.current.destroy();
       }
     };
   }, [items, scale]);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isExpanded) {
+        handleClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isExpanded]);
+
   const handleButtonClick = () => {
-    if (!activeItem?.link) return;
-    if (activeItem.link.startsWith('http')) {
-      window.open(activeItem.link, '_blank');
-    } else {
-      console.log('Internal route:', activeItem.link);
+    if (!activeItem || isMoving) return;
+    setIsExpanded(true);
+    if (sketchRef.current) {
+      sketchRef.current.expand(sketchRef.current.nearestVertexIndex);
+    }
+  };
+
+  const handleClose = () => {
+    setIsExpanded(false);
+    if (sketchRef.current) {
+      sketchRef.current.collapse();
     }
   };
 
   return (
-    <div className="infinite-menu-container">
+    <div className={`infinite-menu-container ${isExpanded ? 'expanded' : ''}`}>
       <canvas id="infinite-grid-menu-canvas" ref={canvasRef} />
 
-      <div className="infinite-menu-header">
+      <div className={`infinite-menu-header ${isExpanded ? 'hidden' : ''}`}>
         <h1 className="infinite-menu-title">POSTS</h1>
         <p className="infinite-menu-subtitle">Drag To see all the creatives ive created</p>
       </div>
 
-      <div className="infinite-menu-footer">
+      <div className={`infinite-menu-footer ${isExpanded ? 'hidden' : ''}`}>
         <button className="return-home-button" onClick={() => onClose ? onClose() : window.history.back()}>
           Return To Home
           <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="return-icon">
@@ -1033,7 +1099,7 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
       </div>
 
       {activeItem && (
-        <div className="infinite-menu-overlay">
+        <div className={`infinite-menu-overlay ${isExpanded ? 'hidden' : ''}`}>
           <h2 className={`face-title ${isMoving ? 'inactive' : 'active'}`}>
             {activeItem.title}
           </h2>
@@ -1045,10 +1111,29 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
           <button 
             onClick={handleButtonClick} 
             className={`action-button ${isMoving ? 'inactive' : 'active'}`}
-            aria-label="View Project"
+            aria-label="Expand Project"
           >
             <span className="action-button-icon">&#x2197;</span>
           </button>
+        </div>
+      )}
+
+      {activeItem && (
+        <div className={`expanded-modal-overlay ${isExpanded ? 'visible' : 'hidden'}`}>
+          <button className="expanded-close-button" onClick={handleClose} aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          <div className="expanded-modal-content">
+            <div className="expanded-hero-image-wrapper">
+              <img src={activeItem.image} alt={activeItem.title} className="expanded-hero-image" />
+            </div>
+            <h2 className="expanded-title">{activeItem.title}</h2>
+            <p className="expanded-description">
+              {activeItem.description || "This is a detailed case study view for the selected creative. Here you can read more about the process, see the full layout, and interact with the content directly on this screen."}
+            </p>
+          </div>
         </div>
       )}
     </div>
