@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CaseStudy.css';
 import bulletSvg from '../../assets/bullet.svg';
 import FuzzyText from '../ui/FuzzyText';
@@ -54,6 +54,10 @@ const CASE_STUDIES_DATA = {
       chayanKaroImg,
       loveCupidImg,
       agritechMarketplaceImg,
+      caseStudyUiDesignImg,
+      chayanKaroImg,
+      loveCupidImg,
+      agritechMarketplaceImg,
       caseStudyUiDesignImg
     ],
 
@@ -100,6 +104,10 @@ const CASE_STUDIES_DATA = {
     ],
 
     mockups: [
+      loveCupidImg,
+      chayanKaroImg,
+      agritechMarketplaceImg,
+      caseStudyUiDesignImg,
       loveCupidImg,
       chayanKaroImg,
       agritechMarketplaceImg,
@@ -153,6 +161,10 @@ const CASE_STUDIES_DATA = {
       agritechMarketplaceImg,
       chayanKaroImg,
       loveCupidImg,
+      caseStudyUiDesignImg,
+      agritechMarketplaceImg,
+      chayanKaroImg,
+      loveCupidImg,
       caseStudyUiDesignImg
     ],
 
@@ -199,6 +211,10 @@ const CASE_STUDIES_DATA = {
     ],
 
     mockups: [
+      pairfectImg,
+      chayanKaroImg,
+      loveCupidImg,
+      agritechMarketplaceImg,
       pairfectImg,
       chayanKaroImg,
       loveCupidImg,
@@ -330,24 +346,71 @@ export function ProblemSection({ problem }) {
 }
 
 /* ─────────────────────────────────────────
+   SCREENSHOTS SLIDER COMPONENT
+───────────────────────────────────────── */
+export function ScreenshotsSlider({ mockups, title }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  
+  const chunks = [];
+  for (let i = 0; i < mockups.length; i += 4) {
+    chunks.push(mockups.slice(i, i + 4));
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex(current => (current + 1) % chunks.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [chunks.length]);
+
+  return (
+    <div className="cs-screenshots-slider">
+      <h3 className="cs-screenshots-title">{title}</h3>
+      <div className="cs-screenshots-viewport">
+        <div 
+          className="cs-screenshots-track" 
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+        >
+          {chunks.map((chunk, i) => (
+            <div key={i} className="cs-screenshots-slide">
+              {chunk.map((imgUrl, j) => (
+                <PhoneFrame key={j} image={imgUrl} label={`Mockup ${i * 4 + j + 1}`} />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="cs-screenshots-dots">
+        {chunks.map((_, i) => (
+          <button 
+            key={i} 
+            className={`cs-screenshots-dot ${i === activeIndex ? 'active' : ''}`}
+            onClick={() => setActiveIndex(i)}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────
    #02 SOLUTION
 ───────────────────────────────────────── */
-export function SolutionSection({ solution, mockups }) {
+export function SolutionSection({ solution, mockups, title }) {
   return (
     <SectionShell num="#02" title="THE SOLUTION" modifier="solution">
       <p className="cs-section__body">{solution}</p>
 
-      <div className="cs-mockups-row">
-        {mockups && mockups.length > 0 ? (
-          mockups.map((imgUrl, i) => (
-            <PhoneFrame key={i} image={imgUrl} label={`Mockup ${i + 1}`} />
-          ))
-        ) : (
-          [1, 2, 3, 4].map(n => (
+      {mockups && mockups.length > 0 ? (
+        <ScreenshotsSlider mockups={mockups} title={title} />
+      ) : (
+        <div className="cs-mockups-row">
+          {[1, 2, 3, 4].map(n => (
             <PhoneFrame key={n} label={`Mockup ${n}`} />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </SectionShell>
   );
 }
@@ -544,7 +607,7 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
     >
       <CaseStudyHero data={data} projectImage={images?.[id]} onClose={onClose} />
       <ProblemSection problem={data.problem} scrollContainerRef={pageRef} />
-      <SolutionSection solution={data.solution} mockups={data.mockups} scrollContainerRef={pageRef} />
+      <SolutionSection solution={data.solution} mockups={data.mockups} title={data.title} scrollContainerRef={pageRef} />
       <SystemBlueprintSection
         blueprint={data.blueprint}
         fontMain={data.fontMain}
