@@ -11,6 +11,7 @@ import loveCupidImg from '../../assets/love_cupid.png';
 import agritechMarketplaceImg from '../../assets/agritech_marketplace.png';
 import caseStudyUiDesignImg from '../../assets/casestudyuidesign.png';
 import chayanKaroWomensDayImg from '../../assets/chayan_karo_womens_day.png';
+import pairfectImg from '../../assets/pairfect.png';
 
 const CASE_STUDIES_DATA = {
   'chayan-karo': {
@@ -56,8 +57,8 @@ const CASE_STUDIES_DATA = {
       caseStudyUiDesignImg
     ],
 
-    nextId: 'love-cupid',
-    nextTitle: 'Love Cupid',
+    nextId: 'agritech-marketplace',
+    nextTitle: 'Agritech Marketplace',
     demoUrl: 'https://chayankaro.com',
 
   },
@@ -105,8 +106,8 @@ const CASE_STUDIES_DATA = {
       caseStudyUiDesignImg
     ],
 
-    nextId: 'agritech-marketplace',
-    nextTitle: 'Agritech Marketplace',
+    nextId: 'pairfect',
+    nextTitle: 'Pairfect',
     demoUrl: 'https://chayankaro.com',
 
 
@@ -155,9 +156,58 @@ const CASE_STUDIES_DATA = {
       caseStudyUiDesignImg
     ],
 
+    nextId: 'love-cupid',
+    nextTitle: 'Love Cupid',
+    demoUrl: 'https://chayankaro.com',
+
+  },
+
+  'pairfect': {
+    title: 'Pairfect',
+    subtitle: 'Connecting Developers Through Pair Programming',
+    tagline:
+      'A platform dedicated to matching developers for pair programming sessions, fostering collaboration, and enhancing coding skills through shared experiences.',
+
+    category: 'UX Research, Branding + UX/UI Designing',
+    role: 'Lead Product Designer',
+    timeline: '8 Weeks',
+    deliverables: 'Web App Design',
+    platform: 'Responsive Web',
+
+    problem:
+      'Developers often struggle to find compatible partners for pair programming. Existing platforms are either too broad or lack the specific features needed to match developers based on skill level, language preference, and availability.',
+
+    solution:
+      'Pairfect provides a streamlined matchmaking system that connects developers based on their technical profiles. The platform includes integrated scheduling, communication tools, and feedback mechanisms to ensure productive and enjoyable pair programming sessions.',
+
+    blueprint:
+      'The design system features a clean, minimal interface with a dark mode aesthetic and vibrant pink accents. High contrast typography and intuitive navigation help users quickly find matches and manage their schedules without distraction.',
+
+    challenges:
+      'Creating an effective matching algorithm required balancing user preferences with availability. The interface needed to clearly communicate matching criteria while remaining uncluttered and easy to use.',
+
+    learnings:
+      'Developers highly value clear communication and structured sessions. Providing tools for scheduling and feedback significantly improved the success rate and satisfaction of pair programming sessions.',
+
+    fontMain: 'SF PRO',
+
+    colorPalette: [
+      { hex: '#E2006A' },
+      { hex: '#1C1C1F' },
+      { hex: '#FFFFFF' },
+      { hex: '#333333' }
+    ],
+
+    mockups: [
+      pairfectImg,
+      chayanKaroImg,
+      loveCupidImg,
+      agritechMarketplaceImg
+    ],
+
     nextId: 'chayan-karo',
     nextTitle: 'Chayan Karo',
-    demoUrl: 'https://chayankaro.com',
+    demoUrl: 'https://pairfect.io',
 
   }
 };

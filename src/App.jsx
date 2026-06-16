@@ -18,6 +18,7 @@ import { preloadAudio } from './utils/audioManager';
 import chayanKaroImg from './assets/chayan_karo.png';
 import loveCupidImg from './assets/love_cupid.png';
 import agritechMarketplaceImg from './assets/agritech_marketplace.png';
+import pairfectImg from './assets/pairfect.png';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -33,7 +34,8 @@ export default function App() {
   const projectImages = {
     'chayan-karo': chayanKaroImg,
     'love-cupid': loveCupidImg,
-    'agritech-marketplace': agritechMarketplaceImg
+    'agritech-marketplace': agritechMarketplaceImg,
+    'pairfect': pairfectImg
   };
 
   const handleReveal = () => {

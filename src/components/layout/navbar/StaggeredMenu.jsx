@@ -120,8 +120,8 @@ export const StaggeredMenu = ({
         });
       } else if (currentY > lastScrollY.current) {
         gsap.to(headerRef.current, {
-          y: 0,
-          opacity: 1,
+          y: -120,
+          opacity: 0,
           duration: 0.5,
           ease: "power4.out",
           overwrite: "auto"

@@ -3,11 +3,20 @@ import './Projects.css';
 import chayanKaroImg from '../../assets/chayan_karo.png';
 import loveCupidImg from '../../assets/love_cupid.png';
 import agritechMarketplaceImg from '../../assets/agritech_marketplace.png';
+import pairfectImg from '../../assets/pairfect.png';
 import CautionTape from '../../components/caution-tape/CautionTape';
 import bulletSvg from '../../assets/bullet.svg';
 
 export default function Projects({ onViewCaseStudy }) {
   const primaryProjects = [
+    {
+      id: 'pairfect',
+      title: 'Pairfect',
+      category: 'UX Research,Branding + UX/UI Designing',
+      description: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
+      image: pairfectImg,
+      link: '#/case-study/pairfect'
+    },
     {
       id: 'chayan-karo',
       title: 'Chayan Karo',
@@ -17,20 +26,20 @@ export default function Projects({ onViewCaseStudy }) {
       link: '#/case-study/chayan-karo'
     },
     {
-      id: 'love-cupid',
-      title: 'Love Cupid',
-      category: 'UX Research,Branding + UX/UI Designing',
-      description: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
-      image: loveCupidImg,
-      link: '#/case-study/love-cupid'
-    },
-    {
       id: 'agritech-marketplace',
       title: 'Agritech-Marketplace',
       category: 'UX Research,Branding + UX/UI Designing',
       description: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
       image: agritechMarketplaceImg,
       link: '#/case-study/agritech-marketplace'
+    },
+    {
+      id: 'love-cupid',
+      title: 'Love Cupid',
+      category: 'UX Research,Branding + UX/UI Designing',
+      description: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
+      image: loveCupidImg,
+      link: '#/case-study/love-cupid'
     }
   ];
 
