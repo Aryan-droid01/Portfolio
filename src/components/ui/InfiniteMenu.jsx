@@ -84,36 +84,44 @@ void main() {
     ivec2 texSize = textureSize(uTex, 0);
     float imageAspect = float(texSize.x) / float(texSize.y);
     
-    // Cards aspect ratio is 1.0 : 1.25
+    // Original cards aspect ratio
     float containerAspect = 1.0 / 1.25;
     
-    // Perform object-fit: contain scaling
+    // Perform object-fit: cover scaling
     float scaleX = 1.0;
     float scaleY = 1.0;
     if (imageAspect > containerAspect) {
-        scaleY = containerAspect / imageAspect;
-    } else {
+        // Image is wider than container, crop sides
         scaleX = imageAspect / containerAspect;
+    } else {
+        // Image is taller than container, crop top/bottom
+        scaleY = containerAspect / imageAspect;
     }
     
-    // Add 16px equivalent padding by scaling UVs outward
-    float paddingScale = 1.1;
-    scaleX *= paddingScale;
-    scaleY *= paddingScale;
+    // Slightly enlarge images inside the frame: scale(1.05-1.15)
+    // Square posts can be enlarged more. Portrait slightly less.
+    float dynamicScale = 1.08;
+    if (imageAspect >= 0.95 && imageAspect <= 1.05) dynamicScale = 1.15; // Square
+    else if (imageAspect > 1.05) dynamicScale = 1.10; // Wide
+    else dynamicScale = 1.05; // Portrait
+    
+    // Zoom in
+    scaleX /= dynamicScale;
+    scaleY /= dynamicScale;
     
     vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
-    st = (st - 0.5) * vec2(scaleX, scaleY) + 0.5;
+    vec2 centeredSt = st - 0.5;
+    vec2 scaledSt = centeredSt * vec2(scaleX, scaleY);
     
-    // Determine bounds for padding background
-    float inBounds = step(0.0, st.x) * step(st.x, 1.0) * step(0.0, st.y) * step(st.y, 1.0);
+    // Map back to UV space for texture sample
+    vec2 texUv = scaledSt + 0.5;
     
-    st = clamp(st, 0.0, 1.0);
-    st = st * cellSize + cellOffset;
+    vec2 clampedUv = clamp(texUv, 0.0, 1.0);
+    clampedUv = clampedUv * cellSize + cellOffset;
     
-    vec4 texColor = texture(uTex, st);
-    vec4 bgColor = vec4(0.05, 0.05, 0.05, 1.0); // Flat minimal dark background for padding
+    vec4 texColor = texture(uTex, clampedUv);
     
-    outColor = mix(bgColor, texColor, inBounds);
+    outColor = texColor;
     outColor.a *= vAlpha;
 }
 `;
@@ -736,10 +744,10 @@ class InfiniteGridMenu {
       uAtlasSize: gl.getUniformLocation(this.discProgram, 'uAtlasSize')
     };
 
-    // Custom RoundedRectangleGeometry matching the exact specifications
+    // Original Custom RoundedRectangleGeometry
     this.discGeo = new RoundedRectangleGeometry(
-    1.44,
-    1.45,
+    1.0,
+    1.25,
     0.25,
     12
 );
@@ -852,6 +860,16 @@ class InfiniteGridMenu {
       mat4.multiply(matrix, matrix, mat4.fromScaling(mat4.create(), [finalScale, finalScale, finalScale]));
       mat4.multiply(matrix, matrix, mat4.fromTranslation(mat4.create(), [0, 0, -this.SPHERE_RADIUS]));
 
+      // 3D Hover effect for the actively centered/nearest card
+      if (ndx === this.nearestVertexIndex && !this.isMoving) {
+        // translateY(-8px) -> WebGL equivalent Y translation
+        mat4.multiply(matrix, matrix, mat4.fromTranslation(mat4.create(), [0, 0.08, 0]));
+        // rotateX(2deg)
+        mat4.multiply(matrix, matrix, mat4.fromXRotation(mat4.create(), 2 * Math.PI / 180));
+        // rotateY(-2deg)
+        mat4.multiply(matrix, matrix, mat4.fromYRotation(mat4.create(), -2 * Math.PI / 180));
+      }
+
       if (this.expandProgress > 0) {
         // Fade/shrink all cards to black out the WebGL background
         const shrinkMatrix = mat4.create();
@@ -956,6 +974,7 @@ class InfiniteGridMenu {
 
     if (!this.control.isPointerDown) {
       const nearestVertexIndex = this.#findNearestVertexIndex();
+      this.nearestVertexIndex = nearestVertexIndex;
       const itemIndex = nearestVertexIndex % Math.max(1, this.items.length);
       this.onActiveItemChange(itemIndex);
       const snapDirection = vec3.normalize(vec3.create(), this.#getVertexWorldPosition(nearestVertexIndex));

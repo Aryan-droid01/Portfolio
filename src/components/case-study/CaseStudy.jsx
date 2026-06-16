@@ -13,6 +13,77 @@ import caseStudyUiDesignImg from '../../assets/casestudyuidesign.png';
 import chayanKaroWomensDayImg from '../../assets/chayan_karo_womens_day.png';
 import pairfectImg from '../../assets/pairfect.png';
 
+// Pairfect
+import pairfect1 from '../../assets/mockups/ScreenMockups/Home_Pairfect.svg';
+import pairfect2 from '../../assets/mockups/ScreenMockups/Explore_pairfect.svg';
+import pairfect3 from '../../assets/mockups/ScreenMockups/Closet_pairfect.svg';
+import pairfect4 from '../../assets/mockups/ScreenMockups/Profile_pairfect.svg';
+
+// LoveCupid
+import lovecupid1 from '../../assets/mockups/ScreenMockups/lovecupid1.svg';
+import lovecupid2 from '../../assets/mockups/ScreenMockups/lovecupid2.svg';
+import lovecupid3 from '../../assets/mockups/ScreenMockups/lovecupid3.svg';
+import lovecupid4 from '../../assets/mockups/ScreenMockups/lovecupid4.svg';
+
+// Chayan Karo
+import chayankaro1 from '../../assets/mockups/ScreenMockups/Chayann Karo.svg';
+import chayankaro2 from '../../assets/mockups/ScreenMockups/Chayan karo2.svg';
+import chayankaro3 from '../../assets/mockups/ScreenMockups/chayan karo3.svg';
+import chayankaro4 from '../../assets/mockups/ScreenMockups/chayan karo3-1.svg';
+
+// Chayan Saathi
+import chayansaathi1 from '../../assets/mockups/ScreenMockups/Chayansathi.svg';
+import chayansaathi2 from '../../assets/mockups/ScreenMockups/Chayansathi1.svg';
+import chayansaathi3 from '../../assets/mockups/ScreenMockups/Chayan sathi2.svg';
+import chayansaathi4 from '../../assets/mockups/ScreenMockups/Chayansathi3.svg';
+
+// Agritech (Madhumitra)
+import madhumitra1 from '../../assets/mockups/ScreenMockups/madhumitra1.svg';
+import madhumitra2 from '../../assets/mockups/ScreenMockups/Mdhumitra2.svg';
+import madhumitra3 from '../../assets/mockups/ScreenMockups/madhumitra3.svg';
+import madhumitra4 from '../../assets/mockups/ScreenMockups/madhumitra4.svg';
+
+// Horticulture
+import horticulture1 from '../../assets/mockups/ScreenMockups/horticulture1.svg';
+import horticulture2 from '../../assets/mockups/ScreenMockups/horticulture2.svg';
+import horticulture3 from '../../assets/mockups/ScreenMockups/horticulture3.svg';
+import horticulture4 from '../../assets/mockups/ScreenMockups/horticulture4.svg';
+
+// Videos
+import chayanKaroVideo from '../../assets/Chayan karo.mp4';
+import chayanSaathiVideo from '../../assets/Chayan Sathi.mp4';
+import madhumitraVideo from '../../assets/Madhumita.mp4';
+import horticultureVideo from '../../assets/Horticulture.mp4';
+import loveCupidVideo from '../../assets/Lovecupid.mp4';
+import pairfectVideo from '../../assets/PAIRFECT.mp4';
+
+// Posts 25
+import post001 from '../../assets/posts/Posts/AC (Chayan karo).png';
+import post002 from '../../assets/posts/Posts/AC offer promotion(Chayan karo).png';
+import post003 from '../../assets/posts/Posts/AC Offer Promotion 2(Chayan karo).png';
+import post004 from '../../assets/posts/Posts/AC Post 2(Chayan karo).png';
+import post005 from '../../assets/posts/Posts/AC Technician Hiring(Chayan Karo).png';
+import post006 from '../../assets/posts/Posts/After Holi Car Wash(Wonder Shine).png';
+import post007 from '../../assets/posts/Posts/After Holi Car Wash 2(Wonder Shine).png';
+import post008 from '../../assets/posts/Posts/Bathroom Cleaning (Chayan karo).png';
+import post009 from '../../assets/posts/Posts/Canopy Back (chayan karo).png';
+import post010 from '../../assets/posts/Posts/Canopy Top(Chayan karo).png';
+import post011 from '../../assets/posts/Posts/Canopyy Front(Chayan Karo).png';
+import post012 from '../../assets/posts/Posts/Carpenter Offer(Chayan karo).png';
+import post013 from '../../assets/posts/Posts/Hindi AC Technician Hiring.png';
+import post014 from '../../assets/posts/Posts/Holi (Chayan karo).png';
+import post015 from '../../assets/posts/Posts/Holi AC offer(Chayan karo).png';
+import post016 from '../../assets/posts/Posts/India Winning (Chayan Karo ).png';
+import post017 from '../../assets/posts/Posts/Meme Post (Chayan karo).png';
+import post018 from '../../assets/posts/Posts/Promotion 1 (Chayan karo).png';
+import post019 from '../../assets/posts/Posts/Promotion 2(Chayan karo).png';
+import post020 from '../../assets/posts/Posts/Ram Navmi (Chayan karo).png';
+import post021 from '../../assets/posts/Posts/Valentines Day Offer(Chayan karo).png';
+import post022 from '../../assets/posts/Posts/Vassant panchami(Chayan Karo).png';
+import post023 from '../../assets/posts/Posts/Weekend offer(Chayan karo).png';
+import post024 from '../../assets/posts/Posts/Women\'s Day(Chayan karo).png';
+import post025 from '../../assets/posts/Posts/Your Home’s Best Friend(Tivoli).png';
+
 const CASE_STUDIES_DATA = {
   'chayan-karo': {
     title: 'Chayan Karo',
@@ -50,20 +121,31 @@ const CASE_STUDIES_DATA = {
       { hex: '#FFEDE0' }
     ],
 
-    mockups: [
-      chayanKaroImg,
-      loveCupidImg,
-      agritechMarketplaceImg,
-      caseStudyUiDesignImg,
-      chayanKaroImg,
-      loveCupidImg,
-      agritechMarketplaceImg,
-      caseStudyUiDesignImg
+    hasMultipleApps: true,
+    slides: [
+      {
+        title: "CHAYAN KARO",
+        mockups: [
+          chayankaro1,
+          chayankaro2,
+          chayankaro3,
+          chayankaro4
+        ]
+      },
+      {
+        title: "CHAYAN SAATHI",
+        mockups: [
+          chayansaathi1,
+          chayansaathi2,
+          chayansaathi3,
+          chayansaathi4
+        ]
+      }
     ],
 
     nextId: 'agritech-marketplace',
     nextTitle: 'Agritech Marketplace',
-    demoUrl: 'https://chayankaro.com',
+    demoUrl: 'https://www.figma.com/proto/cd3buiRvAQmecsDvx8oyYz/Prototype?node-id=6168-4494&viewport=-393%2C-469%2C0.26&t=YERE7HA53urgdApi-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=6168%3A3191&page-id=6083%3A34',
 
   },
 
@@ -103,20 +185,17 @@ const CASE_STUDIES_DATA = {
       { hex: '#000000' }
     ],
 
+    hasMultipleApps: false,
     mockups: [
-      loveCupidImg,
-      chayanKaroImg,
-      agritechMarketplaceImg,
-      caseStudyUiDesignImg,
-      loveCupidImg,
-      chayanKaroImg,
-      agritechMarketplaceImg,
-      caseStudyUiDesignImg
+      lovecupid1,
+      lovecupid2,
+      lovecupid3,
+      lovecupid4
     ],
 
     nextId: 'pairfect',
     nextTitle: 'Pairfect',
-    demoUrl: 'https://chayankaro.com',
+    demoUrl: 'https://www.figma.com/proto/wVw9GNtAHNJOZL5yqhbfN5/Prototype?node-id=1591-917&p=f&viewport=325%2C60%2C0.11&t=7Ag8FHdLiEtLGcvu-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1591%3A782&page-id=1534%3A113',
 
 
   },
@@ -157,20 +236,31 @@ const CASE_STUDIES_DATA = {
       { hex: '#FF9100' }
     ],
 
-    mockups: [
-      agritechMarketplaceImg,
-      chayanKaroImg,
-      loveCupidImg,
-      caseStudyUiDesignImg,
-      agritechMarketplaceImg,
-      chayanKaroImg,
-      loveCupidImg,
-      caseStudyUiDesignImg
+    hasMultipleApps: true,
+    slides: [
+      {
+        title: "MADHUMITRA",
+        mockups: [
+          madhumitra1,
+          madhumitra2,
+          madhumitra3,
+          madhumitra4
+        ]
+      },
+      {
+        title: "HORTICULTURE",
+        mockups: [
+          horticulture1,
+          horticulture2,
+          horticulture3,
+          horticulture4
+        ]
+      }
     ],
 
     nextId: 'love-cupid',
     nextTitle: 'Love Cupid',
-    demoUrl: 'https://chayankaro.com',
+    demoUrl: 'https://www.figma.com/proto/cd3buiRvAQmecsDvx8oyYz/Prototype?node-id=6185-6342&p=f&viewport=60%2C398%2C0.08&t=OyZ5LCrRhMfPFd0x-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1',
 
   },
 
@@ -210,20 +300,17 @@ const CASE_STUDIES_DATA = {
       { hex: '#333333' }
     ],
 
+    hasMultipleApps: false,
     mockups: [
-      pairfectImg,
-      chayanKaroImg,
-      loveCupidImg,
-      agritechMarketplaceImg,
-      pairfectImg,
-      chayanKaroImg,
-      loveCupidImg,
-      agritechMarketplaceImg
+      pairfect1,
+      pairfect2,
+      pairfect3,
+      pairfect4
     ],
 
     nextId: 'chayan-karo',
     nextTitle: 'Chayan Karo',
-    demoUrl: 'https://pairfect.io',
+    demoUrl: 'https://www.figma.com/proto/wVw9GNtAHNJOZL5yqhbfN5/Pairfect?page-id=0%3A1&node-id=1094-135&viewport=9869%2C3833%2C0.67&t=MyV4I3h2QueDtwU7-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1002%3A2',
 
   }
 };
@@ -328,9 +415,107 @@ function SectionShell({ num, title, modifier, children }) {
 }
 
 /* ─────────────────────────────────────────
+   HERO VIDEO FRAME
+───────────────────────────────────────── */
+export const HeroVideoFrame = React.forwardRef(({ image, video, label, className = '' }, ref) => {
+  return (
+    <div className={`cs-hero-video-frame ${className}`}>
+      <div className="media-wrapper">
+        {video ? (
+          <video ref={ref} src={video} autoPlay loop muted playsInline />
+        ) : image ? (
+          <img src={image} alt={label || "Mockup"} />
+        ) : (
+          <span className="cs-phone-frame__label">{label || "For Video"}</span>
+        )}
+      </div>
+    </div>
+  );
+});
+
+/* ─────────────────────────────────────────
+   DUAL VIDEO SHOWCASE
+───────────────────────────────────────── */
+export function DualVideoShowcase({ id }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+  const frontVideoRef = useRef(null);
+  const backVideoRef = useRef(null);
+
+  const handleFlip = () => {
+    setIsFlipped(!isFlipped);
+  };
+
+  useEffect(() => {
+    if (isFlipped) {
+      if (frontVideoRef.current) frontVideoRef.current.pause();
+      if (backVideoRef.current) backVideoRef.current.play();
+    } else {
+      if (frontVideoRef.current) frontVideoRef.current.play();
+      if (backVideoRef.current) backVideoRef.current.pause();
+    }
+  }, [isFlipped]);
+
+  const titles = id === 'chayan-karo' 
+    ? ['CHAYAN KARO', 'CHAYAN SAATHI'] 
+    : ['MADHUMITRA', 'HORTICULTURE'];
+
+  const videos = id === 'chayan-karo'
+    ? [chayanKaroVideo, chayanSaathiVideo]
+    : [madhumitraVideo, horticultureVideo];
+
+  const activeTitle = isFlipped ? titles[1] : titles[0];
+
+  return (
+    <div className="cs-dual-video-showcase">
+      <div className="cs-dual-content">
+        <div className="cs-dual-title-wrapper">
+          <h3 className="cs-dual-title" key={isFlipped ? 'back' : 'front'}>
+            {activeTitle}
+          </h3>
+        </div>
+        
+        <div className="cs-flip-scene">
+          <div className={`cs-flip-card ${isFlipped ? 'is-flipped' : ''}`}>
+            <div className="cs-flip-face cs-flip-face--front">
+              <HeroVideoFrame
+                ref={frontVideoRef}
+                video={videos[0]}
+                image={null}
+                label={titles[0]}
+              />
+            </div>
+            <div className="cs-flip-face cs-flip-face--back">
+              <HeroVideoFrame
+                ref={backVideoRef}
+                video={videos[1]}
+                image={null}
+                label={titles[1]}
+              />
+            </div>
+          </div>
+        </div>
+
+        <button className="cs-flip-trigger" onClick={handleFlip} aria-label="Flip Card">
+          <img src={bulletSvg} className="cs-flip-arrow" alt="Flip Arrow" />
+        </button>
+        <p className="cs-flip-instruction">
+          ↺ Tap arrow below to flip between apps
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────
    #01 PROBLEM
 ───────────────────────────────────────── */
-export function ProblemSection({ problem }) {
+export function ProblemSection({ problem, id }) {
+  const isMultiApp = id === 'chayan-karo' || id === 'agritech-marketplace';
+
+  let singleVideo = null;
+  if (id === 'pairfect') singleVideo = pairfectVideo;
+  if (id === 'love-cupid') singleVideo = loveCupidVideo;
+
   return (
     <SectionShell num="#01" title="THE PROBLEM" modifier="problem">
       <div className="cs-split">
@@ -338,7 +523,11 @@ export function ProblemSection({ problem }) {
           <p className="cs-section__body">{problem}</p>
         </div>
         <div className="cs-split__right">
-          <PhoneFrame video={null} label="For Video" />
+          {isMultiApp ? (
+            <DualVideoShowcase id={id} />
+          ) : (
+            <PhoneFrame video={singleVideo} />
+          )}
         </div>
       </div>
     </SectionShell>
@@ -348,32 +537,32 @@ export function ProblemSection({ problem }) {
 /* ─────────────────────────────────────────
    SCREENSHOTS SLIDER COMPONENT
 ───────────────────────────────────────── */
-export function ScreenshotsSlider({ mockups, title }) {
+export function ScreenshotsSlider({ slides }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  
-  const chunks = [];
-  for (let i = 0; i < mockups.length; i += 4) {
-    chunks.push(mockups.slice(i, i + 4));
-  }
 
   useEffect(() => {
+    if (!slides || slides.length === 0) return;
     const interval = setInterval(() => {
-      setActiveIndex(current => (current + 1) % chunks.length);
+      setActiveIndex(current => (current + 1) % slides.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [chunks.length]);
+  }, [slides]);
+
+  if (!slides || slides.length === 0) return null;
 
   return (
     <div className="cs-screenshots-slider">
-      <h3 className="cs-screenshots-title">{title}</h3>
+      <h3 className="cs-screenshots-title" key={activeIndex}>
+        {slides[activeIndex].title}
+      </h3>
       <div className="cs-screenshots-viewport">
         <div 
           className="cs-screenshots-track" 
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
-          {chunks.map((chunk, i) => (
+          {slides.map((slide, i) => (
             <div key={i} className="cs-screenshots-slide">
-              {chunk.map((imgUrl, j) => (
+              {slide.mockups.map((imgUrl, j) => (
                 <PhoneFrame key={j} image={imgUrl} label={`Mockup ${i * 4 + j + 1}`} />
               ))}
             </div>
@@ -381,7 +570,7 @@ export function ScreenshotsSlider({ mockups, title }) {
         </div>
       </div>
       <div className="cs-screenshots-dots">
-        {chunks.map((_, i) => (
+        {slides.map((_, i) => (
           <button 
             key={i} 
             className={`cs-screenshots-dot ${i === activeIndex ? 'active' : ''}`}
@@ -395,22 +584,38 @@ export function ScreenshotsSlider({ mockups, title }) {
 }
 
 /* ─────────────────────────────────────────
+   STATIC SHOWCASE COMPONENT
+───────────────────────────────────────── */
+export function StaticShowcase({ mockups }) {
+  return (
+    <div className="cs-static-showcase">
+      <div className="cs-mockups-row">
+        {mockups && mockups.map((imgUrl, i) => (
+          <PhoneFrame key={i} image={imgUrl} label={`Mockup ${i + 1}`} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────
+   CASE STUDY SHOWCASE ORCHESTRATOR
+───────────────────────────────────────── */
+export function CaseStudyShowcase({ data }) {
+  if (data.hasMultipleApps && data.slides) {
+    return <ScreenshotsSlider slides={data.slides} />;
+  }
+  return <StaticShowcase mockups={data.mockups} />;
+}
+
+/* ─────────────────────────────────────────
    #02 SOLUTION
 ───────────────────────────────────────── */
-export function SolutionSection({ solution, mockups, title }) {
+export function SolutionSection({ solution, data }) {
   return (
     <SectionShell num="#02" title="THE SOLUTION" modifier="solution">
       <p className="cs-section__body">{solution}</p>
-
-      {mockups && mockups.length > 0 ? (
-        <ScreenshotsSlider mockups={mockups} title={title} />
-      ) : (
-        <div className="cs-mockups-row">
-          {[1, 2, 3, 4].map(n => (
-            <PhoneFrame key={n} label={`Mockup ${n}`} />
-          ))}
-        </div>
-      )}
+      <CaseStudyShowcase data={data} />
     </SectionShell>
   );
 }
@@ -527,30 +732,31 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
   // Intercept 'posts-brand' case study to display WebGL InfiniteMenu
   if (id === 'posts-brand') {
     const postItems = [
-      {
-        image: chayanKaroWomensDayImg,
-        link: 'https://google.com/',
-        title: 'Chayan Karo "Women\'s Day"',
-        description: 'Social media creative highlighting women empowerment and security features.'
-      },
-      {
-        image: loveCupidImg,
-        link: 'https://google.com/',
-        title: 'Love Cupid "Valentine\'s Day"',
-        description: 'Guided conversation and matching promotion.'
-      },
-      {
-        image: agritechMarketplaceImg,
-        link: 'https://google.com/',
-        title: 'Agritech "Harvest Festival"',
-        description: 'Logistics coordination and crop trading campaign.'
-      },
-      {
-        image: caseStudyUiDesignImg,
-        link: 'https://google.com/',
-        title: 'Chayan Karo Design Guidelines',
-        description: 'Design system core color palette and typography assets.'
-      }
+      { image: post001, link: '#', title: 'AS-001 — AC Service Campaign', description: 'Seasonal AC service awareness.' },
+      { image: post002, link: '#', title: 'AS-002 — AC Offer Campaign', description: 'Promotional AC service offer.' },
+      { image: post003, link: '#', title: 'AS-003 — Summer Cooling Campaign', description: 'Affordable cooling solutions.' },
+      { image: post004, link: '#', title: 'AS-004 — AC Care Campaign', description: 'Reliable AC maintenance services.' },
+      { image: post005, link: '#', title: 'AS-005 — Technician Hiring Drive', description: 'Recruitment campaign for technicians.' },
+      { image: post006, link: '#', title: 'AS-006 — Post Holi Car Wash', description: 'Special cleaning campaign after Holi.' },
+      { image: post007, link: '#', title: 'AS-007 — Premium Car Wash Campaign', description: 'Professional detailing and wash services.' },
+      { image: post008, link: '#', title: 'AS-008 — Bathroom Cleaning Service', description: 'Home hygiene and cleaning promotion.' },
+      { image: post009, link: '#', title: 'AS-009 — Canopy Branding Design', description: 'Outdoor branding visual.' },
+      { image: post010, link: '#', title: 'AS-010 — Top Canopy Branding', description: 'Top view branding design.' },
+      { image: post011, link: '#', title: 'AS-011 — Front Canopy Branding', description: 'Front-facing branding design.' },
+      { image: post012, link: '#', title: 'AS-012 — Carpentry Service Campaign', description: 'Woodwork and furniture repair promotion.' },
+      { image: post013, link: '#', title: 'AS-013 — Hindi Hiring Campaign', description: 'Regional recruitment campaign.' },
+      { image: post014, link: '#', title: 'AS-014 — Holi Festival Creative', description: 'Festive greetings for Holi.' },
+      { image: post015, link: '#', title: 'AS-015 — Holi Special Offer', description: 'Seasonal AC promotional offer.' },
+      { image: post016, link: '#', title: 'AS-016 — Victory Celebration Post', description: 'National achievement celebration.' },
+      { image: post017, link: '#', title: 'AS-017 — Fun Engagement Post', description: 'Interactive social media creative.' },
+      { image: post018, link: '#', title: 'AS-018 — Promotional Campaign', description: 'General marketing campaign.' },
+      { image: post019, link: '#', title: 'AS-019 — Brand Awareness Campaign', description: 'Building trust and visibility.' },
+      { image: post020, link: '#', title: 'AS-020 — Ram Navami Creative', description: 'Festival greeting post.' },
+      { image: post021, link: '#', title: 'AS-021 — Valentine\'s Day Campaign', description: 'Seasonal engagement creative.' },
+      { image: post022, link: '#', title: 'AS-022 — Vasant Panchami Creative', description: 'Traditional festive campaign.' },
+      { image: post023, link: '#', title: 'AS-023 — Weekend Special Campaign', description: 'Weekend promotional offer.' },
+      { image: post024, link: '#', title: 'AS-024 — Women\'s Day Campaign', description: 'Celebrating empowerment and resilience.' },
+      { image: post025, link: '#', title: 'AS-025 — Customer Trust Campaign', description: 'Strengthening brand credibility.' }
     ];
 
     return (
@@ -606,8 +812,8 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
       }}
     >
       <CaseStudyHero data={data} projectImage={images?.[id]} onClose={onClose} />
-      <ProblemSection problem={data.problem} scrollContainerRef={pageRef} />
-      <SolutionSection solution={data.solution} mockups={data.mockups} title={data.title} scrollContainerRef={pageRef} />
+      <ProblemSection problem={data.problem} id={id} scrollContainerRef={pageRef} />
+      <SolutionSection solution={data.solution} data={data} scrollContainerRef={pageRef} />
       <SystemBlueprintSection
         blueprint={data.blueprint}
         fontMain={data.fontMain}
