@@ -1,12 +1,14 @@
 import React from 'react';
 import StaggeredMenu from './StaggeredMenu';
 
-export default function Navbar() {
+export default function Navbar({ onNavigate, scrollContainerRef }) {
   const menuItems = [
-    { label: 'Home', ariaLabel: 'Scroll to home', link: '#home' },
-    { label: 'Project', ariaLabel: 'Scroll to projects', link: '#projects' },
-    { label: 'About', ariaLabel: 'Scroll to about section', link: '#about' },
-    { label: 'Contact', ariaLabel: 'Scroll to contact section', link: '#contact' }
+    { label: 'HOME', ariaLabel: 'Navigate to home', link: '/' },
+    { label: 'ABOUT', ariaLabel: 'Scroll to about section', link: '#about' },
+    { label: 'WORK', ariaLabel: 'Scroll to work section', link: '#projects' },
+    { label: 'POSTS', ariaLabel: 'Navigate to posts', link: '/posts' },
+    { label: 'ILLUSTRATIONS', ariaLabel: 'Navigate to illustrations', link: '/illustrations' },
+    { label: 'CONTACT', ariaLabel: 'Scroll to contact section', link: '#contact' }
   ];
 
   const socialItems = [
@@ -28,6 +30,8 @@ export default function Navbar() {
       colors={['#1c1c1f', 'var(--pink)']}
       accentColor="var(--pink)"
       isFixed={true}
+      onNavigate={onNavigate}
+      scrollContainerRef={scrollContainerRef}
     />
   );
 }

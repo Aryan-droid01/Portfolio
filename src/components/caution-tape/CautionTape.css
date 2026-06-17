@@ -58,125 +58,69 @@
 
 
 /* TOP STRIP */
-
-.tape-track-top{
-
-    width:300vw;
-
-    height:48px;
-
-    transform:
-        translate(-50%,-50%)
-        rotate(4.88deg);
-
-    z-index:2;
+.tape-track-top {
+    width: 250vw;
+    height: 48px;
+    transform: translate(-50%, -50%) rotate(4.88deg);
+    z-index: 2;
 }
-
 
 /* BOTTOM STRIP */
-
-.tape-track-bottom{
-
-    width:300vw;
-
-    height:48px;
-
-    transform:
-        translate(-50%,-50%)
-        rotate(-3.99deg);
-
-    z-index:1;
+.tape-track-bottom {
+    width: 250vw;
+    height: 48px;
+    transform: translate(-50%, -50%) rotate(-3.99deg);
+    z-index: 1;
 }
 
+/* INNER WRAPPER */
+.tape-inner {
+    display: flex;
+    width: 200%;
+    height: 100%;
+    will-change: transform;
+}
 
 /* STRIPE */
-
-.caution-tape{
-
-    position:absolute;
-
-    left:-100%;
-
-    width:300%;
-
-    height:100%;
-
-    background:
-
-    repeating-linear-gradient(
-
+.caution-tape {
+    flex: 0 0 50%;
+    height: 100%;
+    background: repeating-linear-gradient(
         -45deg,
-
         #fff 0px,
         #fff 9px,
-
         #000 9px,
         #000 18px
-
     );
-
-    border-top:2px solid rgb(0, 0, 0);
-
-    border-bottom:2px solid rgb(0, 0, 0);
-
+    border-top: 2px solid rgb(0, 0, 0);
+    border-bottom: 2px solid rgb(0, 0, 0);
 }
-
 
 /* animation */
-
-@keyframes tapeScrollLeft{
-
-    from{
-
-        transform:translateX(0);
-
+@keyframes tapeScrollLeft {
+    from {
+        transform: translate3d(0, 0, 0);
     }
-
-    to{
-
-        transform:translateX(-18px);
-
+    to {
+        transform: translate3d(-50%, 0, 0);
     }
-
 }
 
-
-@keyframes tapeScrollRight{
-
-    from{
-
-        transform:translateX(0);
-
+@keyframes tapeScrollRight {
+    from {
+        transform: translate3d(-50%, 0, 0);
     }
-
-    to{
-
-        transform:translateX(18px);
-
+    to {
+        transform: translate3d(0, 0, 0);
     }
-
 }
 
-
-.tape-top{
-
-    animation:
-        tapeScrollLeft
-        1.5s
-        linear
-        infinite;
-
+.tape-top {
+    animation: tapeScrollLeft 90s linear infinite;
 }
 
-
-.tape-bottom{
-
-    animation:
-        tapeScrollRight
-        1.5s
-        linear
-        infinite;
-
+.tape-bottom {
+    animation: tapeScrollRight 90s linear infinite;
 }
 
 
@@ -194,20 +138,14 @@
 
     }
 
-    .tape-track-top{
-
-        width:300vw;
-
-        height:36px;
-
+    .tape-track-top {
+        width: 250vw;
+        height: 36px;
     }
 
-    .tape-track-bottom{
-
-        width:300vw;
-
-        height:36px;
-
+    .tape-track-bottom {
+        width: 250vw;
+        height: 36px;
     }
 
 }

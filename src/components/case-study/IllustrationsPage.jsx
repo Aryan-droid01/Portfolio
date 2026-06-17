@@ -1,21 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import Navbar from '../layout/navbar/Navbar';
 import TiltedCard from '../ui/TiltedCard';
 import LightRays from '../ui/LightRays';
 import FuzzyText from '../ui/FuzzyText';
 import './IllustrationsPage.css';
 import bulletSvg from '../../assets/bullet.svg';
-// We'll use the user's provided spotify image since we don't have the skull image in assets, 
-// or maybe chayanKaroWomensDayImg just to have an image. Let's use the external image.
-const skullPlaceholder = "https://i.scdn.co/image/ab67616d0000b273d9985092cd88bffd97653b58";
+import illustration1 from '../../assets/Illustration/Illustration 1.svg';
+import illustration2 from '../../assets/Illustration/Illustration 2.svg';
 
-export default function IllustrationsPage({ onClose }) {
+export default function IllustrationsPage({ onClose, onNavigate }) {
+  const pageRef = useRef(null);
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, []);
 
   return (
-    <article className="illustrations-page">
+    <article ref={pageRef} className="illustrations-page">
+      <Navbar onNavigate={onNavigate} scrollContainerRef={pageRef} />
       <div className="illustrations-light-rays">
         <LightRays
           raysOrigin="top-center"
@@ -49,7 +51,7 @@ export default function IllustrationsPage({ onClose }) {
 
       <div className="illustrations-gallery">
           <TiltedCard
-            imageSrc={skullPlaceholder}
+            imageSrc={illustration1}
             altText="Illustration 1"
             captionText="Illustration 1"
             containerHeight="525px"
@@ -63,13 +65,13 @@ export default function IllustrationsPage({ onClose }) {
             displayOverlayContent={true}
             overlayContent={
               <div className="tilted-card-badge">
-                SKULL // 01
+                AS-01
               </div>
             }
           />
 
           <TiltedCard
-            imageSrc={skullPlaceholder}
+            imageSrc={illustration2}
             altText="Illustration 2"
             captionText="Illustration 2"
             containerHeight="525px"
@@ -83,15 +85,12 @@ export default function IllustrationsPage({ onClose }) {
             displayOverlayContent={true}
             overlayContent={
               <div className="tilted-card-badge">
-                SKULL // 02
+                AS-02
               </div>
             }
           />
       </div>
 
-      <button onClick={onClose} className="illustrations-close-btn">
-        Return To Home <img src={bulletSvg} className="bullet-icon-right" alt="back pointer" />
-      </button>
     </article>
   );
 }

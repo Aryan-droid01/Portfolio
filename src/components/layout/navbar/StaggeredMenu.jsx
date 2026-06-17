@@ -1,28 +1,9 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import './StaggeredMenu.css';
+import pfpImage from '../../../assets/PFP.png';
 
-const usePathname = () => {
-  const [pathname, setPathname] = useState(typeof window !== 'undefined' ? window.location.pathname : '');
-  React.useEffect(() => {
-    const handleLocationChange = () => {
-      setPathname(window.location.pathname);
-    };
-    window.addEventListener('popstate', handleLocationChange);
-    window.addEventListener('pushState', handleLocationChange);
-    window.addEventListener('replaceState', handleLocationChange);
-
-    const interval = setInterval(handleLocationChange, 200);
-
-    return () => {
-      window.removeEventListener('popstate', handleLocationChange);
-      window.removeEventListener('pushState', handleLocationChange);
-      window.removeEventListener('replaceState', handleLocationChange);
-      clearInterval(interval);
-    };
-  }, []);
-  return pathname;
-};
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 
 export const StaggeredMenu = ({
   position = 'right',
@@ -40,7 +21,9 @@ export const StaggeredMenu = ({
   isFixed = false,
   closeOnClickAway = true,
   onMenuOpen,
-  onMenuClose
+  onMenuClose,
+  onNavigate,
+  scrollContainerRef
 }) => {
   const [open, setOpen] = useState(false);
   const openRef = useRef(false);
@@ -65,85 +48,22 @@ export const StaggeredMenu = ({
 
   const headerRef = useRef(null);
   const floatingWrapperRef = useRef(null);
-  const pathname = usePathname();
-  const [isCaseStudyInDom, setIsCaseStudyInDom] = useState(false);
+  const { scrollY } = useScroll(scrollContainerRef ? { container: scrollContainerRef } : undefined);
+  const [headerHidden, setHeaderHidden] = useState(false);
+  const [lastY, setLastY] = useState(0);
 
-  React.useEffect(() => {
-    const checkDom = () => {
-      setIsCaseStudyInDom(document.querySelector('.cs-page') !== null);
-    };
-    checkDom();
-    const observer = new MutationObserver(checkDom);
-    observer.observe(document.body, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, []);
-
-  const hideNavbar =
-    pathname.includes("case-study") ||
-    pathname.includes("love-cupid") ||
-    pathname.includes("chayan-karo") ||
-    pathname.includes("project") ||
-    isCaseStudyInDom;
-
-  const lastScrollY = useRef(0);
-
-  React.useEffect(() => {
-    if (hideNavbar) return;
-
-    // Initial entrance animation
-    gsap.fromTo(
-      headerRef.current,
-      {
-        y: -120,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        ease: "power4.out"
-      }
-    );
-
-    const handleScroll = () => {
-      if (openRef.current) return;
-
-      const currentY = window.scrollY;
-
-      if (currentY < 100) {
-        gsap.to(headerRef.current, {
-          y: 0,
-          opacity: 1,
-          duration: 0.5,
-          ease: "power4.out",
-          overwrite: "auto"
-        });
-      } else if (currentY > lastScrollY.current) {
-        gsap.to(headerRef.current, {
-          y: -120,
-          opacity: 0,
-          duration: 0.5,
-          ease: "power4.out",
-          overwrite: "auto"
-        });
-      } else {
-        gsap.to(headerRef.current, {
-          y: 0,
-          opacity: 1,
-          duration: 0.5,
-          ease: "power4.out",
-          overwrite: "auto"
-        });
-      }
-      lastScrollY.current = currentY;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [hideNavbar]);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (openRef.current) return;
+    if (latest > lastY && latest > 50) {
+      setHeaderHidden(true);
+    } else {
+      setHeaderHidden(false);
+    }
+    setLastY(latest);
+  });
 
   React.useLayoutEffect(() => {
-    if (hideNavbar || !floatingWrapperRef.current) return;
+    if (!floatingWrapperRef.current) return;
 
     const ctx = gsap.context(() => {
       gsap.to(floatingWrapperRef.current, {
@@ -155,7 +75,7 @@ export const StaggeredMenu = ({
       });
     });
     return () => ctx.revert();
-  }, [hideNavbar]);
+  }, []);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -466,9 +386,7 @@ export const StaggeredMenu = ({
     };
   }, [closeOnClickAway, open, closeMenu]);
 
-  if (hideNavbar) {
-    return null;
-  }
+
 
   return (
     <div
@@ -489,7 +407,15 @@ export const StaggeredMenu = ({
         })()}
       </div>
 
-      <header ref={headerRef} className="staggered-menu-header" aria-label="Main navigation header">
+      <motion.header 
+        ref={headerRef} 
+        className="staggered-menu-header" 
+        aria-label="Main navigation header"
+        initial={{ y: -40, opacity: 0 }}
+        animate={headerHidden ? { y: -20, opacity: 0 } : { y: 0, opacity: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        style={{ pointerEvents: headerHidden ? 'none' : 'auto' }}
+      >
         <div ref={floatingWrapperRef} className="sm-header-inner-float">
           <div className="sm-logo" aria-label="Logo">
             {logoUrl ? (
@@ -502,19 +428,13 @@ export const StaggeredMenu = ({
                 height={24}
               />
             ) : (
-              <div
-                className="navbar-logo-circle"
+              <img
+                src={pfpImage}
+                alt="Profile"
+                className="sm-pfp-avatar"
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                   closeMenu();
-                }}
-                style={{
-                  width: '12px',
-                  height: '12px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--pink)',
-                  boxShadow: '0 0 15px var(--pink)',
-                  cursor: 'pointer'
                 }}
               />
             )}
@@ -543,7 +463,7 @@ export const StaggeredMenu = ({
             </span>
           </button>
         </div>
-      </header>
+      </motion.header>
 
       <aside id="staggered-menu-panel" ref={panelRef} className="staggered-menu-panel" aria-hidden={!open}>
         <div className="sm-panel-inner">
@@ -557,12 +477,20 @@ export const StaggeredMenu = ({
                     aria-label={it.ariaLabel}
                     data-index={idx + 1}
                     onClick={(e) => {
+                      e.preventDefault();
                       if (it.link.startsWith('#')) {
-                        e.preventDefault();
-                        const id = it.link.substring(1);
-                        const el = document.getElementById(id);
-                        if (el) {
-                          el.scrollIntoView({ behavior: 'smooth' });
+                        if (onNavigate) {
+                          onNavigate(it.link);
+                        } else {
+                          const id = it.link.substring(1);
+                          const el = document.getElementById(id);
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      } else if (it.link.startsWith('/')) {
+                        if (onNavigate) {
+                          onNavigate(it.link);
+                        } else {
+                          window.location.href = it.link;
                         }
                       }
                       closeMenu();

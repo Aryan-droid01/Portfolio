@@ -4,6 +4,8 @@ import bulletSvg from '../../assets/bullet.svg';
 import FuzzyText from '../ui/FuzzyText';
 import InfiniteMenu from '../ui/InfiniteMenu';
 import IllustrationsPage from './IllustrationsPage';
+import Navbar from '../layout/navbar/Navbar';
+import { IPhone16Frame, SamsungS26Frame } from '../ui/DeviceFrames';
 
 // Import mockup images for project solutions
 import chayanKaroImg from '../../assets/chayan_karo.png';
@@ -317,7 +319,7 @@ const CASE_STUDIES_DATA = {
 /* ─────────────────────────────────────────
    HERO
    ───────────────────────────────────────── */
-export function CaseStudyHero({ data, projectImage, onClose }) {
+export function CaseStudyHero({ data, projectImage }) {
   return (
     <section className="cs-hero">
       {/* Gradient + mockup banner */}
@@ -328,11 +330,7 @@ export function CaseStudyHero({ data, projectImage, onClose }) {
         <div className="cs-hero__banner-overlay" />
       </div>
 
-      {/* Text content sits over the banner */}
       <div className="cs-hero__content">
-        <button onClick={onClose} className="cs-back-btn" aria-label="Close Case Study">
-          <img src={bulletSvg} className="cs-bullet-icon-left" alt="back pointer" /> BACK TO HOME
-        </button>
 
         <h1 className="cs-hero__title">{data.title}</h1>
         {data.subtitle && <h2 className="cs-hero__subtitle">{data.subtitle}</h2>}
@@ -362,26 +360,7 @@ export function CaseStudyHero({ data, projectImage, onClose }) {
   );
 }
 
-/* ─────────────────────────────────────────
-   REUSABLE PHONE FRAME COMPONENT
-───────────────────────────────────────── */
-export function PhoneFrame({ image, video, children, label, className = '' }) {
-  return (
-    <div className={`cs-phone-frame ${className}`}>
-      <div className="media-wrapper">
-        {video ? (
-          <video src={video} autoPlay loop muted playsInline />
-        ) : image ? (
-          <img src={image} alt={label || "Mockup"} />
-        ) : children ? (
-          children
-        ) : (
-          <span className="cs-phone-frame__label">{label || "Mockup"}</span>
-        )}
-      </div>
-    </div>
-  );
-}
+
 
 /* ─────────────────────────────────────────
    SECTION WRAPPER — ghost number + content
@@ -414,24 +393,7 @@ function SectionShell({ num, title, modifier, children }) {
   );
 }
 
-/* ─────────────────────────────────────────
-   HERO VIDEO FRAME
-───────────────────────────────────────── */
-export const HeroVideoFrame = React.forwardRef(({ image, video, label, className = '' }, ref) => {
-  return (
-    <div className={`cs-hero-video-frame ${className}`}>
-      <div className="media-wrapper">
-        {video ? (
-          <video ref={ref} src={video} autoPlay loop muted playsInline />
-        ) : image ? (
-          <img src={image} alt={label || "Mockup"} />
-        ) : (
-          <span className="cs-phone-frame__label">{label || "For Video"}</span>
-        )}
-      </div>
-    </div>
-  );
-});
+
 
 /* ─────────────────────────────────────────
    DUAL VIDEO SHOWCASE
@@ -477,18 +439,16 @@ export function DualVideoShowcase({ id }) {
         <div className="cs-flip-scene">
           <div className={`cs-flip-card ${isFlipped ? 'is-flipped' : ''}`}>
             <div className="cs-flip-face cs-flip-face--front">
-              <HeroVideoFrame
+              <IPhone16Frame
                 ref={frontVideoRef}
                 video={videos[0]}
-                image={null}
                 label={titles[0]}
               />
             </div>
             <div className="cs-flip-face cs-flip-face--back">
-              <HeroVideoFrame
+              <IPhone16Frame
                 ref={backVideoRef}
                 video={videos[1]}
-                image={null}
                 label={titles[1]}
               />
             </div>
@@ -525,8 +485,10 @@ export function ProblemSection({ problem, id }) {
         <div className="cs-split__right">
           {isMultiApp ? (
             <DualVideoShowcase id={id} />
+          ) : id === 'pairfect' ? (
+            <SamsungS26Frame video={singleVideo} />
           ) : (
-            <PhoneFrame video={singleVideo} />
+            <IPhone16Frame video={singleVideo} />
           )}
         </div>
       </div>
@@ -535,9 +497,20 @@ export function ProblemSection({ problem, id }) {
 }
 
 /* ─────────────────────────────────────────
+   SCREENSHOT IMAGE COMPONENT
+───────────────────────────────────────── */
+export function ScreenshotImage({ image, label }) {
+  return (
+    <div className="cs-screenshot-wrapper">
+      <img src={image} alt={label || "Screenshot"} />
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────
    SCREENSHOTS SLIDER COMPONENT
 ───────────────────────────────────────── */
-export function ScreenshotsSlider({ slides }) {
+export function ScreenshotsSlider({ slides, id }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -563,7 +536,7 @@ export function ScreenshotsSlider({ slides }) {
           {slides.map((slide, i) => (
             <div key={i} className="cs-screenshots-slide">
               {slide.mockups.map((imgUrl, j) => (
-                <PhoneFrame key={j} image={imgUrl} label={`Mockup ${i * 4 + j + 1}`} />
+                <ScreenshotImage key={j} image={imgUrl} label={`Mockup ${i * 4 + j + 1}`} />
               ))}
             </div>
           ))}
@@ -586,12 +559,12 @@ export function ScreenshotsSlider({ slides }) {
 /* ─────────────────────────────────────────
    STATIC SHOWCASE COMPONENT
 ───────────────────────────────────────── */
-export function StaticShowcase({ mockups }) {
+export function StaticShowcase({ mockups, id }) {
   return (
     <div className="cs-static-showcase">
       <div className="cs-mockups-row">
         {mockups && mockups.map((imgUrl, i) => (
-          <PhoneFrame key={i} image={imgUrl} label={`Mockup ${i + 1}`} />
+          <ScreenshotImage key={i} image={imgUrl} label={`Mockup ${i + 1}`} />
         ))}
       </div>
     </div>
@@ -601,21 +574,21 @@ export function StaticShowcase({ mockups }) {
 /* ─────────────────────────────────────────
    CASE STUDY SHOWCASE ORCHESTRATOR
 ───────────────────────────────────────── */
-export function CaseStudyShowcase({ data }) {
+export function CaseStudyShowcase({ data, id }) {
   if (data.hasMultipleApps && data.slides) {
-    return <ScreenshotsSlider slides={data.slides} />;
+    return <ScreenshotsSlider slides={data.slides} id={id} />;
   }
-  return <StaticShowcase mockups={data.mockups} />;
+  return <StaticShowcase mockups={data.mockups} id={id} />;
 }
 
 /* ─────────────────────────────────────────
    #02 SOLUTION
 ───────────────────────────────────────── */
-export function SolutionSection({ solution, data }) {
+export function SolutionSection({ solution, data, id }) {
   return (
     <SectionShell num="#02" title="THE SOLUTION" modifier="solution">
       <p className="cs-section__body">{solution}</p>
-      <CaseStudyShowcase data={data} />
+      <CaseStudyShowcase data={data} id={id} />
     </SectionShell>
   );
 }
@@ -728,7 +701,7 @@ export function CaseStudyFooter({
 /* ─────────────────────────────────────────
    ROOT EXPORT
 ───────────────────────────────────────── */
-export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
+export default function CaseStudy({ id, onClose, onNavigateNext, images, onNavigate }) {
   // Intercept 'posts-brand' case study to display WebGL InfiniteMenu
   if (id === 'posts-brand') {
     const postItems = [
@@ -761,9 +734,7 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
 
     return (
       <article className="cs-page" style={{ backgroundColor: '#000', overflow: 'hidden', height: '100vh', width: '100vw' }}>
-        <button onClick={onClose} className="cs-posts-close-btn">
-          CLOSE <span className="cs-posts-close-x">✕</span>
-        </button>
+        <Navbar onNavigate={onNavigate} />
         <div style={{ width: '100%', height: '100%', position: 'relative' }}>
           <InfiniteMenu items={postItems} onClose={onClose} />
         </div>
@@ -771,9 +742,8 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
     );
   }
 
-  // Intercept 'illustrations' case study
   if (id === 'illustrations') {
-    return <IllustrationsPage onClose={onClose} />;
+    return <IllustrationsPage onClose={onClose} onNavigate={onNavigate} />;
   }
 
   const data = CASE_STUDIES_DATA[id];
@@ -790,9 +760,6 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
     return (
       <div className="cs-error">
         <h2>Case Study Not Found</h2>
-        <button onClick={onClose} className="cs-back-btn">
-          <img src={bulletSvg} className="cs-bullet-icon-left" alt="back pointer" /> BACK TO HOME
-        </button>
       </div>
     );
   }
@@ -811,9 +778,10 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images }) {
         '--cs-tertiary': tertiaryColor
       }}
     >
-      <CaseStudyHero data={data} projectImage={images?.[id]} onClose={onClose} />
+      <Navbar onNavigate={onNavigate} scrollContainerRef={pageRef} />
+      <CaseStudyHero data={data} projectImage={images?.[id]} />
       <ProblemSection problem={data.problem} id={id} scrollContainerRef={pageRef} />
-      <SolutionSection solution={data.solution} data={data} scrollContainerRef={pageRef} />
+      <SolutionSection solution={data.solution} data={data} id={id} scrollContainerRef={pageRef} />
       <SystemBlueprintSection
         blueprint={data.blueprint}
         fontMain={data.fontMain}

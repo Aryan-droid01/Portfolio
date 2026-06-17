@@ -14,11 +14,11 @@
 
 .staggered-menu-header {
   position: fixed !important;
-  top: 24px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%) !important;
 
-  width: min(82vw, 1600px);
+  width: min(92vw, 1500px);
   height: 72px;
 
   padding: 0 34px;
@@ -35,7 +35,7 @@
   box-shadow:
     0 20px 60px rgba(0, 0, 0, .5);
 
-  z-index: 99999;
+  z-index: 9999;
 
   pointer-events: auto;
 }
@@ -89,6 +89,22 @@
   height: 32px;
   width: auto;
   object-fit: contain;
+}
+
+.sm-pfp-avatar {
+  width: clamp(42px, 5vw, 56px);
+  height: clamp(42px, 5vw, 56px);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+}
+
+.sm-pfp-avatar:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
 }
 
 .sm-toggle {

@@ -15,17 +15,73 @@ import { preloadAudio } from './utils/audioManager';
 
 
 // Import project mockup assets
-import chayanKaroImg from './assets/chayan_karo.png';
-import loveCupidImg from './assets/love_cupid.png';
-import agritechMarketplaceImg from './assets/agritech_marketplace.png';
-import pairfectImg from './assets/pairfect.png';
+import chayanKaroImg from './assets/mockups/Chayan Karo_hero.svg';
+import loveCupidImg from './assets/mockups/Lovecupid_hero.svg';
+import agritechMarketplaceImg from './assets/mockups/Agritech_hero.svg';
+import pairfectImg from './assets/mockups/Pairfect_Hero.svg';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [showChain, setShowChain] = useState(true);
   const [showFlicker, setShowFlicker] = useState(false);
   const [siteVisible, setSiteVisible] = useState(false);
-  const [currentCaseStudy, setCurrentCaseStudy] = useState(null);
+  const [currentCaseStudy, setCurrentCaseStudy] = useState(() => {
+    if (typeof window === 'undefined') return null;
+    const path = window.location.pathname;
+    if (path === '/posts') return 'posts-brand';
+    if (path === '/illustrations') return 'illustrations';
+    if (path.startsWith('/case-study/')) return path.replace('/case-study/', '');
+    return null;
+  });
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      if (path === '/posts') setCurrentCaseStudy('posts-brand');
+      else if (path === '/illustrations') setCurrentCaseStudy('illustrations');
+      else if (path.startsWith('/case-study/')) setCurrentCaseStudy(path.replace('/case-study/', ''));
+      else setCurrentCaseStudy(null);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const handleNavigate = (path) => {
+    if (path === '/') {
+      setCurrentCaseStudy(null);
+      window.history.pushState({}, '', '/');
+    } else if (path === '/posts') {
+      setCurrentCaseStudy('posts-brand');
+      window.history.pushState({}, '', '/posts');
+    } else if (path === '/illustrations') {
+      setCurrentCaseStudy('illustrations');
+      window.history.pushState({}, '', '/illustrations');
+    } else if (path.startsWith('/case-study/')) {
+      setCurrentCaseStudy(path.replace('/case-study/', ''));
+      window.history.pushState({}, '', path);
+    } else if (path.startsWith('#')) {
+      setCurrentCaseStudy(null);
+      window.history.pushState({}, '', '/');
+      setTimeout(() => {
+        const id = path.substring(1);
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+    }
+  };
+
+  const handleSetCaseStudy = (id) => {
+    setCurrentCaseStudy(id);
+    if (id === null) {
+      window.history.pushState({}, '', '/');
+    } else if (id === 'posts-brand') {
+      window.history.pushState({}, '', '/posts');
+    } else if (id === 'illustrations') {
+      window.history.pushState({}, '', '/illustrations');
+    } else {
+      window.history.pushState({}, '', `/case-study/${id}`);
+    }
+  };
 
   useEffect(() => {
     preloadAudio();
@@ -85,7 +141,7 @@ export default function App() {
         </div>
       )}
 
-      {siteVisible && !currentCaseStudy && <Navbar />}
+      {siteVisible && !currentCaseStudy && <Navbar onNavigate={handleNavigate} />}
 
       {/* Main website wrapper (revealed when pulled) */}
       <motion.div 
@@ -100,7 +156,7 @@ export default function App() {
       >
         <main style={{ position: 'relative' }}>
           <Hero isRevealed={siteVisible} />
-          <Projects onViewCaseStudy={setCurrentCaseStudy} />
+          <Projects onViewCaseStudy={handleSetCaseStudy} />
           <About />
           <Contact />
         </main>
@@ -109,8 +165,9 @@ export default function App() {
       {currentCaseStudy && (
         <CaseStudy 
           id={currentCaseStudy} 
-          onClose={() => setCurrentCaseStudy(null)} 
-          onNavigateNext={(nextId) => setCurrentCaseStudy(nextId)}
+          onClose={() => handleSetCaseStudy(null)} 
+          onNavigateNext={(nextId) => handleSetCaseStudy(nextId)}
+          onNavigate={handleNavigate}
           images={projectImages}
         />
       )}

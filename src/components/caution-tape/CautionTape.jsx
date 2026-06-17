@@ -17,12 +17,18 @@ export default function CautionTape() {
     <div className="caution-tapes-wrapper" aria-hidden="true">
       {/* Top tape: tilts upper-left → lower-right, scrolls left */}
       <div className="tape-track tape-track-top">
-        <div className="caution-tape tape-top" />
+        <div className="tape-inner tape-top">
+          <div className="caution-tape" />
+          <div className="caution-tape" />
+        </div>
       </div>
 
       {/* Bottom tape: tilts upper-right → lower-left, scrolls right */}
       <div className="tape-track tape-track-bottom">
-        <div className="caution-tape tape-bottom" />
+        <div className="tape-inner tape-bottom">
+          <div className="caution-tape" />
+          <div className="caution-tape" />
+        </div>
       </div>
     </div>
   );
