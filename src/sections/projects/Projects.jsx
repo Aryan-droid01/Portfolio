@@ -7,55 +7,57 @@ import pairfectImg from '../../assets/pairfect.png';
 import CautionTape from '../../components/caution-tape/CautionTape';
 import bulletSvg from '../../assets/bullet.svg';
 
+
 export default function Projects({ onViewCaseStudy }) {
   const primaryProjects = [
     {
-      id: 'pairfect',
-      title: 'Pairfect',
-      category: 'UX Research,Branding + UX/UI Designing',
-      description: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
-      image: pairfectImg,
-      link: '#/case-study/pairfect'
-    },
-    {
       id: 'chayan-karo',
       title: 'Chayan Karo',
-      category: 'UX Research,Branding + UX/UI Designing',
-      description: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
+      category: 'UX Research, Branding + UX/UI Designing',
+      description: 'A home services app that puts the choice of who enters your home back in your hands, backed by a companion app that turns gig workers into a trusted, growing workforce.',
       image: chayanKaroImg,
       link: '#/case-study/chayan-karo'
     },
     {
+      id: 'pairfect',
+      title: 'Pairfect',
+      category: 'UX Research, Branding + UX/UI Designing + Frontend Development',
+      description: 'A styling app that builds outfit combinations from clothes you already own, and shows you what to add next if you want more options.',
+      image: pairfectImg,
+      link: '#/case-study/pairfect'
+    },
+    {
       id: 'agritech-marketplace',
-      title: 'Agritech-Marketplace',
-      category: 'UX Research,Branding + UX/UI Designing',
-      description: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
+      title: 'Agritech Marketplace',
+      category: 'UX Research, Branding + UX/UI Designing',
+      description: 'Two apps built for the same farming communities, helping beekeepers and fruit growers track what they produce, grow it smarter, and finally sell it themselves.',
       image: agritechMarketplaceImg,
       link: '#/case-study/agritech-marketplace'
     },
     {
       id: 'love-cupid',
       title: 'Love Cupid',
-      category: 'UX Research,Branding + UX/UI Designing',
-      description: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
+      category: 'UX Research, Branding + UX/UI Designing',
+      description: 'A dating app for people too busy to waste time on shallow swiping, built around personality first profiles and conversations that actually go somewhere.',
       image: loveCupidImg,
       link: '#/case-study/love-cupid'
-    }
+    },
+
   ];
 
   const secondaryProjects = [
     {
       id: 'posts-brand',
       title: 'Posts And Brand Identity',
-      category: 'UX Research,Branding + UX/UI Designing',
-      description: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
+      category: 'Social Media Design, Branding',
+      description: 'Recurring social media creatives for Chayan Karo and its service partners, from seasonal offers and festival posts to hiring drives and brand awareness campaigns.',
       link: '#/case-study/posts-brand'
     },
     {
       id: 'illustrations',
       title: 'Illustrations',
-      category: 'UX Research,Branding + UX/UI Designing',
-      description: 'Create a unified design system that would serve as the foundation for all Allegion digital products—enabling designers to prototype faster, developers to build consistently, and users to enjoy cohesive experiences across every touchpoint',
+      category: 'Illustration, Visual Design',
+      description: 'A collection of personal illustration work, exploring style, mood, and storytelling outside the constraints of any single product or client.',
       link: '#/case-study/illustrations'
     }
   ];

@@ -87,30 +87,30 @@ import post025 from '../../assets/posts/Posts/Your Home’s Best Friend(Tivoli).
 const CASE_STUDIES_DATA = {
   'chayan-karo': {
     title: 'Chayan Karo',
-    subtitle: 'Building Trust With Chayan Karo',
+    subtitle: 'Designing Trust at the Doorstep',
     tagline:
-      'A trust-first safety and community platform designed to help users feel secure, connected, and confident through intuitive experiences and accessible digital interactions.',
+      'A home services app that puts the choice of who enters your home back in your hands, backed by a companion app that turns gig workers into a trusted, growing workforce.',
 
     category: 'UX Research, Branding + UX/UI Designing',
-    role: 'UI/UX Lead Designer',
-    timeline: '8 Weeks',
-    deliverables: 'Product Design',
-    platform: 'iOS/Android',
+    role: 'Lead UX / Product Designer',
+    timeline: 'Oct 2025 – Mar 2026',
+    deliverables: 'Product Design — Customer App + Provider App',
+    platform: 'Android · iOS (Flutter)',
 
     problem:
-      'Women and families often hesitate to use safety and community platforms due to concerns around trust, verification, and usability. Existing solutions felt complicated, lacked transparency, and failed to create confidence during critical moments when users needed assistance.',
+      'Most home service apps solve discovery but not trust. You tap "book a plumber" and a name and photo simply appear at your door, decided by the system, not by you. There is no moment in that flow where you actually choose who you are letting into your home. Customers had no visibility into a provider\'s rating, experience, or track record before booking, no transparent pricing before committing, and no real recourse when a cancellation or refund went wrong. This was never really a UI gap. It was a decision authority gap. The app was making a call that should have belonged to the user, and stripping out the one variable that matters most in a home services transaction: who. On the provider side, the same lack of structure showed up as an unpredictable job pipeline and no formal way to build a reputation that followed them between gigs.',
 
     solution:
-      'Chayan Karo was designed as a trust-first platform that combines safety features, community engagement, and intuitive user flows. The experience focuses on simplicity, fast access to key actions, clear visual hierarchy, and a seamless onboarding journey that helps users feel confident from their first interaction.',
+      'The core product decision was to put provider selection back in the customer\'s control. Instead of auto assigning a technician, Chayan Karo surfaces a list of available providers for the selected service and time slot, each with a photo, rating, and experience, and lets the customer pick one, or choose to let the system match someone if they don\'t have a preference. That single decision reframes the entire booking flow. It stops being "request a service and hope" and becomes "compare and decide," which is closer to the mental model people already trust from food delivery and cab booking. Every booking closes the loop with a 4 digit PIN the provider has to show at the door, turning a one off transaction into a small ritual both sides understand without needing to read anything. On the other side of the same system, Chayan Saathi gives providers the structure to earn that visibility: one tap to go online, jobs that arrive by zone instead of randomly, and a rating that builds over time instead of being assigned to them on day one.',
 
     blueprint:
-      'The design system was built around accessibility, consistency, and emotional reassurance. A structured component library, scalable typography system, warm color palette, and reusable interaction patterns ensured a cohesive experience across every screen while accelerating future product development.',
+      'Provider choice only works as a feature if comparing providers is fast, so the real design problem became how to show enough information to decide confidently without turning a three minute booking into a research project. The answer was a compact provider card showing photo, rating, years of experience, and price for the selected service, repeated as a scrollable list, with the system matched option pinned at the top for anyone who just wants speed. A single brand orange carries every interactive state across the app, from enabled buttons to the selected provider to the active tab, so the decision of who you picked stays visually unambiguous even at a glance. The provider app mirrors the same visual language but is built for a different job. An availability toggle sits at the top of the dashboard as the single most important control on the screen, because for a gig worker, that toggle is the difference between earning and not earning that day.',
 
     challenges:
-      'Balancing strong safety messaging without creating fear was a major challenge. The product needed to communicate reliability and security while maintaining an approachable and welcoming experience. Designing for diverse user groups and varying levels of technical familiarity also required extensive iteration.',
+      'Letting customers choose their own provider introduced a problem most auto assign apps never have to deal with: what happens when the provider you picked goes offline between selection and payment. A provider could appear available when chosen, then quietly toggle off thirty to sixty seconds later while the customer was still completing payment, breaking the one promise the whole feature was built on. The fix was to re check availability at the moment payment is initiated rather than only at selection, and if the provider had gone offline, swap in an alternative selection screen instead of a dead end error. The second hard problem was making payment itself feel safe in a market where most customers had never paid for anything online. Cash had to be designed as an equally respected option next to Razorpay, not a fallback for people who "couldn\'t" pay digitally, so neither method ever reads as the lesser choice. A third, quieter problem was protecting new providers from the cold start trap that choice based booking creates. A provider with zero completed jobs showing a 0.0 rating next to seasoned providers with four and five stars would mean customers always pick around them, so new providers simply show no rating yet rather than a number that looks like a red flag.',
 
     learnings:
-      'Trust is built through small design decisions. Clear communication, intuitive navigation, transparent actions, and consistent visual feedback significantly improved user confidence. User testing revealed that simplicity and reassurance were more valuable than adding complex features.',
+      'The biggest lesson was that giving users a choice creates obligations the product didn\'t have before. Once you let someone pick a specific provider, you\'ve implicitly promised that provider will actually show up, and that\'s a much harder promise to keep than "someone will show up." That one decision is what pulled in the real time availability check, the PIN verification ritual, and the rating suppression logic for new providers, none of which would have been necessary under a simpler auto assign model. It reinforced something worth remembering on every project since: the most differentiating feature in a product is rarely the one that\'s hardest to build technically. It\'s the one that needs the most supporting design work to actually feel trustworthy.',
 
     fontMain: 'SF PRO',
 
@@ -151,32 +151,33 @@ const CASE_STUDIES_DATA = {
 
   'love-cupid': {
     title: 'Love Cupid',
-    subtitle: 'Personality-Focused Matchmaking',
+    subtitle: 'Swipe Right, Match Vibe',
     tagline:
-      'A dating experience focused on meaningful connections through personality-driven matching, guided conversations, and compatibility-first interactions.',
+      'A dating app for people too busy to waste time on shallow swiping, built around personality first profiles and conversations that actually go somewhere.',
 
     category: 'UX Research, Branding + UX/UI Designing',
-    role: 'Lead UX Researcher & Designer',
-    timeline: '10 Weeks',
-    deliverables: 'Branding & UX/UI',
-    platform: 'iOS Mobile App',
+    role: 'UI/UX Designer',
+    timeline: '4 Weeks',
+    deliverables: 'Product Design, User Experience, High Fidelity Interface',
+    platform: 'iOS & Android',
 
     problem:
-      'Many dating applications focus heavily on appearance-based interactions, leading to superficial engagement and low-quality matches. Users struggled to build meaningful connections and often experienced conversation fatigue shortly after matching.',
+      'Most dating apps optimise for volume, not quality, which leaves people endlessly swiping through profiles that all start to look the same. For someone with a packed schedule and not much patience left at the end of the day, that kind of app becomes another chore rather than something they actually want to open. The deeper issue is that a profile built from a handful of photos and a one line bio doesn\'t give anyone enough to judge actual compatibility, so most conversations stall out within the first few messages because there was never much shared ground to build on in the first place. Trust was another quiet problem sitting underneath all of this, since most people had no real way to tell who on the other end of a match was actually who they said they were.',
 
     solution:
-      'Love Cupid introduced personality-driven matchmaking, guided conversations, and compatibility-focused interactions. The platform encourages deeper engagement by helping users discover shared interests and reducing the pressure associated with traditional swipe-based experiences.',
+      'LoveCupid was built around a simple idea: give people enough real context about each other that a conversation has somewhere to go before it even starts. Profiles lean into personality and interests rather than just photos, and the matching logic looks at compatibility signals instead of treating every swipe as equally meaningful. The onboarding flow was kept light on purpose, asking just enough to make a good first match without turning sign up into a personality test someone has to sit through before they can even see who else is on the app. Conversations get a gentle nudge in the right direction too, with built in conversation starters that take the pressure off opening a chat with a stranger, which is usually the exact moment most matches go quiet and never recover.',
 
     blueprint:
-      'The visual system combines modern dating aesthetics with a warm and approachable personality. Soft gradients, expressive typography, carefully designed interaction states, and compatibility indicators help create an emotionally engaging experience.',
+      'The visual system runs on warm coral tones over soft, almost paper like backgrounds, which gives the whole app a friendlier feel than the colder, high contrast look most dating apps default to. Components are rounded throughout and the layouts use generous whitespace, so nothing ever feels cramped even on screens with a lot of profile information. Typography sticks to SF Compact Rounded across both bold and regular weights, partly for the soft, friendly letterforms that suit a dating app and partly because it holds up consistently across both iOS and Android without ever looking like it was designed for one platform and ported to the other. The full journey moves through auth, onboarding, discovery, matching, messaging, and profile as one connected loop, with each step designed to lower the friction of getting to the next one.',
 
     challenges:
-      'Designing engagement systems without overwhelming users required careful balance. The team needed to encourage meaningful interaction while avoiding unnecessary friction during onboarding, profile creation, and matching workflows.',
+      'The hardest balance to strike was keeping the app familiar enough for anyone who has used a swipe based dating app before, while still introducing deeper profile information without making day one feel like filling out a form. That meant compressing what would normally be a long personality questionnaire into short, almost game like interactions that didn\'t feel like work. A related challenge showed up after a match happened rather than before it: getting two strangers from "you matched" to an actual conversation required interactive prompts that nudged the first message along, since that early silence is exactly where most matches quietly die. Profile depth also had to be handled carefully, since asking for everything upfront would have scared people off, so the design needed to let people build out their profile gradually over time without ever making an incomplete profile feel broken or unfinished. None of this was small in isolation, but doing it consistently across more than thirty screens without the experience drifting in tone was its own ongoing discipline.',
 
     learnings:
-      'Users value authenticity over volume. Features that encouraged meaningful conversations generated stronger engagement than traditional growth-focused mechanics. Safety, transparency, and thoughtful interaction design played a key role in user retention.',
+      'The clearest lesson from this project was that cutting friction matters more than adding features, since the biggest engagement gains came from removing steps rather than introducing new ones. A warmer visual identity also did more for perceived trust than any messaging ever could, which made it obvious that color and tone aren\'t just decoration in a product like this, they\'re doing real emotional work. Letting people reveal more about themselves gradually instead of all at once kept profile quality high without scaring anyone off during onboarding, and the small, almost invisible interactions, like a conversation starter appearing at exactly the right moment, ended up mattering more to the overall feel of the app than any single big feature did.',
 
-    fontMain: 'SF PRO',
+    fontMain: 'SF Compact Rounded',
+
 
     colorPalette: [
       { hex: '#F7B89C' },
@@ -202,30 +203,30 @@ const CASE_STUDIES_DATA = {
 
   'agritech-marketplace': {
     title: 'Agritech Marketplace',
-    subtitle: 'Connecting Farmers and Wholesale Buyers',
+    subtitle: 'MadhuMitra & Horticulture, One Mission for Rural India',
     tagline:
-      'A digital marketplace that empowers farmers with direct market access, transparent pricing, and streamlined logistics management.',
+      'Two apps built for the same farming communities, helping beekeepers and fruit growers track what they produce, grow it smarter, and finally sell it themselves.',
 
     category: 'UX Research, Branding + UX/UI Designing',
     role: 'Senior Product Designer',
     timeline: '12 Weeks',
-    deliverables: 'Responsive Web, Mobile App',
-    platform: 'iOS, Android & Web',
+    deliverables: 'Product Design — MadhuMitra (Beekeeping) + Horticulture (Fruit Farming)',
+    platform: 'Android',
 
     problem:
-      'Farmers often face limited access to buyers, inconsistent pricing information, and fragmented logistics processes. The lack of transparency across the agricultural supply chain creates inefficiencies that impact both profitability and trust.',
+      'Beekeepers have always had a working knowledge of their hives, but almost none of it lives anywhere outside their own memory. Migration timing, hive health, how much honey or wax a season actually produced, all of it stayed undocumented, which made it nearly impossible to spot what was actually working and improve on it season over season. And once the honey was ready, there was nowhere to sell it except local middlemen who set the price. Fruit growers faced a parallel version of the same problem from a different angle. They knew their land and their crops, but had no structured way to log what was planted where, follow a cultivation guide built for their specific fruit and soil, or get in front of a buyer without a market visit. In both cases the gap wasn\'t a lack of farming knowledge, it was a lack of any system to capture that knowledge and turn it into either better decisions or a direct sale.',
 
     solution:
-      'The marketplace connects farmers directly with wholesale buyers through a unified digital platform. Real-time pricing, product listings, logistics coordination, and transaction visibility help streamline the entire trading process from listing to delivery.',
+      'MadhuMitra gives a beekeeper a running record of their entire operation, from hive registration and migration tracking to a productivity log that captures honey, wax, and propolis output over time. A built in camera tool lets a farmer photograph a hive, a pest, or a flowering plant and get instant identification and guidance back, and that same capture feeds into a productivity dashboard that turns scattered observations into a clearer picture of which hives are performing and why. Once a season\'s harvest is ready, MadhuMitra lets the beekeeper list it directly in a marketplace built into the same app, turning what used to be a separate trip to a middleman into a continuation of the same workflow. Horticulture mirrors that same philosophy for fruit growers. A farmer registers their plot using the same official land records the government already recognises, gets a cultivation guide specific to their fruit and soil, and tracks pest and nutrition needs as the season progresses. Just like MadhuMitra, Horticulture closes the loop with a built in marketplace, so growing guidance and selling live in the same place instead of being two separate problems a farmer has to solve on their own.',
 
     blueprint:
-      'The design system prioritizes clarity, readability, and accessibility in outdoor usage environments. Large touch targets, high-contrast interfaces, simplified workflows, and multilingual considerations ensure usability across a wide range of users.',
+      'Both apps share a backbone of OTP login, bilingual onboarding, and a camera first interaction pattern, but each one wears its own identity on top of that shared foundation. MadhuMitra runs on a warm amber that feels appropriate for honey and hives, while Horticulture uses a forest green that reads instantly as crop and cultivation. The productivity dashboard in MadhuMitra was designed to feel less like a spreadsheet and more like a season at a glance, surfacing trends in plain language rather than raw numbers. The marketplace screens in both apps follow the same listing pattern deliberately, so a farmer who lists honey in MadhuMitra would recognise exactly how to list mangoes in Horticulture without having to relearn anything.',
 
     challenges:
-      'Designing for users with different levels of digital literacy required simplifying complex marketplace workflows without removing essential functionality. Network limitations and rural connectivity challenges also influenced product decisions.',
+      'The hardest design problem in MadhuMitra was making the AI camera feature feel genuinely useful rather than gimmicky. A farmer pointing their phone at a hive needs information that actually changes what they do next, not a label that just confirms what they already knew, so the recommendation layer had to translate raw identification into a specific next action and quietly log that observation into the productivity dashboard without asking the farmer to do any extra data entry themselves. Designing the marketplace inside both apps raised a different challenge entirely, since neither beekeepers nor fruit growers had ever sold directly to a buyer through an app before, which meant listing a product had to feel as simple as taking a photo and naming a price, with nothing that resembled a complicated seller dashboard. On the Horticulture side, tying crop data to real land records meant the design had to handle the reality that not every farmer\'s paperwork is current or complete, so the flow needed to work for someone with perfect records and someone still catching up equally well.',
 
     learnings:
-      'Successful agricultural products require reliability before innovation. Offline-friendly experiences, clear status indicators, and simplified workflows significantly increased user confidence and platform adoption.',
+      'The biggest realisation across both apps was that farmers don\'t actually want a separate tool for tracking and a separate tool for selling, they want one continuous workflow where what they grow naturally leads into what they sell, and splitting those into two destinations would have meant losing people at the handoff. Building the AI camera feature also reinforced that the most valuable part of an AI tool in this context isn\'t the AI part at all, it\'s the fact that a farmer with no time or patience for data entry ends up with a usable productivity record anyway, just because they took a photo they were already going to take. And designing two visually distinct apps on the same underlying patterns confirmed that consistency doesn\'t mean identical, it means a farmer who learns one app should already half know how to use the other.',
 
     fontMain: 'SF PRO',
 
@@ -266,36 +267,35 @@ const CASE_STUDIES_DATA = {
 
   'pairfect': {
     title: 'Pairfect',
-    subtitle: 'Connecting Developers Through Pair Programming',
+    subtitle: 'Your Closet, Finally Making Sense',
     tagline:
-      'A platform dedicated to matching developers for pair programming sessions, fostering collaboration, and enhancing coding skills through shared experiences.',
+      'A styling app that builds outfit combinations from clothes you already own, and shows you what to add next if you want more options.',
 
-    category: 'UX Research, Branding + UX/UI Designing',
-    role: 'Lead Product Designer',
+    category: 'UX Research, Branding + UX/UI Designing + Frontend Development',
+    role: 'Designer & Frontend Developer',
     timeline: '8 Weeks',
-    deliverables: 'Web App Design',
-    platform: 'Responsive Web',
+    deliverables: 'Product Design + Native Frontend (Kotlin)',
+    platform: 'Android (Native, Kotlin)',
 
     problem:
-      'Developers often struggle to find compatible partners for pair programming. Existing platforms are either too broad or lack the specific features needed to match developers based on skill level, language preference, and availability.',
+      'Most people own more clothes than they actually wear, not because the clothes are bad, but because figuring out what goes with what takes more effort than just reaching for the same three outfits on repeat. Standing in front of a full closet and still feeling like you have nothing to wear is a strangely common experience, and it usually comes down to one missing step: nobody ever showed you which pieces in your own wardrobe actually pair well together. Styling apps that try to solve this either ignore your real closet entirely and just push you toward buying new things, or they rely on heavier recommendation systems that need a lot of data and still don\'t explain why one combination works and another doesn\'t. There was no simple, transparent way to look at your own clothes and get a combination you could trust without needing to think about it yourself.',
 
     solution:
-      'Pairfect provides a streamlined matchmaking system that connects developers based on their technical profiles. The platform includes integrated scheduling, communication tools, and feedback mechanisms to ensure productive and enjoyable pair programming sessions.',
+      'Pairfect starts with your actual closet. You add what you own, organised by category, and the app builds outfit combinations using a rule based pairing system, matching tops with bottoms and accessories based on category logic rather than a black box recommendation engine, so every suggestion is something you can immediately understand and trust. Alongside your closet sits an Explore section, which works the opposite direction: instead of styling what you have, it shows you outfit ideas and individual pieces you don\'t own yet, each linking out to where you can actually buy them. The two sections were designed to feel like one continuous loop rather than two separate features, your closet for styling what\'s already yours, Explore for filling in what\'s missing.',
 
     blueprint:
-      'The design system features a clean, minimal interface with a dark mode aesthetic and vibrant pink accents. High contrast typography and intuitive navigation help users quickly find matches and manage their schedules without distraction.',
+      'The interface keeps clothing as the visual focus throughout, with minimal chrome around every product image so nothing competes with the actual outfit being shown. Closet items are organised into clear categories with a card based layout, and the same card pattern carries over into Explore, so switching between styling your own clothes and browsing new ones never feels like switching apps. Since the pairing logic itself is rule based, the design leans into making that visible and legible rather than hiding it, an outfit combination should read clearly as top plus bottom plus accessory rather than feeling like an opaque suggestion with no explanation behind it. I designed every screen and then built the entire frontend natively in Kotlin myself, which meant having full control over how outfit cards render, how closet categories scroll, and how the transition between an outfit and its individual pieces feels, details that are easy to spec in a design file but only really come together once you\'re the one wiring up the actual views.',
 
     challenges:
-      'Creating an effective matching algorithm required balancing user preferences with availability. The interface needed to clearly communicate matching criteria while remaining uncluttered and easy to use.',
+      'The first real challenge was making closet entry fast enough that people would actually bother doing it, since the whole pairing system is only useful once your wardrobe is in the app, and any friction at that stage means people give up before ever seeing a single outfit suggestion. The second was a tension specific to rule based pairing: category logic alone can technically combine any top with any bottom, so the harder design problem was constraining those combinations enough that suggestions felt intentional rather than random, without needing a full recommendation model to get there. Designing Explore to sit naturally next to a closet built from someone\'s own clothes was its own balance to strike, since it needed to feel like a genuine extension of styling, not an ad slotted into the middle of the app. And because I was also building the Kotlin frontend myself, several decisions that looked simple in the design file, like how an outfit card animates into its expanded view, turned into real engineering problems I had to solve directly rather than hand off to someone else.',
 
     learnings:
-      'Developers highly value clear communication and structured sessions. Providing tools for scheduling and feedback significantly improved the success rate and satisfaction of pair programming sessions.',
+      'Designing and building the same product end to end made the cost of every visual decision much more concrete, since anything that looked good in a static mockup but was expensive to implement had nowhere to hide. Rule based pairing turned out to have a real advantage over a more complex model at this stage: every suggestion is explainable, which matters a lot when you\'re asking someone to trust an app with how they look. The closet and Explore sections also taught a clearer lesson about scope, that styling what you own and discovering what to buy next are genuinely two different jobs, and treating them as one feature would have made both weaker. Building the frontend myself also meant the biggest constraint on what shipped wasn\'t the design vision, it was how much time I had to translate that vision into working Kotlin, which forced a much sharper sense of what actually mattered in version one.',
 
     fontMain: 'SF PRO',
-
     colorPalette: [
-      { hex: '#E2006A' },
-      { hex: '#1C1C1F' },
+      { hex: '#070707' },
+      { hex: '#EFEEE7' },
       { hex: '#FFFFFF' },
       { hex: '#333333' }
     ],
@@ -455,8 +455,8 @@ export function DualVideoShowcase({ id }) {
     }
   }, [isFlipped]);
 
-  const titles = id === 'chayan-karo' 
-    ? ['CHAYAN KARO', 'CHAYAN SAATHI'] 
+  const titles = id === 'chayan-karo'
+    ? ['CHAYAN KARO', 'CHAYAN SAATHI']
     : ['MADHUMITRA', 'HORTICULTURE'];
 
   const videos = id === 'chayan-karo'
@@ -473,7 +473,7 @@ export function DualVideoShowcase({ id }) {
             {activeTitle}
           </h3>
         </div>
-        
+
         <div className="cs-flip-scene">
           <div className={`cs-flip-card ${isFlipped ? 'is-flipped' : ''}`}>
             <div className="cs-flip-face cs-flip-face--front">
@@ -556,8 +556,8 @@ export function ScreenshotsSlider({ slides }) {
         {slides[activeIndex].title}
       </h3>
       <div className="cs-screenshots-viewport">
-        <div 
-          className="cs-screenshots-track" 
+        <div
+          className="cs-screenshots-track"
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
           {slides.map((slide, i) => (
@@ -571,8 +571,8 @@ export function ScreenshotsSlider({ slides }) {
       </div>
       <div className="cs-screenshots-dots">
         {slides.map((_, i) => (
-          <button 
-            key={i} 
+          <button
+            key={i}
             className={`cs-screenshots-dot ${i === activeIndex ? 'active' : ''}`}
             onClick={() => setActiveIndex(i)}
             aria-label={`Go to slide ${i + 1}`}

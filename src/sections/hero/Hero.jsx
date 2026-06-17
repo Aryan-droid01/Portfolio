@@ -9,7 +9,7 @@ import RotatingText from '../../components/rotating-text/RotatingText';
 import { playBulbFlickerSound, playTypewriterKey, playQuoteWhoosh } from '../../utils/audioManager';
 
 export default function Hero({ isRevealed }) {
-  const words = ["Designs", "Late Nights", "Ui/Ux", "Binge Watching"];
+  const words = ["Curiosity", "Late Nights", "Bad Wifi", "One More Tweak"];
   const [cardActive, setCardActive] = useState(false);
 
   const nameText = "ARYAN VERMA";
@@ -78,7 +78,7 @@ export default function Hero({ isRevealed }) {
         <div className="hero-centered-content hero-reveal">
 
           {/* Introductory label */}
-          <div className="hero-intro-text">Hello, I am</div>
+          <div className="hero-intro-text">Hi, I'm</div>
 
           {/* Name Box with Figma selection border & handles */}
           <div className="hero-name-box figma-select">
@@ -96,7 +96,7 @@ export default function Hero({ isRevealed }) {
 
           {/* Headline and rotating word (stacked) */}
           <div className="hero-headline-group">
-            <div className="hero-accent-lead">A Designer Fueled by</div>
+            <div className="hero-accent-lead">A Designer Driven by</div>
 
             <div className="word-rotator-wrapper">
               {isTypingFinished && (
@@ -154,7 +154,7 @@ export default function Hero({ isRevealed }) {
                             <ul className="back-skills-list">
                               <li>UI/UX Designer</li>
                               <li>Android Developer</li>
-                              <li>Jetpack Compose</li>
+                              <li>Frontend Developer</li>
                             </ul>
 
                             <div className="back-footer">SYSTEM_OK</div>

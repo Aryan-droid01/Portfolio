@@ -50,14 +50,14 @@ export default function About() {
         {/* ABOUT ME Section */}
         <div className="about-text-content">
           <h2 className="about-title">ABOUT ME</h2>
-          
+
           <h3 className="about-tagline">
-            Always Learning new things and growing ,Sticking To one thing is not my niche
+            Always learning new things and growing, sticking to one thing is not my niche
           </h3>
-          
+
           <div className="about-description">
             <p>
-              I’m Aryan Verma — a <strong>UI/UX Designer and Creative Developer</strong> passionate about building immersive digital experiences that combine modern aesthetics, smooth interactions, and strong visual storytelling. I enjoy creating interfaces that not only look visually premium but also feel intuitive, engaging, and emotionally connected with users. My design approach focuses on blending creativity with functionality through clean layouts, cinematic motion, interactive elements, and thoughtful user experiences. I love transforming ideas into visually striking digital products that deliver both beauty and usability across every screen and device. From modern websites and brand experiences to interactive interfaces and creative web applications, I constantly explore new ways to push design beyond static visuals. I believe great design is not just about appearance — it’s about creating experiences that leave a lasting impression through detail, storytelling, movement, and seamless interaction.
+              I'm Aryan Verma, a <strong>UI/UX Designer</strong> who cares more about how a product feels to use than how it looks in a single screenshot. My process starts with the actual problem a user is facing, not the visual style, and works backward from there into layouts, flows, and interactions that feel obvious in hindsight even when they took several rounds to get right. I spend most of my time thinking about hierarchy, spacing, motion, and the small interaction details that decide whether an interface feels effortless or just looks good in isolation. Across the projects I've worked on, from dual sided marketplaces to dating apps to agritech platforms, the common thread has always been designing for real constraints, low digital literacy, trust gaps, cluttered information, rather than designing in a vacuum. I also know my way around frontend development, with React for web and Kotlin for native Android, which means I can prototype an idea quickly or take a design all the way to a working build when a project needs that, instead of stopping at the handoff.
             </p>
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function About() {
                   <img src={skill.icon} className="skill-icon-img" alt={`${skill.name} icon`} />
                 </div>
               </div>
-              
+
               <div className="skill-card-details">
                 <div className="skill-progress-item">
                   <div className="progress-label">

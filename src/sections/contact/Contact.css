@@ -2,7 +2,8 @@
   width: 100%;
   background-color: var(--black);
   color: var(--white);
-  padding: 0px 24px 80px 24px; /* Shifted header closer to About caution tape */
+  padding: 0px 24px 80px 24px;
+  /* Shifted header closer to About caution tape */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -56,15 +57,18 @@
 /* Centered Form Box panel */
 .contact-form-box {
   width: 100%;
-  max-width: 1200px; /* Made form box wider matching design layout */
+  max-width: 1200px;
+  /* Made form box wider matching design layout */
   margin: 0 auto 50px auto;
   position: relative;
   z-index: 2;
 }
 
 .contact-form-wrapper {
-  background: rgba(7, 7, 7, 0.85); /* Solid dark with transparency */
-  border: 1px solid rgba(255, 255, 255, 0.15); /* Thin white/grey outline border */
+  background: rgba(7, 7, 7, 0.85);
+  /* Solid dark with transparency */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  /* Thin white/grey outline border */
   border-radius: 0;
   padding: 40px;
   transition: all 0.4s ease;
@@ -123,9 +127,11 @@
 .form-textarea {
   font-family: var(--font-body);
   font-size: 14px;
-  background-color: #000000; /* Pure black background */
+  background-color: #000000;
+  /* Pure black background */
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0; /* Square edges */
+  border-radius: 0;
+  /* Square edges */
   padding: 14px 16px;
   color: var(--white);
   box-sizing: border-box;
@@ -210,7 +216,8 @@
   align-items: center;
   gap: 12px;
   text-decoration: none;
-  color: #757575; /* Grey default */
+  color: #757575;
+  /* Grey default */
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
@@ -238,16 +245,39 @@
   font-size: 12px;
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.35);
-  text-align: left; /* Match form alignment */
-  max-width: 1200px; /* Aligned width with the wider form box */
+  text-align: center;
+  /* Match form alignment */
+  max-width: 1200px;
+  /* Aligned width with the wider form box */
   margin: 0 auto;
   box-sizing: border-box;
   padding: 0 10px;
 }
 
+
+
+.contact-footer-message {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0 0 8px 0;
+}
+
+.contact-footer-copyright {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin: 0;
+}
+
 @keyframes bannerSlideIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
@@ -292,6 +322,7 @@
 }
 
 @media (max-width: 480px) {
+
   .confetti-left-svg,
   .confetti-right-svg {
     display: none;
@@ -307,7 +338,8 @@
   height: 100%;
   pointer-events: none;
   overflow: hidden;
-  z-index: 1; /* Floating behind inputs/forms but in front of tactical black background */
+  z-index: 1;
+  /* Floating behind inputs/forms but in front of tactical black background */
 }
 
 .confetti-particle {
@@ -350,16 +382,21 @@
   0% {
     transform: translate3d(0, -20px, 0);
     opacity: 0;
-    animation-timing-function: cubic-bezier(0.1, 0.8, 0.3, 1); /* Quick initial burst outward/upward */
+    animation-timing-function: cubic-bezier(0.1, 0.8, 0.3, 1);
+    /* Quick initial burst outward/upward */
   }
+
   15% {
     transform: translate3d(var(--burst-x, 0px), var(--burst-y, -40px), 0);
     opacity: var(--opacity-max, 1);
-    animation-timing-function: cubic-bezier(0.35, 0.45, 0.65, 0.85); /* Smooth natural gravity fall deceleration/acceleration */
+    animation-timing-function: cubic-bezier(0.35, 0.45, 0.65, 0.85);
+    /* Smooth natural gravity fall deceleration/acceleration */
   }
+
   85% {
     opacity: var(--opacity-max, 1);
   }
+
   100% {
     transform: translate3d(var(--drift-x, 0px), var(--fall-height), 0);
     opacity: 0;
@@ -370,6 +407,7 @@
   0% {
     transform: translate3d(calc(var(--sway-amp, 20px) * -1), 0, 0);
   }
+
   100% {
     transform: translate3d(var(--sway-amp, 20px), 0, 0);
   }
@@ -379,9 +417,11 @@
   0% {
     transform: rotate3d(var(--rot-axis-x, 1), var(--rot-axis-y, 0), var(--rot-axis-z, 0), var(--rot-start, 0deg)) translate3d(0, 0, 0);
   }
+
   50% {
     transform: rotate3d(var(--rot-axis-x, 1), var(--rot-axis-y, 0), var(--rot-axis-z, 0), var(--rot-mid, 180deg)) translate3d(0, var(--flutter-y, 4px), var(--flutter-z, 5px));
   }
+
   100% {
     transform: rotate3d(var(--rot-axis-x, 1), var(--rot-axis-y, 0), var(--rot-axis-z, 0), var(--rot-end, 360deg)) translate3d(0, 0, 0);
   }
@@ -391,6 +431,7 @@
   0% {
     transform: scale(var(--scale-base, 1));
   }
+
   100% {
     transform: scale(calc(var(--scale-base, 1) * var(--scale-var, 0.9)));
   }
