@@ -415,6 +415,7 @@ export const StaggeredMenu = ({
         animate={headerHidden ? { y: -20, opacity: 0 } : { y: 0, opacity: 1 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
         style={{ pointerEvents: headerHidden ? 'none' : 'auto' }}
+        data-cursor-ignore={headerHidden ? "true" : undefined}
       >
         <div ref={floatingWrapperRef} className="sm-header-inner-float">
           <div className="sm-logo" aria-label="Logo">
@@ -426,6 +427,16 @@ export const StaggeredMenu = ({
                 draggable={false}
                 width={110}
                 height={24}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  if (onNavigate) {
+                    onNavigate('/');
+                  } else {
+                    window.location.href = '/';
+                  }
+                  closeMenu();
+                }}
+                style={{ cursor: 'pointer' }}
               />
             ) : (
               <img
@@ -434,6 +445,11 @@ export const StaggeredMenu = ({
                 className="sm-pfp-avatar"
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
+                  if (onNavigate) {
+                    onNavigate('/');
+                  } else {
+                    window.location.href = '/';
+                  }
                   closeMenu();
                 }}
               />

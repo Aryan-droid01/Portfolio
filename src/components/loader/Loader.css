@@ -54,7 +54,7 @@
 
 .loader-percentage {
   font-family: var(--font-heading);
-  font-size: clamp(110px, 16vw, 150px);
+  font-size: clamp(60px, 16vw, 150px);
   font-weight: 500;
   line-height: 0.85;
   letter-spacing: -0.01em;
@@ -99,4 +99,12 @@
   height: 100%;
   background: var(--white);
   box-shadow: 0 0 10px var(--white);
+}
+
+@media (max-width: 480px) {
+  .loader-hud-info {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
 }

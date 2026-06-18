@@ -68,6 +68,7 @@ const FuzzyText = ({
       if (isCancelled) return;
 
       const text = React.Children.toArray(children).join('');
+      const lines = text.split('\n');
 
       const offscreen = document.createElement('canvas');
       const offCtx = offscreen.getContext('2d');
@@ -76,32 +77,54 @@ const FuzzyText = ({
       offCtx.font = `${fontWeight} ${fontSizeStr} ${computedFontFamily}`;
       offCtx.textBaseline = 'alphabetic';
 
-      let totalWidth = 0;
-      if (letterSpacing !== 0) {
-        for (const char of text) {
-          totalWidth += offCtx.measureText(char).width + letterSpacing;
+      let maxLineWidth = 0;
+      let maxLineLeft = 0;
+      let maxLineRight = 0;
+      let maxLineAscent = 0;
+      let maxLineDescent = 0;
+
+      const lineMetrics = lines.map(line => {
+        let lineWidth = 0;
+        if (letterSpacing !== 0) {
+          for (const char of line) {
+            lineWidth += offCtx.measureText(char).width + letterSpacing;
+          }
+          lineWidth -= letterSpacing;
+        } else {
+          lineWidth = offCtx.measureText(line).width;
         }
-        totalWidth -= letterSpacing;
-      } else {
-        totalWidth = offCtx.measureText(text).width;
-      }
 
-      const metrics = offCtx.measureText(text);
-      const actualLeft = metrics.actualBoundingBoxLeft ?? 0;
-      const actualRight = letterSpacing !== 0 ? totalWidth : (metrics.actualBoundingBoxRight ?? metrics.width);
-      const actualAscent = metrics.actualBoundingBoxAscent ?? numericFontSize;
-      const actualDescent = metrics.actualBoundingBoxDescent ?? numericFontSize * 0.2;
+        const metrics = offCtx.measureText(line);
+        const actualLeft = metrics.actualBoundingBoxLeft ?? 0;
+        const actualRight = letterSpacing !== 0 ? lineWidth : (metrics.actualBoundingBoxRight ?? metrics.width);
+        const actualAscent = metrics.actualBoundingBoxAscent ?? numericFontSize;
+        const actualDescent = metrics.actualBoundingBoxDescent ?? numericFontSize * 0.2;
 
-      const textBoundingWidth = Math.ceil(letterSpacing !== 0 ? totalWidth : actualLeft + actualRight);
-      const tightHeight = Math.ceil(actualAscent + actualDescent);
+        maxLineWidth = Math.max(maxLineWidth, lineWidth);
+        maxLineLeft = Math.max(maxLineLeft, actualLeft);
+        maxLineRight = Math.max(maxLineRight, actualRight);
+        maxLineAscent = Math.max(maxLineAscent, actualAscent);
+        maxLineDescent = Math.max(maxLineDescent, actualDescent);
 
-      const extraWidthBuffer = 10;
-      const offscreenWidth = textBoundingWidth + extraWidthBuffer;
+        return { lineWidth, actualLeft, actualRight, actualAscent, actualDescent };
+      });
+
+      const extraWidthBuffer = Math.max(fuzzRange * 4, numericFontSize * 0.5);
+      const extraHeightBuffer = numericFontSize * 0.2;
+      const textBoundingWidth = Math.ceil(maxLineLeft + maxLineRight);
+      
+      const lineHeightMultiplier = 1.15;
+      const lineSpacing = numericFontSize * lineHeightMultiplier;
+      
+      const tightHeight = Math.ceil(maxLineAscent + maxLineDescent + extraHeightBuffer * 2 + (lines.length - 1) * lineSpacing);
+      const offscreenWidth = Math.ceil(textBoundingWidth + extraWidthBuffer * 2);
 
       offscreen.width = offscreenWidth;
       offscreen.height = tightHeight;
 
-      const xOffset = extraWidthBuffer / 2;
+      const xOffset = extraWidthBuffer;
+      const startYOffset = maxLineAscent + extraHeightBuffer;
+      
       offCtx.font = `${fontWeight} ${fontSizeStr} ${computedFontFamily}`;
       offCtx.textBaseline = 'alphabetic';
 
@@ -113,25 +136,30 @@ const FuzzyText = ({
         offCtx.fillStyle = color;
       }
 
-      if (letterSpacing !== 0) {
-        let xPos = xOffset;
-        for (const char of text) {
-          offCtx.fillText(char, xPos, actualAscent);
-          xPos += offCtx.measureText(char).width + letterSpacing;
-        }
-      } else {
-        offCtx.fillText(text, xOffset - actualLeft, actualAscent);
-      }
+      lines.forEach((line, index) => {
+        const yOffset = startYOffset + index * lineSpacing;
+        const lineXOffset = xOffset + (textBoundingWidth - lineMetrics[index].lineWidth) / 2;
 
-      const horizontalMargin = fuzzRange + 20;
-      const verticalMargin = 0;
+        if (letterSpacing !== 0) {
+          let xPos = lineXOffset;
+          for (const char of line) {
+            offCtx.fillText(char, xPos, yOffset);
+            xPos += offCtx.measureText(char).width + letterSpacing;
+          }
+        } else {
+          offCtx.fillText(line, lineXOffset - lineMetrics[index].actualLeft, yOffset);
+        }
+      });
+
+      const horizontalMargin = Math.max(fuzzRange * 2, numericFontSize * 0.5);
+      const verticalMargin = extraHeightBuffer;
       canvas.width = offscreenWidth + horizontalMargin * 2;
       canvas.height = tightHeight + verticalMargin * 2;
       ctx.translate(horizontalMargin, verticalMargin);
 
-      const interactiveLeft = horizontalMargin + xOffset;
+      const interactiveLeft = horizontalMargin;
       const interactiveTop = verticalMargin;
-      const interactiveRight = interactiveLeft + textBoundingWidth;
+      const interactiveRight = interactiveLeft + offscreenWidth;
       const interactiveBottom = interactiveTop + tightHeight;
 
       let isHovering = false;

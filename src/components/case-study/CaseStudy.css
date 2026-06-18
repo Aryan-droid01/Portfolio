@@ -103,7 +103,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 1600px;
+  max-width: 1800px;
   height: 100%;
   object-fit: cover;
   object-position: center;
@@ -226,7 +226,6 @@
   border-top: 2px solid rgba(255, 255, 255, 0.12);
   background: #0d0d0d;
   box-sizing: border-box;
-  overflow: hidden;
 
   /* Scroll-reveal — animates in on load; nth-of-type adds stagger */
   opacity: 0;
@@ -301,24 +300,26 @@
   z-index: 0;
 }
 
-/* Title */
 .section-title {
   position: absolute;
   left: 70px;
   top: 80px;
-  width: max-content;
-  height: 92px;
+  width: auto;
+  max-width: 100%;
+  height: auto;
   z-index: 2;
   font-family: 'Teko', sans-serif;
   font-weight: 700;
-  font-size: 64px;
-  line-height: 92px;
+  font-size: clamp(2rem, 8vw, 6rem);
+  line-height: 0.9;
   letter-spacing: 0;
   text-transform: uppercase;
   color: #e2006a;
-  /* Bold pink color matching case study.png design */
   display: flex;
   align-items: center;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  text-align: left;
 }
 
 .section-title canvas {
@@ -346,14 +347,15 @@
 /* Body copy */
 .cs-section__body {
   font-family: 'Instrument Sans', sans-serif;
-  font-size: 18px;
+  font-size: clamp(1rem, 2vw, 1.25rem);
   font-weight: 400;
-  line-height: 1.35;
+  line-height: 1.4;
   letter-spacing: 0;
   color: rgba(255, 255, 255, 0.92);
   margin-top: 24px;
   margin-left: 70px;
   max-width: 820px;
+  overflow-wrap: anywhere;
 }
 
 .cs-footer__actions {
@@ -467,9 +469,8 @@
 
 /* Reusable Screenshot Image Wrapper */
 .cs-screenshot-wrapper {
-  width: 220px;
-  height: 460px;
-  flex-shrink: 0;
+  flex: 0 1 auto;
+  min-width: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -481,8 +482,8 @@
 }
 
 .cs-screenshot-wrapper img {
-  width: 100%;
-  height: 100%;
+  width: min(100%, 300px);
+  height: auto;
   object-fit: contain;
   display: block;
 }
@@ -491,8 +492,16 @@
    #02 SOLUTION — four phone mockup cards
    ========================================================================== */
 
-.cs-screenshots-slider {
+.cs-screenshots-multi {
   margin-top: 64px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+}
+
+.cs-screenshots-group {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -501,12 +510,15 @@
 
 .cs-screenshots-title {
   font-family: 'Teko', sans-serif;
-  font-size: 40px;
+  font-size: clamp(2rem, 7vw, 4rem);
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #ffffff;
   margin-bottom: 40px;
+  text-align: center;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   animation: titleFadeUp .4s cubic-bezier(.22,1,.36,1);
 }
 
@@ -542,42 +554,6 @@
   display: block;
 }
 
-.cs-screenshots-viewport {
-  width: 100%;
-  overflow: hidden;
-}
-
-.cs-screenshots-track {
-  display: flex;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.cs-screenshots-slide {
-  min-width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 32px;
-  flex-wrap: nowrap;
-}
-
-.cs-screenshots-dots {
-  display: flex;
-  gap: 8px;
-  margin-top: 40px;
-  justify-content: center;
-}
-
-.cs-screenshots-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
 .cs-screenshots-dot.active {
   width: 32px;
   background: var(--cs-primary, #e47830);
@@ -585,11 +561,12 @@
 
 .cs-mockups-row {
   display: flex;
-  gap: 32px;
+  gap: clamp(16px, 2vw, 32px);
   margin-top: 52px;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
 .cs-phone-frame,
@@ -609,10 +586,17 @@
   color: rgba(255, 255, 255, 0.15);
 }
 
-.cs-mockup-img-el {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.cs-screenshot-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cs-mockup-img-el,
+.cs-screenshot-wrapper img {
+  width: min(100%, 300px);
+  height: auto;
+  object-fit: contain;
 }
 
 /* ==========================================================================
@@ -650,6 +634,36 @@
   margin: 0 0 28px;
   word-break: break-word;
   font-family: -apple-system, 'SF Pro Display', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+}
+
+/* ==========================================================================
+   MOBILE NATIVE SWIPE GALLERIES (<768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Flatten the track so it acts as the scroll container */
+  /* Same treatment for static mockup rows and new multi-app groups */
+  .cs-mockups-row {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    flex-wrap: nowrap;
+    padding: 0 20px;
+    gap: clamp(16px, 4vw, 32px);
+  }
+  
+  .cs-mockups-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Lock the cards to safe widths and enable snap */
+  .cs-screenshot-wrapper,
+  .cs-phone-frame {
+    flex: 0 0 min(85%, 320px);
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
 }
 
 /* Bold / Semibold / Regular weight samples */

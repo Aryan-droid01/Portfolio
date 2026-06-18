@@ -173,19 +173,38 @@ const TargetCursor = ({
       ];
     };
 
+    const isElementValid = el => {
+      if (!el || el.closest('[data-cursor-ignore="true"]')) return false;
+      const style = window.getComputedStyle(el);
+      if (
+        style.display === 'none' ||
+        style.visibility === 'hidden' ||
+        parseFloat(style.opacity) === 0 ||
+        el.offsetParent === null
+      ) {
+        return false;
+      }
+      return true;
+    };
+
     const scrollHandler = () => {
       if (!activeTarget || !cursorRef.current) return;
       
-      // Keep target coordinates updated as the page scrolls
       updateTargetCoords(activeTarget);
 
       const { x: offsetX, y: offsetY } = getOffset();
       const mouseX = gsap.getProperty(cursorRef.current, 'x') + offsetX;
       const mouseY = gsap.getProperty(cursorRef.current, 'y') + offsetY;
       const elementUnderMouse = document.elementFromPoint(mouseX, mouseY);
-      const isStillOverTarget =
+      
+      let isStillOverTarget =
         elementUnderMouse &&
         (elementUnderMouse === activeTarget || elementUnderMouse.closest(targetSelector) === activeTarget);
+        
+      if (isStillOverTarget && !isElementValid(activeTarget)) {
+        isStillOverTarget = false;
+      }
+
       if (!isStillOverTarget) {
         if (currentLeaveHandler) {
           currentLeaveHandler();
@@ -221,6 +240,7 @@ const TargetCursor = ({
       }
       const target = allTargets[0] || null;
       if (!target || !cursorRef.current || !cornersRef.current) return;
+      if (!isElementValid(target)) return;
       if (activeTarget === target) return;
       if (activeTarget) {
         cleanupTarget(activeTarget);

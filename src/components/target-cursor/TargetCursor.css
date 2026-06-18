@@ -55,3 +55,8 @@
   border-right: none;
   border-top: none;
 }
+
+[data-cursor-ignore="true"],
+[data-cursor-ignore="true"] * {
+  pointer-events: none !important;
+}

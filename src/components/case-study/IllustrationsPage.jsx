@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import Navbar from '../layout/navbar/Navbar';
+
 import TiltedCard from '../ui/TiltedCard';
 import LightRays from '../ui/LightRays';
 import FuzzyText from '../ui/FuzzyText';
@@ -17,7 +17,6 @@ export default function IllustrationsPage({ onClose, onNavigate }) {
 
   return (
     <article ref={pageRef} className="illustrations-page">
-      <Navbar onNavigate={onNavigate} scrollContainerRef={pageRef} />
       <div className="illustrations-light-rays">
         <LightRays
           raysOrigin="top-center"
@@ -35,7 +34,7 @@ export default function IllustrationsPage({ onClose, onNavigate }) {
       <header className="illustrations-header">
         <h1 className="illustrations-title">
           <FuzzyText
-            fontSize="72px"
+            fontSize="clamp(2.5rem, 8vw, 4.5rem)"
             fontWeight={800}
             fontFamily="'Instrument Sans', sans-serif"
             color="#ffffff"
@@ -54,10 +53,10 @@ export default function IllustrationsPage({ onClose, onNavigate }) {
             imageSrc={illustration1}
             altText="Illustration 1"
             captionText="Illustration 1"
-            containerHeight="525px"
-            containerWidth="400px"
-            imageHeight="525px"
-            imageWidth="400px"
+            containerHeight="auto"
+            containerWidth="100%"
+            imageHeight="100%"
+            imageWidth="100%"
             rotateAmplitude={12}
             scaleOnHover={1.05}
             showMobileWarning={false}
@@ -74,10 +73,10 @@ export default function IllustrationsPage({ onClose, onNavigate }) {
             imageSrc={illustration2}
             altText="Illustration 2"
             captionText="Illustration 2"
-            containerHeight="525px"
-            containerWidth="400px"
-            imageHeight="525px"
-            imageWidth="400px"
+            containerHeight="auto"
+            containerWidth="100%"
+            imageHeight="100%"
+            imageWidth="100%"
             rotateAmplitude={12}
             scaleOnHover={1.05}
             showMobileWarning={false}
@@ -91,6 +90,10 @@ export default function IllustrationsPage({ onClose, onNavigate }) {
           />
       </div>
 
+      <button className="illustrations-floating-btn" onClick={onClose}>
+        Return To Home
+        <img src={bulletSvg} alt="Arrow" className="bullet-icon-right" />
+      </button>
     </article>
   );
 }

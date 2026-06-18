@@ -16,6 +16,13 @@ export default function Hero({ isRevealed }) {
   const [typedName, setTypedName] = useState("");
   const [isTypingFinished, setIsTypingFinished] = useState(false);
   const [startTyping, setStartTyping] = useState(false);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Start typing after bulb flicker finishes (1.5s) and isRevealed is true
   useEffect(() => {
@@ -168,9 +175,21 @@ export default function Hero({ isRevealed }) {
               Master Of <strong>Some</strong>
             </div>
 
-            <div className="hero-quote-lines" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+            <div className="hero-quote-lines" style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'center', 
+              gap: '4px',
+              maxWidth: 'min(90vw, 900px)',
+              marginInline: 'auto',
+              paddingInline: 'clamp(12px, 3vw, 24px)',
+              textAlign: 'center',
+              lineHeight: '1.15',
+              overflowWrap: 'break-word',
+              whiteSpace: 'normal'
+            }}>
               <FuzzyText
-                fontSize="clamp(18px, 4vw, 36px)"
+                fontSize="clamp(20px, 2vw, 40px)"
                 fontWeight="italic bold"
                 fontFamily="inherit"
                 color="#ffffff"
@@ -178,18 +197,9 @@ export default function Hero({ isRevealed }) {
                 hoverIntensity={0.4}
                 fuzzRange={10}
               >
-                "Probably Redesigning Something
-              </FuzzyText>
-              <FuzzyText
-                fontSize="clamp(18px, 4vw, 36px)"
-                fontWeight="italic bold"
-                fontFamily="inherit"
-                color="#ffffff"
-                baseIntensity={0.15}
-                hoverIntensity={0.4}
-                fuzzRange={10}
-              >
-                in my head right now"
+                {isMobile 
+                  ? "Probably Redesigning Something\nin my head right now"
+                  : "Probably Redesigning Something in my head right now"}
               </FuzzyText>
             </div>
           </div>

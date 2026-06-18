@@ -529,50 +529,25 @@ export function ScreenshotImage({ image, label }) {
 }
 
 /* ─────────────────────────────────────────
-   SCREENSHOTS SLIDER COMPONENT
+   SCREENSHOTS MULTI-APP COMPONENT
 ───────────────────────────────────────── */
 export function ScreenshotsSlider({ slides, id }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    if (!slides || slides.length === 0) return;
-    const interval = setInterval(() => {
-      setActiveIndex(current => (current + 1) % slides.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [slides]);
-
   if (!slides || slides.length === 0) return null;
 
   return (
-    <div className="cs-screenshots-slider">
-      <h3 className="cs-screenshots-title" key={activeIndex}>
-        {slides[activeIndex].title}
-      </h3>
-      <div className="cs-screenshots-viewport">
-        <div
-          className="cs-screenshots-track"
-          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-        >
-          {slides.map((slide, i) => (
-            <div key={i} className="cs-screenshots-slide">
-              {slide.mockups.map((imgUrl, j) => (
-                <ScreenshotImage key={j} image={imgUrl} label={`Mockup ${i * 4 + j + 1}`} />
-              ))}
-            </div>
-          ))}
+    <div className="cs-screenshots-multi">
+      {slides.map((slide, i) => (
+        <div key={i} className="cs-screenshots-group">
+          <h3 className="cs-screenshots-title">
+            {slide.title}
+          </h3>
+          <div className="cs-mockups-row">
+            {slide.mockups.map((imgUrl, j) => (
+              <ScreenshotImage key={j} image={imgUrl} label={`Mockup ${i * 4 + j + 1}`} />
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="cs-screenshots-dots">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            className={`cs-screenshots-dot ${i === activeIndex ? 'active' : ''}`}
-            onClick={() => setActiveIndex(i)}
-            aria-label={`Go to slide ${i + 1}`}
-          />
-        ))}
-      </div>
+      ))}
     </div>
   );
 }
@@ -755,7 +730,6 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images, onNavig
 
     return (
       <article className="cs-page" style={{ backgroundColor: '#000', overflow: 'hidden', height: '100vh', width: '100vw' }}>
-        <Navbar onNavigate={onNavigate} />
         <div style={{ width: '100%', height: '100%', position: 'relative' }}>
           <InfiniteMenu items={postItems} onClose={onClose} />
         </div>

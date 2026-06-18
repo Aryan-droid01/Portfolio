@@ -359,8 +359,9 @@
     align-items:center;
 }
 
-.hero-quote canvas {
-    margin-left: -30px;
+.hero-quote-lines canvas {
+    max-width: 90vw;
+    height: auto;
     display: block;
 }
 

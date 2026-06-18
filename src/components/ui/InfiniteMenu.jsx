@@ -73,6 +73,12 @@ in vec2 vUvs;
 in float vAlpha;
 flat in int vInstanceId;
 
+// SDF for rounded boxes
+float sdRoundedBox(vec2 p, vec2 b, float r) {
+    vec2 q = abs(p) - b + r;
+    return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r;
+}
+
 void main() {
     int itemIndex = vInstanceId % uItemCount;
     int cellsPerRow = uAtlasSize;
@@ -81,48 +87,64 @@ void main() {
     vec2 cellSize = vec2(1.0) / vec2(float(cellsPerRow));
     vec2 cellOffset = vec2(float(cellX), float(cellY)) * cellSize;
 
+    // UVs are 0..1. Map to -0.5..0.5
+    vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
+    vec2 centeredSt = st - 0.5;
+
+    // Maximum bounds for the image inside the 1x1 WebGL quad (leaving 20% padding for shadow)
+    vec2 maxArtSize = vec2(0.40); 
+    
+    // Determine image aspect ratio
     ivec2 texSize = textureSize(uTex, 0);
     float imageAspect = float(texSize.x) / float(texSize.y);
     
-    // Original cards aspect ratio
-    float containerAspect = 1.0 / 1.25;
-    
-    // Perform object-fit: cover scaling
-    float scaleX = 1.0;
-    float scaleY = 1.0;
-    if (imageAspect > containerAspect) {
-        // Image is wider than container, crop sides
-        scaleX = imageAspect / containerAspect;
+    // Physical art dimensions (maintains perfect native aspect ratio inside the square quad)
+    vec2 artSize;
+    if (imageAspect > 1.0) {
+        // Wider than tall
+        artSize = vec2(maxArtSize.x, maxArtSize.x / imageAspect);
     } else {
-        // Image is taller than container, crop top/bottom
-        scaleY = containerAspect / imageAspect;
+        // Taller than wide
+        artSize = vec2(maxArtSize.y * imageAspect, maxArtSize.y);
     }
     
-    // Slightly enlarge images inside the frame: scale(1.05-1.15)
-    // Square posts can be enlarged more. Portrait slightly less.
-    float dynamicScale = 1.08;
-    if (imageAspect >= 0.95 && imageAspect <= 1.05) dynamicScale = 1.15; // Square
-    else if (imageAspect > 1.05) dynamicScale = 1.10; // Wide
-    else dynamicScale = 1.05; // Portrait
+    // Premium floating poster corner radius (45-55px equivalent)
+    float artRadius = 0.12; 
     
-    // Zoom in
-    scaleX /= dynamicScale;
-    scaleY /= dynamicScale;
+    // Image SDF mask
+    float dArt = sdRoundedBox(centeredSt, artSize, artRadius);
+    float artMask = smoothstep(0.005, -0.005, dArt);
     
-    vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
-    vec2 centeredSt = st - 0.5;
-    vec2 scaledSt = centeredSt * vec2(scaleX, scaleY);
+    // Soft shadow directly behind the image (blurred, low opacity, elevated)
+    float shadowBlur = 0.08;
+    // Shift shadow down slightly to simulate elevation
+    vec2 shadowSt = centeredSt - vec2(0.0, -0.015);
+    float dShadow = sdRoundedBox(shadowSt, artSize, artRadius);
+    float shadowAlpha = smoothstep(shadowBlur, -shadowBlur, dShadow - 0.01) * 0.45;
     
-    // Map back to UV space for texture sample
-    vec2 texUv = scaledSt + 0.5;
+    // Sample texture within art bounds
+    vec2 artUv = centeredSt / (artSize * 2.0);
+    vec2 sampleUv = artUv + 0.5; // Map to 0..1
     
-    vec2 clampedUv = clamp(texUv, 0.0, 1.0);
-    clampedUv = clampedUv * cellSize + cellOffset;
+    vec4 imgColor = vec4(0.0);
+    if (sampleUv.x >= 0.0 && sampleUv.x <= 1.0 && sampleUv.y >= 0.0 && sampleUv.y <= 1.0) {
+        vec2 finalSt = clamp(sampleUv, 0.0, 1.0);
+        finalSt = finalSt * cellSize + cellOffset;
+        imgColor = texture(uTex, finalSt);
+    }
     
-    vec4 texColor = texture(uTex, clampedUv);
+    // Composition
+    vec3 shadowColor = vec3(0.0);
+    float imgAlpha = artMask * imgColor.a;
     
-    outColor = texColor;
-    outColor.a *= vAlpha;
+    // Combine shadow and image
+    vec3 finalColor = mix(shadowColor, imgColor.rgb, imgAlpha);
+    float finalAlpha = max(imgAlpha, shadowAlpha * (1.0 - artMask));
+    
+    // Discard completely transparent pixels for depth test optimization
+    if (finalAlpha < 0.01) discard;
+    
+    outColor = vec4(finalColor, finalAlpha * vAlpha);
 }
 `;
 
@@ -745,8 +767,9 @@ class InfiniteGridMenu {
     };
 
     // Original Custom RoundedRectangleGeometry
+    // Made perfectly square to preserve "Square cards" geometry requirement
     this.discGeo = new RoundedRectangleGeometry(
-    1.0,
+    1.25,
     1.25,
     0.25,
     12
@@ -849,7 +872,8 @@ class InfiniteGridMenu {
     let positions = this.instancePositions.map(p => vec3.transformQuat(vec3.create(), p, this.control.orientation));
     
     // Apple Vision Pro floating card scale: 0.26
-    const scale = 0.30;
+    // Increased scale to compensate for smaller maxArtSize, making the images huge (95-98% visual scale)
+    const scale = 0.36;
     const SCALE_INTENSITY = 0.6;
     positions.forEach((p, ndx) => {
       const s = (Math.abs(p[2]) / this.SPHERE_RADIUS) * SCALE_INTENSITY + (1 - SCALE_INTENSITY);
@@ -1037,6 +1061,7 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
   const canvasRef = useRef(null);
   const sketchRef = useRef(null);
   const [activeItem, setActiveItem] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -1046,6 +1071,7 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
     const handleActiveItem = index => {
       const itemIndex = index % items.length;
       setActiveItem(items[itemIndex]);
+      setActiveIndex(itemIndex);
     };
 
     if (canvas) {
@@ -1108,7 +1134,7 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
       <div className={`infinite-menu-header ${isExpanded ? 'hidden' : ''}`}>
         <h1 className="infinite-menu-title">
           <FuzzyText
-            fontSize="72px"
+            fontSize="clamp(40px, 10vw, 72px)"
             fontWeight={800}
             fontFamily="'Instrument Sans', sans-serif"
             color="#ffffff"
@@ -1131,8 +1157,12 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onClose }) {
 
       {activeItem && (
         <div className={`infinite-menu-overlay ${isExpanded ? 'hidden' : ''}`}>
+          <div className={`face-index ${isMoving ? 'inactive' : 'active'}`}>
+            AS-{(activeIndex + 1).toString().padStart(2, '0')}
+          </div>
+
           <h2 className={`face-title ${isMoving ? 'inactive' : 'active'}`}>
-            {activeItem.title}
+            {activeItem.title.replace(/^AS-\d+\s*[-—]\s*/i, '').trim()}
           </h2>
 
           <p className={`face-description ${isMoving ? 'inactive' : 'active'}`}>
