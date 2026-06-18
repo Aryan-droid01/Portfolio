@@ -47,40 +47,44 @@ export default function App() {
   }, []);
 
   const handleNavigate = (path) => {
-    if (path === '/') {
-      setCurrentCaseStudy(null);
-      window.history.pushState({}, '', '/');
-    } else if (path === '/posts') {
-      setCurrentCaseStudy('posts-brand');
-      window.history.pushState({}, '', '/posts');
-    } else if (path === '/illustrations') {
-      setCurrentCaseStudy('illustrations');
-      window.history.pushState({}, '', '/illustrations');
-    } else if (path.startsWith('/case-study/')) {
-      setCurrentCaseStudy(path.replace('/case-study/', ''));
-      window.history.pushState({}, '', path);
-    } else if (path.startsWith('#')) {
-      setCurrentCaseStudy(null);
-      window.history.pushState({}, '', '/');
-      setTimeout(() => {
-        const id = path.substring(1);
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 50);
-    }
+    React.startTransition(() => {
+      if (path === '/') {
+        setCurrentCaseStudy(null);
+        window.history.pushState({}, '', '/');
+      } else if (path === '/posts') {
+        setCurrentCaseStudy('posts-brand');
+        window.history.pushState({}, '', '/posts');
+      } else if (path === '/illustrations') {
+        setCurrentCaseStudy('illustrations');
+        window.history.pushState({}, '', '/illustrations');
+      } else if (path.startsWith('/case-study/')) {
+        setCurrentCaseStudy(path.replace('/case-study/', ''));
+        window.history.pushState({}, '', path);
+      } else if (path.startsWith('#')) {
+        setCurrentCaseStudy(null);
+        window.history.pushState({}, '', '/');
+        setTimeout(() => {
+          const id = path.substring(1);
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 50);
+      }
+    });
   };
 
   const handleSetCaseStudy = (id) => {
-    setCurrentCaseStudy(id);
-    if (id === null) {
-      window.history.pushState({}, '', '/');
-    } else if (id === 'posts-brand') {
-      window.history.pushState({}, '', '/posts');
-    } else if (id === 'illustrations') {
-      window.history.pushState({}, '', '/illustrations');
-    } else {
-      window.history.pushState({}, '', `/case-study/${id}`);
-    }
+    React.startTransition(() => {
+      setCurrentCaseStudy(id);
+      if (id === null) {
+        window.history.pushState({}, '', '/');
+      } else if (id === 'posts-brand') {
+        window.history.pushState({}, '', '/posts');
+      } else if (id === 'illustrations') {
+        window.history.pushState({}, '', '/illustrations');
+      } else {
+        window.history.pushState({}, '', `/case-study/${id}`);
+      }
+    });
   };
 
   useEffect(() => {
@@ -125,7 +129,7 @@ export default function App() {
       )}
 
       {/* Dotted Background Grid - Rendered globally at viewport level to bypass containing blocks */}
-      {siteVisible && (
+      {siteVisible && !currentCaseStudy && (
         <div className="landing-background">
           <DotGrid
             dotSize={3}
@@ -150,8 +154,8 @@ export default function App() {
         animate={siteVisible ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         style={{ 
-          pointerEvents: siteVisible ? 'auto' : 'none',
-          display: siteVisible ? 'block' : 'none' 
+          pointerEvents: siteVisible && !currentCaseStudy ? 'auto' : 'none',
+          display: siteVisible && !currentCaseStudy ? 'block' : 'none' 
         }}
       >
         <main style={{ position: 'relative' }}>

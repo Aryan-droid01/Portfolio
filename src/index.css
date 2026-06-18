@@ -19,6 +19,7 @@ html {
   scroll-behavior: smooth;
   background-color: var(--bg-color);
   scroll-padding-top: 90px;
+  overflow-x: hidden;
 }
 
 body {
@@ -34,6 +35,7 @@ body {
 
 #root {
   width: 100%;
+  overflow-x: hidden;
 }
 
 * {

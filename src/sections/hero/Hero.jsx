@@ -168,9 +168,9 @@ export default function Hero({ isRevealed }) {
               Master Of <strong>Some</strong>
             </div>
 
-            <p className="hero-quote">
+            <div className="hero-quote-lines" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
               <FuzzyText
-                fontSize="36px"
+                fontSize="clamp(18px, 4vw, 36px)"
                 fontWeight="italic bold"
                 fontFamily="inherit"
                 color="#ffffff"
@@ -178,9 +178,20 @@ export default function Hero({ isRevealed }) {
                 hoverIntensity={0.4}
                 fuzzRange={10}
               >
-                "Probably Redesigning Something in my head right now"
+                "Probably Redesigning Something
               </FuzzyText>
-            </p>
+              <FuzzyText
+                fontSize="clamp(18px, 4vw, 36px)"
+                fontWeight="italic bold"
+                fontFamily="inherit"
+                color="#ffffff"
+                baseIntensity={0.15}
+                hoverIntensity={0.4}
+                fuzzRange={10}
+              >
+                in my head right now"
+              </FuzzyText>
+            </div>
           </div>
 
         </div>

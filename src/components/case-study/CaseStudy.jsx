@@ -366,28 +366,49 @@ export function CaseStudyHero({ data, projectImage }) {
    SECTION WRAPPER — ghost number + content
 ───────────────────────────────────────── */
 function SectionShell({ num, title, modifier, children }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '400px' }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className={`cs-section cs-section--${modifier}`}>
-      <div className="cs-section__inner">
-        <div className="section-header">
-          <div className="section-number">{num}</div>
-          <h2 className="section-title">
-            <FuzzyText
-              fontSize="clamp(2.5rem, 5vw, 4rem)"
-              fontWeight={700}
-              fontFamily="inherit"
-              color="#e2006a"
-              baseIntensity={0.15}
-              hoverIntensity={0.4}
-              fuzzRange={12}
-            >
-              {title}
-            </FuzzyText>
-          </h2>
-        </div>
-        <div className="cs-section__content">
-          {children}
-        </div>
+    <section className={`cs-section cs-section--${modifier}`} ref={ref}>
+      <div className="cs-section__inner" style={{ minHeight: '600px' }}>
+        {isVisible && (
+          <>
+            <div className="section-header">
+              <div className="section-number">{num}</div>
+              <h2 className="section-title">
+                <FuzzyText
+                  fontSize="clamp(2.5rem, 5vw, 4rem)"
+                  fontWeight={700}
+                  fontFamily="inherit"
+                  color="#e2006a"
+                  baseIntensity={0.15}
+                  hoverIntensity={0.4}
+                  fuzzRange={12}
+                >
+                  {title}
+                </FuzzyText>
+              </h2>
+            </div>
+            <div className="cs-section__content">
+              {children}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
