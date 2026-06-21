@@ -9,7 +9,6 @@ import { IPhone16Frame, SamsungS26Frame } from '../ui/DeviceFrames';
 
 // Import mockup images for project solutions
 import chayanKaroImg from '../../assets/chayan_karo.png';
-import loveCupidImg from '../../assets/love_cupid.png';
 import agritechMarketplaceImg from '../../assets/agritech_marketplace.png';
 import caseStudyUiDesignImg from '../../assets/casestudyuidesign.png';
 import chayanKaroWomensDayImg from '../../assets/chayan_karo_womens_day.png';
@@ -21,11 +20,7 @@ import pairfect2 from '../../assets/mockups/ScreenMockups/Explore_pairfect.svg';
 import pairfect3 from '../../assets/mockups/ScreenMockups/Closet_pairfect.svg';
 import pairfect4 from '../../assets/mockups/ScreenMockups/Profile_pairfect.svg';
 
-// LoveCupid
-import lovecupid1 from '../../assets/mockups/ScreenMockups/lovecupid1.svg';
-import lovecupid2 from '../../assets/mockups/ScreenMockups/lovecupid2.svg';
-import lovecupid3 from '../../assets/mockups/ScreenMockups/lovecupid3.svg';
-import lovecupid4 from '../../assets/mockups/ScreenMockups/lovecupid4.svg';
+
 
 // Chayan Karo
 import chayankaro1 from '../../assets/mockups/ScreenMockups/Chayann Karo.svg';
@@ -56,7 +51,6 @@ import chayanKaroVideo from '../../assets/Chayan karo.mp4';
 import chayanSaathiVideo from '../../assets/Chayan Sathi.mp4';
 import madhumitraVideo from '../../assets/Madhumita.mp4';
 import horticultureVideo from '../../assets/Horticulture.mp4';
-import loveCupidVideo from '../../assets/Lovecupid.mp4';
 import pairfectVideo from '../../assets/PAIRFECT.mp4';
 
 // Posts 25
@@ -89,30 +83,98 @@ import post025 from '../../assets/posts/Posts/Your Home’s Best Friend(Tivoli).
 const CASE_STUDIES_DATA = {
   'chayan-karo': {
     title: 'Chayan Karo',
-    subtitle: 'Designing Trust at the Doorstep',
-    tagline:
-      'A home services app that puts the choice of who enters your home back in your hands, backed by a companion app that turns gig workers into a trusted, growing workforce.',
+    subtitle: 'Transforming a WhatsApp-based home service business into a two-sided marketplace ecosystem with 10K+ downloads.',
+    tagline: '',
 
     category: 'UX Research, Branding + UX/UI Designing',
     role: 'Lead UX / Product Designer',
-    timeline: 'Oct 2025 – Mar 2026',
-    deliverables: 'Product Design — Customer App + Provider App',
-    platform: 'Android · iOS (Flutter)',
+    timeline: '6 Months',
+    deliverables: 'Customer App + Provider App',
+    platform: 'Android & iOS (Flutter)',
+    metrics: [
+      { label: 'ROLE', value: 'Lead UX / Product Designer' },
+      { label: 'DURATION', value: '6 Months' },
+      { label: 'PLATFORM', value: 'Android & iOS (Flutter)' },
+      { label: 'SCOPE', value: 'Customer App + Provider App' },
+      { label: 'SCREENS DESIGNED', value: '120+' },
+      { label: 'OUTCOME', value: '10K+ Downloads' }
+    ],
 
-    problem:
-      'Most home service apps solve discovery but not trust. You tap "book a plumber" and a name and photo simply appear at your door, decided by the system, not by you. There is no moment in that flow where you actually choose who you are letting into your home. Customers had no visibility into a provider\'s rating, experience, or track record before booking, no transparent pricing before committing, and no real recourse when a cancellation or refund went wrong. This was never really a UI gap. It was a decision authority gap. The app was making a call that should have belonged to the user, and stripping out the one variable that matters most in a home services transaction: who. On the provider side, the same lack of structure showed up as an unpredictable job pipeline and no formal way to build a reputation that followed them between gigs.',
+    problem: (
+      <>
+        <p>Before Chayan Karo existed as a product, it existed as a phone number. Customers discovered the business through word of mouth and booked services over WhatsApp. As the business expanded into salon services, cleaning, and AC servicing, there was no visibility into provider availability, no structured discovery or booking flow, and no provider-side infrastructure.</p>
+        <br/>
+        <p>The challenge wasn't simply designing an app. It was designing two products with different needs that had to launch together, depend on each other, and still feel like one business. Customers needed speed and confidence, while providers needed predictable work and a system that wouldn't make their day harder.</p>
+      </>
+    ),
 
-    solution:
-      'The core product decision was to put provider selection back in the customer\'s control. Instead of auto assigning a technician, Chayan Karo surfaces a list of available providers for the selected service and time slot, each with a photo, rating, and experience, and lets the customer pick one, or choose to let the system match someone if they don\'t have a preference. That single decision reframes the entire booking flow. It stops being "request a service and hope" and becomes "compare and decide," which is closer to the mental model people already trust from food delivery and cab booking. Every booking closes the loop with a 4 digit PIN the provider has to show at the door, turning a one off transaction into a small ritual both sides understand without needing to read anything. On the other side of the same system, Chayan Saathi gives providers the structure to earn that visibility: one tap to go online, jobs that arrive by zone instead of randomly, and a rating that builds over time instead of being assigned to them on day one.',
+    solution: (
+      <>
+        <p>Over six months, I designed both applications from scratch — the customer-facing Chayan Karo and the provider-facing Chayan Saathi — across more than 120 screens. Every major flow, interaction pattern, and booking lifecycle had to be designed from the ground up.</p>
+        <br/>
+        <p>My role extended beyond interface design. I conducted usability sessions, collaborated closely with Flutter developers, stayed involved during QA, and worked directly with the client to translate business requirements into product decisions.</p>
+        <br/>
+        <p>Inspired by marketplace products like Urban Company, the goal was not to copy existing patterns but to adapt them to a business with a smaller provider network, heavier reliance on cash transactions, and providers with varying levels of digital literacy.</p>
+        <br/>
+        <p>The result was a live two-sided marketplace that crossed 10,000 downloads on the Play Store, validating the product's ability to support a growing customer and provider ecosystem.</p>
+      </>
+    ),
 
-    blueprint:
-      'Provider choice only works as a feature if comparing providers is fast, so the real design problem became how to show enough information to decide confidently without turning a three minute booking into a research project. The answer was a compact provider card showing photo, rating, years of experience, and price for the selected service, repeated as a scrollable list, with the system matched option pinned at the top for anyone who just wants speed. A single brand orange carries every interactive state across the app, from enabled buttons to the selected provider to the active tab, so the decision of who you picked stays visually unambiguous even at a glance. The provider app mirrors the same visual language but is built for a different job. An availability toggle sits at the top of the dashboard as the single most important control on the screen, because for a gig worker, that toggle is the difference between earning and not earning that day.',
+    blueprint: (
+      <>
+        <h3>Designing for Confidence</h3>
+        <br/>
+        <p>Showing more information doesn't necessarily create more trust. Provider cards were designed to surface only the signals needed to answer one question:</p>
+        <br/>
+        <p>“Can I trust this person?”</p>
+        <br/>
+        <p>Confidence came from clarity, not density.</p>
+        <br/><hr/><br/>
+        <h3>Designing for Reliability</h3>
+        <br/>
+        <p>Provider availability became one of the most important controls in the ecosystem. Every booking and job offer depended on that state being accurate, which gave the availability toggle outsized importance despite its visual simplicity.</p>
+        <br/><hr/><br/>
+        <h3>One System, Two Products</h3>
+        <br/>
+        <p>Approximately 50–60% of the infrastructure was shared between both applications, including buttons, cards, bottom sheets, inputs, and navigation patterns.</p>
+        <br/>
+        <p>The goal wasn't simply efficiency, but ensuring that both products felt like parts of the same ecosystem.</p>
+        <br/><hr/><br/>
+        <h3>Booking Lifecycle</h3>
+        <br/>
+        <p>Customer</p>
+        <br/>
+        <p>Discover → Search → Service Detail → Cart → Checkout → Booking → Rating</p>
+        <br/>
+        <p>Provider</p>
+        <br/>
+        <p>Registration → KYC → Zone Selection → Availability → Job Acceptance → Completion → Earnings</p>
+        <br/>
+        <p>The real work lived in the connective tissue between both journeys, ensuring that actions on one side remained synchronized with expectations on the other.</p>
+      </>
+    ),
 
-    challenges:
-      'Letting customers choose their own provider introduced a problem most auto assign apps never have to deal with: what happens when the provider you picked goes offline between selection and payment. A provider could appear available when chosen, then quietly toggle off thirty to sixty seconds later while the customer was still completing payment, breaking the one promise the whole feature was built on. The fix was to re check availability at the moment payment is initiated rather than only at selection, and if the provider had gone offline, swap in an alternative selection screen instead of a dead end error. The second hard problem was making payment itself feel safe in a market where most customers had never paid for anything online. Cash had to be designed as an equally respected option next to Razorpay, not a fallback for people who "couldn\'t" pay digitally, so neither method ever reads as the lesser choice. A third, quieter problem was protecting new providers from the cold start trap that choice based booking creates. A provider with zero completed jobs showing a 0.0 rating next to seasoned providers with four and five stars would mean customers always pick around them, so new providers simply show no rating yet rather than a number that looks like a red flag.',
+    challenges: (
+      <>
+        <p>Almost every decision that simplified the customer experience made the provider experience more complex, and vice versa. The challenge wasn't eliminating trade-offs but deciding whose needs should take priority at different moments.</p>
+        <br/>
+        <p>Provider onboarding, KYC, and earnings weren't simply interface problems. Many providers had limited digital familiarity, which meant designing experiences that prioritized understanding over feature density.</p>
+        <br/>
+        <p>Requirements evolved throughout development. A seemingly small decision, replacing plugin icons with custom iconography, eventually touched nearly every screen and reinforced how quickly minor choices can become structural at scale.</p>
+      </>
+    ),
 
-    learnings:
-      'The biggest lesson was that giving users a choice creates obligations the product didn\'t have before. Once you let someone pick a specific provider, you\'ve implicitly promised that provider will actually show up, and that\'s a much harder promise to keep than "someone will show up." That one decision is what pulled in the real time availability check, the PIN verification ritual, and the rating suppression logic for new providers, none of which would have been necessary under a simpler auto assign model. It reinforced something worth remembering on every project since: the most differentiating feature in a product is rarely the one that\'s hardest to build technically. It\'s the one that needs the most supporting design work to actually feel trustworthy.',
+    learnings: (
+      <>
+        <p>Usability sessions with real users revealed friction that internal reviews never surfaced. Most of the improvements came from observing hesitation, confusion, and unexpected behavior rather than predicting them.</p>
+        <br/>
+        <p>These insights led to simpler onboarding, clearer button labels, improved card layouts, reduced visual clutter, and more intuitive navigation.</p>
+        <br/>
+        <p>Given another six months, I would continue simplifying the checkout journey and revisit parts of provider onboarding and earnings to make them even easier for users with little experience managing financial information digitally.</p>
+        <br/>
+        <h3>Screens are the visible part. The system is the actual work.</h3>
+      </>
+    ),
 
     fontMain: 'SF PRO',
 
@@ -151,57 +213,7 @@ const CASE_STUDIES_DATA = {
 
   },
 
-  'love-cupid': {
-    title: 'Love Cupid',
-    subtitle: 'Swipe Right, Match Vibe',
-    tagline:
-      'A dating app for people too busy to waste time on shallow swiping, built around personality first profiles and conversations that actually go somewhere.',
 
-    category: 'UX Research, Branding + UX/UI Designing',
-    role: 'UI/UX Designer',
-    timeline: '4 Weeks',
-    deliverables: 'Product Design, User Experience, High Fidelity Interface',
-    platform: 'iOS & Android',
-
-    problem:
-      'Most dating apps optimise for volume, not quality, which leaves people endlessly swiping through profiles that all start to look the same. For someone with a packed schedule and not much patience left at the end of the day, that kind of app becomes another chore rather than something they actually want to open. The deeper issue is that a profile built from a handful of photos and a one line bio doesn\'t give anyone enough to judge actual compatibility, so most conversations stall out within the first few messages because there was never much shared ground to build on in the first place. Trust was another quiet problem sitting underneath all of this, since most people had no real way to tell who on the other end of a match was actually who they said they were.',
-
-    solution:
-      'LoveCupid was built around a simple idea: give people enough real context about each other that a conversation has somewhere to go before it even starts. Profiles lean into personality and interests rather than just photos, and the matching logic looks at compatibility signals instead of treating every swipe as equally meaningful. The onboarding flow was kept light on purpose, asking just enough to make a good first match without turning sign up into a personality test someone has to sit through before they can even see who else is on the app. Conversations get a gentle nudge in the right direction too, with built in conversation starters that take the pressure off opening a chat with a stranger, which is usually the exact moment most matches go quiet and never recover.',
-
-    blueprint:
-      'The visual system runs on warm coral tones over soft, almost paper like backgrounds, which gives the whole app a friendlier feel than the colder, high contrast look most dating apps default to. Components are rounded throughout and the layouts use generous whitespace, so nothing ever feels cramped even on screens with a lot of profile information. Typography sticks to SF Compact Rounded across both bold and regular weights, partly for the soft, friendly letterforms that suit a dating app and partly because it holds up consistently across both iOS and Android without ever looking like it was designed for one platform and ported to the other. The full journey moves through auth, onboarding, discovery, matching, messaging, and profile as one connected loop, with each step designed to lower the friction of getting to the next one.',
-
-    challenges:
-      'The hardest balance to strike was keeping the app familiar enough for anyone who has used a swipe based dating app before, while still introducing deeper profile information without making day one feel like filling out a form. That meant compressing what would normally be a long personality questionnaire into short, almost game like interactions that didn\'t feel like work. A related challenge showed up after a match happened rather than before it: getting two strangers from "you matched" to an actual conversation required interactive prompts that nudged the first message along, since that early silence is exactly where most matches quietly die. Profile depth also had to be handled carefully, since asking for everything upfront would have scared people off, so the design needed to let people build out their profile gradually over time without ever making an incomplete profile feel broken or unfinished. None of this was small in isolation, but doing it consistently across more than thirty screens without the experience drifting in tone was its own ongoing discipline.',
-
-    learnings:
-      'The clearest lesson from this project was that cutting friction matters more than adding features, since the biggest engagement gains came from removing steps rather than introducing new ones. A warmer visual identity also did more for perceived trust than any messaging ever could, which made it obvious that color and tone aren\'t just decoration in a product like this, they\'re doing real emotional work. Letting people reveal more about themselves gradually instead of all at once kept profile quality high without scaring anyone off during onboarding, and the small, almost invisible interactions, like a conversation starter appearing at exactly the right moment, ended up mattering more to the overall feel of the app than any single big feature did.',
-
-    fontMain: 'SF Compact Rounded',
-
-
-    colorPalette: [
-      { hex: '#F7B89C' },
-      { hex: '#E46A35' },
-      { hex: '#F4F7F5' },
-      { hex: '#000000' }
-    ],
-
-    hasMultipleApps: false,
-    mockups: [
-      lovecupid1,
-      lovecupid2,
-      lovecupid3,
-      lovecupid4
-    ],
-
-    nextId: 'pairfect',
-    nextTitle: 'Pairfect',
-    demoUrl: 'https://www.figma.com/proto/wVw9GNtAHNJOZL5yqhbfN5/Prototype?node-id=1591-917&p=f&viewport=325%2C60%2C0.11&t=7Ag8FHdLiEtLGcvu-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1591%3A782&page-id=1534%3A113',
-
-
-  },
 
   'agritech-marketplace': {
     title: 'Agritech Marketplace',
@@ -261,8 +273,8 @@ const CASE_STUDIES_DATA = {
       }
     ],
 
-    nextId: 'love-cupid',
-    nextTitle: 'Love Cupid',
+    nextId: 'pairfect',
+    nextTitle: 'Pairfect',
     demoUrl: 'https://www.figma.com/proto/cd3buiRvAQmecsDvx8oyYz/Prototype?node-id=6185-6342&p=f&viewport=60%2C398%2C0.08&t=OyZ5LCrRhMfPFd0x-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1',
 
   },
@@ -338,22 +350,33 @@ export function CaseStudyHero({ data, projectImage }) {
 
         {/* Meta strip */}
         <div className="cs-hero__meta">
-          <div className="cs-meta-col">
-            <span className="cs-meta-label">ROLE</span>
-            <span className="cs-meta-value">{data.role}</span>
-          </div>
-          <div className="cs-meta-col">
-            <span className="cs-meta-label">DELIVERABLES</span>
-            <span className="cs-meta-value">{data.deliverables}</span>
-          </div>
-          <div className="cs-meta-col">
-            <span className="cs-meta-label">TIMELINE</span>
-            <span className="cs-meta-value">{data.timeline}</span>
-          </div>
-          <div className="cs-meta-col">
-            <span className="cs-meta-label">PLATFORM</span>
-            <span className="cs-meta-value">{data.platform}</span>
-          </div>
+          {data.metrics ? (
+            data.metrics.map((m, i) => (
+              <div className="cs-meta-col" key={i}>
+                <span className="cs-meta-label">{m.label}</span>
+                <span className="cs-meta-value">{m.value}</span>
+              </div>
+            ))
+          ) : (
+            <>
+              <div className="cs-meta-col">
+                <span className="cs-meta-label">ROLE</span>
+                <span className="cs-meta-value">{data.role}</span>
+              </div>
+              <div className="cs-meta-col">
+                <span className="cs-meta-label">DELIVERABLES</span>
+                <span className="cs-meta-value">{data.deliverables}</span>
+              </div>
+              <div className="cs-meta-col">
+                <span className="cs-meta-label">TIMELINE</span>
+                <span className="cs-meta-value">{data.timeline}</span>
+              </div>
+              <div className="cs-meta-col">
+                <span className="cs-meta-label">PLATFORM</span>
+                <span className="cs-meta-value">{data.platform}</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>
@@ -501,7 +524,7 @@ export function ProblemSection({ problem, id }) {
     <SectionShell num="#01" title="THE PROBLEM" modifier="problem">
       <div className="cs-split">
         <div className="cs-split__left">
-          <p className="cs-section__body">{problem}</p>
+          {typeof problem === 'string' ? <p className="cs-section__body">{problem}</p> : <div className="cs-section__body">{problem}</div>}
         </div>
         <div className="cs-split__right">
           {isMultiApp ? (
@@ -583,7 +606,7 @@ export function CaseStudyShowcase({ data, id }) {
 export function SolutionSection({ solution, data, id }) {
   return (
     <SectionShell num="#02" title="THE SOLUTION" modifier="solution">
-      <p className="cs-section__body">{solution}</p>
+      {typeof solution === 'string' ? <p className="cs-section__body">{solution}</p> : <div className="cs-section__body">{solution}</div>}
       <CaseStudyShowcase data={data} id={id} />
     </SectionShell>
   );
@@ -592,39 +615,10 @@ export function SolutionSection({ solution, data, id }) {
 /* ─────────────────────────────────────────
    #03 SYSTEM BLUEPRINT
 ───────────────────────────────────────── */
-export function SystemBlueprintSection({ blueprint, fontMain, colorPalette }) {
+export function SystemBlueprintSection({ blueprint }) {
   return (
     <SectionShell num="#03" title="SYSTEM BLUEPRINT" modifier="blueprint">
-      <p className="cs-section__body">{blueprint}</p>
-
-      {/* Fonts block */}
-      <div className="cs-blueprint-block">
-        <h3 className="cs-blueprint-block__label">FONTS USED</h3>
-        <p className="cs-font-alphabet">
-          A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 1 2 3 4 5 6 7 8 9 0
-        </p>
-        <div className="cs-font-weights">
-          <span className="cs-font-weight cs-font-weight--bold">{fontMain} Bold</span>
-          <span className="cs-font-weight cs-font-weight--semibold">{fontMain} Semibold</span>
-          <span className="cs-font-weight cs-font-weight--regular">{fontMain} Regular</span>
-        </div>
-      </div>
-
-      {/* Colors block */}
-      <div className="cs-blueprint-block">
-        <h3 className="cs-blueprint-block__label">COLOUR PALETTE USED</h3>
-        <div className="cs-swatches">
-          {colorPalette.map((col, i) => (
-            <div key={i} className="cs-swatch">
-              <div
-                className="cs-swatch__circle"
-                style={{ backgroundColor: col.hex }}
-              />
-              <span className="cs-swatch__hex">{col.hex}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      {typeof blueprint === 'string' ? <p className="cs-section__body">{blueprint}</p> : <div className="cs-section__body">{blueprint}</div>}
     </SectionShell>
   );
 }
@@ -635,7 +629,7 @@ export function SystemBlueprintSection({ blueprint, fontMain, colorPalette }) {
 export function ChallengesSection({ challenges }) {
   return (
     <SectionShell num="#04" title="CHALLENGES" modifier="challenges">
-      <p className="cs-section__body">{challenges}</p>
+      {typeof challenges === 'string' ? <p className="cs-section__body">{challenges}</p> : <div className="cs-section__body">{challenges}</div>}
     </SectionShell>
   );
 }
@@ -646,7 +640,7 @@ export function ChallengesSection({ challenges }) {
 export function LearningsSection({ learnings }) {
   return (
     <SectionShell num="#05" title="LEARNINGS" modifier="learnings">
-      <p className="cs-section__body">{learnings}</p>
+      {typeof learnings === 'string' ? <p className="cs-section__body">{learnings}</p> : <div className="cs-section__body">{learnings}</div>}
     </SectionShell>
   );
 }

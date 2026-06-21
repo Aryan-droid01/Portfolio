@@ -1,7 +1,6 @@
 import React from 'react';
 import './Projects.css';
 import chayanKaroImg from '../../assets/chayan_karo.png';
-import loveCupidImg from '../../assets/love_cupid.png';
 import agritechMarketplaceImg from '../../assets/agritech_marketplace.png';
 import pairfectImg from '../../assets/pairfect.png';
 import CautionTape from '../../components/caution-tape/CautionTape';
@@ -34,14 +33,7 @@ export default function Projects({ onViewCaseStudy }) {
       image: agritechMarketplaceImg,
       link: '#/case-study/agritech-marketplace'
     },
-    {
-      id: 'love-cupid',
-      title: 'Love Cupid',
-      category: 'UX Research, Branding + UX/UI Designing',
-      description: 'A dating app for people too busy to waste time on shallow swiping, built around personality first profiles and conversations that actually go somewhere.',
-      image: loveCupidImg,
-      link: '#/case-study/love-cupid'
-    },
+
 
   ];
 
