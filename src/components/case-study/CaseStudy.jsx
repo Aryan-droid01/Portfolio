@@ -93,11 +93,9 @@ const CASE_STUDIES_DATA = {
     platform: 'Android & iOS (Flutter)',
     metrics: [
       { label: 'ROLE', value: 'Lead UX / Product Designer' },
-      { label: 'DURATION', value: '6 Months' },
-      { label: 'PLATFORM', value: 'Android & iOS (Flutter)' },
       { label: 'SCOPE', value: 'Customer App + Provider App' },
-      { label: 'SCREENS DESIGNED', value: '120+' },
-      { label: 'OUTCOME', value: '10K+ Downloads' }
+      { label: 'TIMELINE', value: '6 Months' },
+      { label: 'PLATFORM', value: 'Android & iOS (Flutter)' }
     ],
 
     problem: (
@@ -207,8 +205,8 @@ const CASE_STUDIES_DATA = {
       }
     ],
 
-    nextId: 'agritech-marketplace',
-    nextTitle: 'Agritech Marketplace',
+    nextId: 'pairfect',
+    nextTitle: 'Pairfect',
     demoUrl: 'https://www.figma.com/proto/cd3buiRvAQmecsDvx8oyYz/Prototype?node-id=6168-4494&viewport=-393%2C-469%2C0.26&t=YERE7HA53urgdApi-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=6168%3A3191&page-id=6083%3A34',
 
   },
@@ -216,31 +214,105 @@ const CASE_STUDIES_DATA = {
 
 
   'agritech-marketplace': {
-    title: 'Agritech Marketplace',
-    subtitle: 'MadhuMitra & Horticulture, One Mission for Rural India',
-    tagline:
-      'Two apps built for the same farming communities, helping beekeepers and fruit growers track what they produce, grow it smarter, and finally sell it themselves.',
+    title: 'Krishi Ecosystem',
+    subtitle: 'Designing digital infrastructure for underserved farming communities in Uttar Pradesh.',
+    tagline: 'A unified ecosystem consisting of two applications — MadhuMitra for beekeepers and Horticulture for fruit growers — built around a shared philosophy of accessibility, trust, and practical field usage.',
 
-    category: 'UX Research, Branding + UX/UI Designing',
-    role: 'Senior Product Designer',
-    timeline: '12 Weeks',
-    deliverables: 'Product Design — MadhuMitra (Beekeeping) + Horticulture (Fruit Farming)',
-    platform: 'Android',
+    category: 'Product Design',
+    role: 'Product Designer',
+    timeline: '3 Months',
+    deliverables: 'MadhuMitra + Horticulture',
+    platform: 'Android + iOS',
+    metrics: [
+      { label: 'ROLE', value: 'Product Designer' },
+      { label: 'SCOPE', value: 'MadhuMitra + Horticulture' },
+      { label: 'TIMELINE', value: '3 Months' },
+      { label: 'PLATFORM', value: 'Android + iOS' }
+    ],
 
-    problem:
-      'Beekeepers have always had a working knowledge of their hives, but almost none of it lives anywhere outside their own memory. Migration timing, hive health, how much honey or wax a season actually produced, all of it stayed undocumented, which made it nearly impossible to spot what was actually working and improve on it season over season. And once the honey was ready, there was nowhere to sell it except local middlemen who set the price. Fruit growers faced a parallel version of the same problem from a different angle. They knew their land and their crops, but had no structured way to log what was planted where, follow a cultivation guide built for their specific fruit and soil, or get in front of a buyer without a market visit. In both cases the gap wasn\'t a lack of farming knowledge, it was a lack of any system to capture that knowledge and turn it into either better decisions or a direct sale.',
+    problem: (
+      <>
+        <p>Agriculture in rural Uttar Pradesh runs on fragmented knowledge — local experts, WhatsApp groups, and personal experience, none of it centralized and all of it changing with seasons, weather, and pest cycles. Identifying a pest or planning bee migration looks simple on paper, but often depends on expertise that isn't available the moment it is needed.</p>
+        <br/>
+        <p>Beekeepers and fruit growers face different day-to-day problems, but both needed the same thing: tools that fit naturally into existing workflows rather than forcing users to adopt new habits. Add varying digital literacy and inconsistent internet access, and the real challenge becomes not what information to deliver, but how to deliver it without introducing another layer of complexity.</p>
+        <br/>
+        <p>The opportunity wasn't to digitize agriculture. It was to make agricultural knowledge and services more accessible.</p>
+      </>
+    ),
 
-    solution:
-      'MadhuMitra gives a beekeeper a running record of their entire operation, from hive registration and migration tracking to a productivity log that captures honey, wax, and propolis output over time. A built in camera tool lets a farmer photograph a hive, a pest, or a flowering plant and get instant identification and guidance back, and that same capture feeds into a productivity dashboard that turns scattered observations into a clearer picture of which hives are performing and why. Once a season\'s harvest is ready, MadhuMitra lets the beekeeper list it directly in a marketplace built into the same app, turning what used to be a separate trip to a middleman into a continuation of the same workflow. Horticulture mirrors that same philosophy for fruit growers. A farmer registers their plot using the same official land records the government already recognises, gets a cultivation guide specific to their fruit and soil, and tracks pest and nutrition needs as the season progresses. Just like MadhuMitra, Horticulture closes the loop with a built in marketplace, so growing guidance and selling live in the same place instead of being two separate problems a farmer has to solve on their own.',
+    solution: (
+      <>
+        <p>I designed two applications for the same client, serving two different agricultural domains.</p>
+        <br/>
+        <p>MadhuMitra helps beekeepers manage apiaries, monitor bee health, track migration, and identify flora. Horticulture helps fruit growers with cultivation guidance, pest management, and access to services like insurance and government schemes.</p>
+        <br/>
+        <p>Although the domains differ, the philosophy remains the same. Both products prioritize accessibility over feature density, replacing unnecessary complexity with patterns users already understand. Bilingual onboarding, OTP login, voice support, and camera-first interactions all serve the same purpose: removing barriers instead of adding functionality for its own sake.</p>
+        <br/>
+        <p>The result is two products that feel distinct in purpose and consistent in experience — separate products connected by a shared philosophy.</p>
+      </>
+    ),
 
-    blueprint:
-      'Both apps share a backbone of OTP login, bilingual onboarding, and a camera first interaction pattern, but each one wears its own identity on top of that shared foundation. MadhuMitra runs on a warm amber that feels appropriate for honey and hives, while Horticulture uses a forest green that reads instantly as crop and cultivation. The productivity dashboard in MadhuMitra was designed to feel less like a spreadsheet and more like a season at a glance, surfacing trends in plain language rather than raw numbers. The marketplace screens in both apps follow the same listing pattern deliberately, so a farmer who lists honey in MadhuMitra would recognise exactly how to list mangoes in Horticulture without having to relearn anything.',
+    blueprint: (
+      <>
+        <h3>Designing for Low Literacy</h3>
+        <br/>
+        <p>The goal wasn't to teach users technology. It was to design technology around the users we had.</p>
+        <br/>
+        <p>Both applications rely on bilingual onboarding, OTP authentication, and straightforward information hierarchy. Recognition was prioritized over memorization wherever possible.</p>
+        <br/>
+        <p>Accessibility wasn't a feature layered on top. It became the foundation.</p>
+        <br/><hr/><br/>
+        <h3>Camera Before Forms</h3>
+        <br/>
+        <p>Typing isn't always the easiest interaction, especially in the field.</p>
+        <br/>
+        <p>Photo-based workflows allowed users to identify plants and pests through a more natural interaction:</p>
+        <br/>
+        <p>Take Picture<br/>↓<br/>Get Information<br/>↓<br/>Act Accordingly</p>
+        <br/>
+        <p>Reducing manual input made the experience feel less like software and more like a tool designed for field conditions.</p>
+        <br/><hr/><br/>
+        <h3>One Ecosystem, Two Domains</h3>
+        <br/>
+        <p>Authentication, profile setup, support, maps, calendars, and navigation patterns remained consistent across both applications.</p>
+        <br/>
+        <p>That consistency wasn't a shortcut. It created familiarity for users and reduced complexity for the client.</p>
+        <br/>
+        <p>MadhuMitra and Horticulture don't look like siblings by accident. They share a skeleton.</p>
+        <br/><hr/><br/>
+        <h3>Designing for the Future</h3>
+        <br/>
+        <p>Geofencing, location mapping, community support, and government scheme integration were designed with long-term extensibility in mind.</p>
+        <br/>
+        <p>Several decisions intentionally created infrastructure that could support future services beyond the initial scope.</p>
+      </>
+    ),
 
-    challenges:
-      'The hardest design problem in MadhuMitra was making the AI camera feature feel genuinely useful rather than gimmicky. A farmer pointing their phone at a hive needs information that actually changes what they do next, not a label that just confirms what they already knew, so the recommendation layer had to translate raw identification into a specific next action and quietly log that observation into the productivity dashboard without asking the farmer to do any extra data entry themselves. Designing the marketplace inside both apps raised a different challenge entirely, since neither beekeepers nor fruit growers had ever sold directly to a buyer through an app before, which meant listing a product had to feel as simple as taking a photo and naming a price, with nothing that resembled a complicated seller dashboard. On the Horticulture side, tying crop data to real land records meant the design had to handle the reality that not every farmer\'s paperwork is current or complete, so the flow needed to work for someone with perfect records and someone still catching up equally well.',
+    challenges: (
+      <>
+        <p>Agriculture contains more domain complexity than most users should ever have to see directly. Land records, crop cycles, pest behavior, nutrition timing, migration planning, and government schemes all carry terminology that experts understand but everyday users may not.</p>
+        <br/>
+        <p>The challenge wasn't deciding what information existed. It was deciding how much information users actually needed in front of them at any given moment.</p>
+        <br/>
+        <p>Connectivity shaped just as many decisions. Reliable internet couldn't be assumed, which meant the experience had to remain useful under imperfect conditions.</p>
+        <br/>
+        <p>The harder balancing act was running two products simultaneously. MadhuMitra and Horticulture solve different problems, but they needed to feel like family — consistent without becoming identical. That required deliberate decisions about which patterns stayed shared and which needed to adapt to their respective domains.</p>
+      </>
+    ),
 
-    learnings:
-      'The biggest realisation across both apps was that farmers don\'t actually want a separate tool for tracking and a separate tool for selling, they want one continuous workflow where what they grow naturally leads into what they sell, and splitting those into two destinations would have meant losing people at the handoff. Building the AI camera feature also reinforced that the most valuable part of an AI tool in this context isn\'t the AI part at all, it\'s the fact that a farmer with no time or patience for data entry ends up with a usable productivity record anyway, just because they took a photo they were already going to take. And designing two visually distinct apps on the same underlying patterns confirmed that consistency doesn\'t mean identical, it means a farmer who learns one app should already half know how to use the other.',
+    learnings: (
+      <>
+        <p>The most sophisticated products aren't always built for sophisticated users.</p>
+        <br/>
+        <p>Good design here meant removing barriers rather than adding capability, and many of the decisions that mattered most weren't visual at all. They were decisions about language, familiarity, and trust.</p>
+        <br/>
+        <p>Designing for underserved users taught me that simplicity isn't the absence of complexity. It's knowing exactly which complexity users should never have to touch.</p>
+        <br/>
+        <p>Looking back, the bigger opportunity lies in treating these products as one platform rather than two applications that happen to share patterns. Shared infrastructure could support a unified farmer profile, centralized support, and entirely new services.</p>
+        <br/>
+        <h3>Good design isn't about adding more. It's about removing barriers.</h3>
+      </>
+    ),
 
     fontMain: 'SF PRO',
 
@@ -273,38 +345,99 @@ const CASE_STUDIES_DATA = {
       }
     ],
 
-    nextId: 'pairfect',
-    nextTitle: 'Pairfect',
+    nextId: 'close',
+    nextTitle: 'VIEW ALL PROJECTS',
     demoUrl: 'https://www.figma.com/proto/cd3buiRvAQmecsDvx8oyYz/Prototype?node-id=6185-6342&p=f&viewport=60%2C398%2C0.08&t=OyZ5LCrRhMfPFd0x-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1',
 
   },
 
   'pairfect': {
     title: 'Pairfect',
-    subtitle: 'Your Closet, Finally Making Sense',
+    subtitle: 'Reinventing outfit discovery through end-to-end design and development.',
     tagline:
-      'A styling app that builds outfit combinations from clothes you already own, and shows you what to add next if you want more options.',
+      'A personal project exploring wardrobe organization and outfit discovery, where design and implementation evolved together through a continuous feedback loop rather than a traditional handoff.',
 
-    category: 'UX Research, Branding + UX/UI Designing + Frontend Development',
-    role: 'Designer & Frontend Developer',
-    timeline: '8 Weeks',
-    deliverables: 'Product Design + Native Frontend (Kotlin)',
-    platform: 'Android (Native, Kotlin)',
+    category: 'Product Design + Android Development',
+    role: 'Product Designer + Android Developer',
+    timeline: '3 Months',
+    deliverables: 'End-to-End Product Ownership\nDesign + Native Android Development',
+    platform: 'Android\nKotlin · Jetpack Compose',
+    metrics: [
+      { label: 'ROLE', value: 'Product Designer + Android Developer' },
+      { label: 'SCOPE', value: <>End-to-End Product Ownership<br/>Design + Native Android Development</> },
+      { label: 'TIMELINE', value: '3 Months' },
+      { label: 'PLATFORM', value: <>Android<br/>Kotlin &middot; Jetpack Compose</> }
+    ],
 
-    problem:
-      'Most people own more clothes than they actually wear, not because the clothes are bad, but because figuring out what goes with what takes more effort than just reaching for the same three outfits on repeat. Standing in front of a full closet and still feeling like you have nothing to wear is a strangely common experience, and it usually comes down to one missing step: nobody ever showed you which pieces in your own wardrobe actually pair well together. Styling apps that try to solve this either ignore your real closet entirely and just push you toward buying new things, or they rely on heavier recommendation systems that need a lot of data and still don\'t explain why one combination works and another doesn\'t. There was no simple, transparent way to look at your own clothes and get a combination you could trust without needing to think about it yourself.',
+    problem: (
+      <>
+        <p>Pairfect started as a personal exploration, not a market gap. I kept noticing the same pattern in my own wardrobe — clothes I owned but rarely wore, outfits I defaulted to out of habit rather than choice, and no real system for putting things together beyond memory. Most wardrobe apps I looked at solved cataloging, not discovery: they're good at storing what you own, less good at helping you actually decide what to wear.</p>
+        <br/>
+        <p>That gap was interesting to design for. But the bigger draw was the chance to own the whole thing myself — not just the interface, but the decisions underneath it, all the way through to shipped code.</p>
+      </>
+    ),
 
-    solution:
-      'Pairfect starts with your actual closet. You add what you own, organised by category, and the app builds outfit combinations using a rule based pairing system, matching tops with bottoms and accessories based on category logic rather than a black box recommendation engine, so every suggestion is something you can immediately understand and trust. Alongside your closet sits an Explore section, which works the opposite direction: instead of styling what you have, it shows you outfit ideas and individual pieces you don\'t own yet, each linking out to where you can actually buy them. The two sections were designed to feel like one continuous loop rather than two separate features, your closet for styling what\'s already yours, Explore for filling in what\'s missing.',
+    solution: (
+      <>
+        <p>I designed and built Pairfect myself, with no handoff between the two. I started with information architecture and flows, then built a component system in Figma, then translated those components into Kotlin and Jetpack Compose.</p>
+        <br/>
+        <p>But the direction of influence wasn't one-way. Implementation constraints regularly pushed back on design decisions — a layout that worked in Figma sometimes had to be rethought once it had to behave correctly across real states in Compose. Just as often, a design decision shaped how a component got built, because I wasn't designing for a developer to interpret later — I was designing for myself to implement next.</p>
+        <br/>
+        <p>That loop, design informing code and code informing design, ran continuously instead of in two separate phases.</p>
+      </>
+    ),
 
-    blueprint:
-      'The interface keeps clothing as the visual focus throughout, with minimal chrome around every product image so nothing competes with the actual outfit being shown. Closet items are organised into clear categories with a card based layout, and the same card pattern carries over into Explore, so switching between styling your own clothes and browsing new ones never feels like switching apps. Since the pairing logic itself is rule based, the design leans into making that visible and legible rather than hiding it, an outfit combination should read clearly as top plus bottom plus accessory rather than feeling like an opaque suggestion with no explanation behind it. I designed every screen and then built the entire frontend natively in Kotlin myself, which meant having full control over how outfit cards render, how closet categories scroll, and how the transition between an outfit and its individual pieces feels, details that are easy to spec in a design file but only really come together once you\'re the one wiring up the actual views.',
+    blueprint: (
+      <>
+        <h3>Designing for Exploration</h3>
+        <br/>
+        <p>The goal wasn't to help people store clothes more neatly. It was to help them discover combinations they wouldn't have put together on their own. The real design problem was choice paralysis — too many items, too many possible pairings.</p>
+        <br/>
+        <p>Confidence came from narrowing that down, not from adding more ways to organize.</p>
+        <br/><hr/><br/>
+        <h3>One Source of Truth</h3>
+        <br/>
+        <p>Figma components mapped directly onto reusable Compose components. Design and development were treated as one system, not two disciplines connected by a handoff file.</p>
+        <br/>
+        <p>A change to a component meant one change, not a redesign followed by a separate re-implementation.</p>
+        <br/><hr/><br/>
+        <h3>Material Design 3</h3>
+        <br/>
+        <p>Building on Material Design 3 instead of a fully custom system was a deliberate trade-off. It provided accessibility, consistency, and scalability without spending effort reinventing baseline interaction patterns.</p>
+        <br/>
+        <p>That effort went toward the actual problem instead: outfit discovery.</p>
+        <br/><hr/><br/>
+        <h3>Architecture</h3>
+        <br/>
+        <p>UI<br/>↓<br/>ViewModel<br/>↓<br/>Repository<br/>↓<br/>Data Layer</p>
+        <br/>
+        <p>MVVM kept the UI layer focused on displaying state rather than managing it, making the app easier to extend and easier to debug as it grew.</p>
+      </>
+    ),
 
-    challenges:
-      'The first real challenge was making closet entry fast enough that people would actually bother doing it, since the whole pairing system is only useful once your wardrobe is in the app, and any friction at that stage means people give up before ever seeing a single outfit suggestion. The second was a tension specific to rule based pairing: category logic alone can technically combine any top with any bottom, so the harder design problem was constraining those combinations enough that suggestions felt intentional rather than random, without needing a full recommendation model to get there. Designing Explore to sit naturally next to a closet built from someone\'s own clothes was its own balance to strike, since it needed to feel like a genuine extension of styling, not an ad slotted into the middle of the app. And because I was also building the Kotlin frontend myself, several decisions that looked simple in the design file, like how an outfit card animates into its expanded view, turned into real engineering problems I had to solve directly rather than hand off to someone else.',
+    challenges: (
+      <>
+        <p>Owning both design and development meant there was no one else to hand a hard problem to. An idea that looked clean in Figma had to survive being turned into maintainable code by the same person who designed it — and not every idea did.</p>
+        <br/>
+        <p>Components built to look elegant in a single static frame sometimes became harder to manage once they had to support multiple real states and variants, which meant going back and simplifying decisions I'd already settled on.</p>
+        <br/>
+        <p>The harder balance was between flexibility and simplicity. A component built to handle every case becomes difficult to reason about; one built only for the common case breaks the first time a real use case doesn't fit it.</p>
+        <br/>
+        <p>Every one of those trade-offs was mine to make, with no second team to catch what I missed.</p>
+      </>
+    ),
 
-    learnings:
-      'Designing and building the same product end to end made the cost of every visual decision much more concrete, since anything that looked good in a static mockup but was expensive to implement had nowhere to hide. Rule based pairing turned out to have a real advantage over a more complex model at this stage: every suggestion is explainable, which matters a lot when you\'re asking someone to trust an app with how they look. The closet and Explore sections also taught a clearer lesson about scope, that styling what you own and discovering what to buy next are genuinely two different jobs, and treating them as one feature would have made both weaker. Building the frontend myself also meant the biggest constraint on what shipped wasn\'t the design vision, it was how much time I had to translate that vision into working Kotlin, which forced a much sharper sense of what actually mattered in version one.',
+    learnings: (
+      <>
+        <p>Pairfect taught me that design doesn't stop when development begins — they're different expressions of the same system, and treating them as separate stages is where a lot of products lose coherence.</p>
+        <br/>
+        <p>Building the interface myself gave me a much sharper sense of what scalability, state management, and maintainability actually cost, not just what they mean in theory.</p>
+        <br/>
+        <p>If I revisited Pairfect, I'd push further on smarter outfit recommendations, deeper personalization, and a more expansive approach to wardrobe organization. But the core lesson would stay the same.</p>
+        <br/>
+        <h3>Designing is thinking. Shipping is proving.</h3>
+      </>
+    ),
 
     fontMain: 'SF PRO',
     colorPalette: [
@@ -322,8 +455,8 @@ const CASE_STUDIES_DATA = {
       pairfect4
     ],
 
-    nextId: 'chayan-karo',
-    nextTitle: 'Chayan Karo',
+    nextId: 'agritech-marketplace',
+    nextTitle: 'Krishi Ecosystem',
     demoUrl: 'https://www.figma.com/proto/wVw9GNtAHNJOZL5yqhbfN5/Pairfect?page-id=0%3A1&node-id=1094-135&viewport=9869%2C3833%2C0.67&t=MyV4I3h2QueDtwU7-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1002%3A2',
 
   }
@@ -649,6 +782,7 @@ export function LearningsSection({ learnings }) {
    FOOTER
 ───────────────────────────────────────── */
 export function CaseStudyFooter({
+  id,
   nextTitle,
   nextId,
   demoUrl,
@@ -659,12 +793,21 @@ export function CaseStudyFooter({
     <footer className="cs-footer">
       <div className="cs-footer__inner">
 
-        <button
-          onClick={() => onNavigateNext(nextId)}
-          className="cs-footer__next-btn"
-        >
-          Next Project: {nextTitle} →
-        </button>
+        {nextId === 'close' ? (
+          <button
+            onClick={onClose}
+            className={`cs-footer__next-btn ${id === 'pairfect' ? 'pairfect-accent' : ''}`}
+          >
+            {nextTitle} →
+          </button>
+        ) : (
+          <button
+            onClick={() => onNavigateNext(nextId)}
+            className={`cs-footer__next-btn ${id === 'pairfect' ? 'pairfect-accent' : ''}`}
+          >
+            Next Project: {nextTitle} →
+          </button>
+        )}
 
         <div className="cs-footer__right">
           {demoUrl && (
@@ -780,6 +923,7 @@ export default function CaseStudy({ id, onClose, onNavigateNext, images, onNavig
       <ChallengesSection challenges={data.challenges} scrollContainerRef={pageRef} />
       <LearningsSection learnings={data.learnings} scrollContainerRef={pageRef} />
       <CaseStudyFooter
+        id={id}
         nextTitle={data.nextTitle}
         nextId={data.nextId}
         demoUrl={data.demoUrl}

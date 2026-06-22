@@ -358,6 +358,15 @@
   overflow-wrap: anywhere;
 }
 
+@media (min-width: 1025px) {
+  .cs-section--solution .cs-section__body,
+  .cs-section--blueprint .cs-section__body,
+  .cs-section--challenges .cs-section__body,
+  .cs-section--learnings .cs-section__body {
+    max-width: 85%;
+  }
+}
+
 .cs-footer__actions {
   display: flex;
   align-items: center;
@@ -768,6 +777,10 @@
 .cs-footer__next-btn:hover {
   transform: translateX(10px);
   color: var(--cs-primary, #e47830);
+}
+
+.cs-footer__next-btn.pairfect-accent:hover {
+  color: #b8b8b8;
 }
 
 .cs-footer__home-btn {

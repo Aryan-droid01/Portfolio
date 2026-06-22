@@ -12,24 +12,24 @@ export default function Projects({ onViewCaseStudy }) {
     {
       id: 'chayan-karo',
       title: 'Chayan Karo',
-      category: 'UX Research, Branding + UX/UI Designing',
-      description: 'A home services app that puts the choice of who enters your home back in your hands, backed by a companion app that turns gig workers into a trusted, growing workforce.',
+      category: 'Product Design · Marketplace Systems',
+      description: 'Building trust between customers and service providers through a two-sided marketplace ecosystem designed from the ground up.',
       image: chayanKaroImg,
       link: '#/case-study/chayan-karo'
     },
     {
       id: 'pairfect',
       title: 'Pairfect',
-      category: 'UX Research, Branding + UX/UI Designing + Frontend Development',
-      description: 'A styling app that builds outfit combinations from clothes you already own, and shows you what to add next if you want more options.',
+      category: 'Product Design + Android Development',
+      description: 'A personal exploration in outfit discovery that became an exercise in complete design-to-code ownership.',
       image: pairfectImg,
       link: '#/case-study/pairfect'
     },
     {
       id: 'agritech-marketplace',
-      title: 'Agritech Marketplace',
-      category: 'UX Research, Branding + UX/UI Designing',
-      description: 'Two apps built for the same farming communities, helping beekeepers and fruit growers track what they produce, grow it smarter, and finally sell it themselves.',
+      title: 'Krishi Ecosystem',
+      category: 'Accessibility · Ecosystem Design',
+      description: 'Designing digital infrastructure for underserved farming communities through two products built around accessibility, trust, and practical field usage.',
       image: agritechMarketplaceImg,
       link: '#/case-study/agritech-marketplace'
     },
